@@ -7,11 +7,16 @@ import { CommonModule } from '@angular/common';
 import { routes } from './app.routes';
 import { NavbarComponent } from "./navbar/navbar.component";
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './_services/auth.interceptor';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterModule, RouterOutlet, LoginComponent, NavbarComponent, MatDatepickerModule],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } // הגדרה של Interceptor
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

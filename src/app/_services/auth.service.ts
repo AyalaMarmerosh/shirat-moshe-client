@@ -14,7 +14,14 @@ export class AuthService {
    login(username: string, password: string): Observable<any> {
     console.log("login called with", { username, password });
     return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
-      tap(response => console.log("Server response:", response)),
+      tap(response => {
+        console.log("Server response:", response);
+        if(response && response.Token){
+          this.saveToken(response.Token);
+        }else{
+          console.error("No token found in response");
+        }
+      }),
       catchError(error => {
         console.error("Error during login:", error);
         throw error;
