@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, tap } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,24 +12,33 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
    // התחברות
-   login(username: string, password: string): Observable<any> {
-    console.log("login called with", { username, password });
-    return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
-      tap(response => {
-        console.log("Server response:", response);
-        if(response && response.token){
-          this.saveToken(response.token);
-        }else{
-          console.error("No token found in response");
-        }
-      }),
-      catchError(error => {
-        console.error("Error during login:", error);
-        throw error;
-      })
-    );
+  //  login(username: string, password: string): Observable<any> {
+  //   console.log("login called with", { username, password });
+  //   return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
+  //     tap(response => {
+  //       console.log("Server response:", response);
+  //       if(response && response.token){
+  //         this.saveToken(response.token);
+  //       }else{
+  //         console.error("No token found in response");
+  //       }
+  //     }),
+  //     catchError(error => {
+  //       console.error("Error during login:", error);
+  //       throw error;
+  //     })
+  //   );
 
-  }
+  // }
+
+  login(username: string, password: string): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
+    catchError(error => {
+      console.error('Error occurred during login:', error);
+      return throwError(() => error);  // להחזיר את השגיאה
+    })
+  );
+}
 
   // בדיקת אם יש טוקן שמאוחסן
   getToken(): string | null {
