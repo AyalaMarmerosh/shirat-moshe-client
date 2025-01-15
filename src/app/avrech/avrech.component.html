@@ -1,0 +1,287 @@
+
+<div class="container py-4" dir="rtl">
+    <!-- חלונית סינון -->
+    <div class="filter-sidebar">
+      <br>
+      <br>
+
+      <mat-form-field appearance="fill" class="w-100 mb-2">
+        <mat-label >חפש לפי שם</mat-label>
+        <input matInput [(ngModel)]="searchQuery" (input)="getAvrechim()" placeholder="חפש שם" />
+      </mat-form-field>
+      <br>
+      <br>
+      <br>
+      <br>
+      <mat-form-field appearance="fill" class="w-100 mb-2">
+        <mat-label>סינון לפי נוכחות</mat-label>
+        <mat-select [(ngModel)]="filterPresence" (ngModelChange)="getAvrechim()">
+          <mat-option value="">הכל</mat-option>
+          <mat-option value="כן">כן</mat-option>
+          <mat-option value="לא">לא</mat-option>
+          <mat-option value="בוקר">בוקר</mat-option>
+          <mat-option value="צהרים">צהרים</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-100 mb-2">
+        <mat-label>סינון לפי דתות</mat-label>
+        <mat-select [(ngModel)]="filterDatot" (ngModelChange)="getAvrechim()">
+          <mat-option value="">הכל</mat-option>
+          <mat-option value="לא_רשום">לא רשום</mat-option>
+          <mat-option value="יום_שלם">יום שלם</mat-option>
+          <mat-option value="חצי_יום">חצי יום</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill" class="w-100 mb-2">
+        <mat-label>סינון לפי סטטוס</mat-label>
+        <mat-select [(ngModel)]="filterStatus" (ngModelChange)="getAvrechim()">
+          <mat-option value="">הכל</mat-option>
+          <mat-option value="ראש_קבוצה_בבוקר">ראש קבוצה בבוקר</mat-option>
+          <mat-option value="ראש_קבוצה_אחה_צ">ראש קבוצה אחה&quot;צ</mat-option>
+          <mat-option value="ר&quot;כ אחה&quot;צ והח חצי דתות">ר&quot;כ אחה&quot;צ והח חצי דתות</mat-option>          
+          <mat-option value="ראש_כולל">ראש כולל</mat-option>
+          <mat-option value="אברך_רצופות_יום_שלם">אברך רצופות יום שלם</mat-option>
+          <mat-option value="אברך_רצופות_חצי_יום">אברך רצופות חצי יום</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="new-avrech">
+      <button class="primary" style="margin: 3% 85% 2%; background-color: #673ab7; color: white; border: 1px solid white; width: 130px; height: 50px; border-radius: 8px;" (click)="openAddAvrechDialog()">הוספת אברך חדש</button>
+    </div>
+
+  <div class="row">
+    <div *ngFor="let avrech of avrechim" class="col-sm-12 mb-4">
+      <mat-card class="card border" style="border-radius: 8px; border: 1px solid #333 !important; width: 65%; margin-right: 30%; margin-left: 5%;">
+        <mat-card-header class="d-flex align-items-center" style="display: flex; justify-content: space-between;">
+          <div class="button-group" style="margin-left: 0;">
+            <button mat-raised-button color="accent" class="me-2" style="width: 110px; margin-left: 10px;" (click)="editAvrech(avrech)">עדכן פרטים</button>
+            <button mat-raised-button color="warn" style="width: 110px;" (click)="deleteAvrech(avrech.id)">מחק</button>
+          </div>
+          <mat-card-title class="font-weight-bold" style="font-size: 2.5em; font-weight:bold; text-align: center; flex-grow: 1;">
+              {{ avrech.fullName }}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+          <div class="data" style="margin-right: 40px;">
+            <br>
+            <br>
+            <div class="abrek-details">
+              <div class="detail-item">
+                <p><strong>תעודת זהות: </strong> {{ avrech.teudatZeut }}</p>
+                <p><strong>תאריך לידה: </strong>{{ formatDate(avrech.dateOfBirth) }}</p>
+                <p><strong>כתובת: </strong>{{ avrech.street + " " + avrech.houseNumber}}</p>
+                                </div>
+          <div class="detail-item">
+
+          <p><strong>סטטוס:</strong> {{ avrech.status }}</p>
+          <p><strong>דתות:</strong> {{ avrech.datot }}</p>
+          <p><strong>נוכחות: </strong>{{ avrech.isPresent }}</p>
+          </div>
+          <div class="detail-item">
+            <mat-expansion-panel class="custom-expansion" style="width: 190px;">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <p><strong>פלאפון: </strong>{{ avrech.cellPhone || "לא קיים "}}</p>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="phone-details">
+                <p><strong>פלאפון 2: </strong>{{ avrech.cellPhone2 || "לא קיים"}}</p>
+                <p><strong>טלפון: </strong>{{ avrech.phone }}</p>
+              </div>
+            </mat-expansion-panel>
+<br>
+            <mat-expansion-panel class="custom-expansion" style="width: 190px;">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <strong>פרטי בנק:</strong>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="bank-details">
+                <p><strong>בנק: </strong>{{ avrech.bank }}</p>
+                <p><strong>סניף: </strong>{{ avrech.branch }}</p>
+                <p><strong>מספר חשבון: </strong>{{ avrech.accountNumber }}</p>
+              </div>
+            </mat-expansion-panel>
+
+          </div>
+        </div>
+          </div>
+        
+    </div>
+        </mat-card-content>
+        <mat-card-actions class="d-flex" style="flex-wrap: wrap;">
+          <mat-expansion-panel style="background-color: #673ab7; width: 30%;" class="mt-4 custom-expansion-panel">
+            <mat-expansion-panel-header style="color: white;">
+              <mat-panel-title style="color: white;">
+          <!-- <div class="form-container d-flex flex-column" style="margin-right: 40px; max-width: 300px;"> -->
+          <!-- <button mat-raised-button color="primary" class="mb-2" -->
+            <!-- (click)="loadMonthlyData(avrech.id, yearInput.value, monthInput.value)" style="margin-right: 40px;"> -->
+            הצג נתוני חודש
+          <!-- </button> -->
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+          <mat-form-field appearance="fill" class="w-80 mb-2" >
+            <mat-label>הזן שנה</mat-label>
+            <input matInput type="text" #yearInput (keydown.enter)="loadMonthlyData(avrech.id, yearInput.value, monthInput.value)" />
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill" class="w-80 mb-2">
+            <mat-label>הזן חודש</mat-label>
+            <input matInput type="text" #monthInput (keydown.enter)="loadMonthlyData(avrech.id, yearInput.value, monthInput.value)" />
+          </mat-form-field>
+          <!-- </div> -->
+        </mat-expansion-panel>
+
+          <!-- נתונים חודשיים -->
+          <div class="monthly-data mt-3" style="margin-right: 60px;" *ngIf="monthlyData[avrech.id] && monthlyData[avrech.id].length">
+            <h3 style="font-weight: bold; color:#673ab7;">נתונים חודשיים:</h3>
+            <table class="table table-striped" style="text-align: center;">
+              <thead>
+                <tr>
+                  <th>שנה</th>
+                  <th>חודש</th>
+                  <th>מלגה בסיסית</th>
+                  <th>חבורה</th>
+                  <th>מבחן גדול</th>
+                  <th>דתות</th>
+                  <th>סך הכל</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let record of monthlyData[avrech.id]">
+                  <td>{{ record.year }}</td>
+                  <td>{{ record.month }}</td>
+                  <td>{{ record.baseAllowance }}</td>
+                  <td>{{ record.isChabura ? '✅' : '❌' }}</td>
+                  <td>{{ record.didLargeTest ? '✅' : '❌' }}</td>
+                  <td>{{ record.datot }}</td>
+                  <td>{{ record.totalAmount }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </mat-card-actions>
+        
+        <!-- טופס עדכון -->
+        <form *ngIf="selectedAvrech && selectedAvrech.id === avrech.id" (ngSubmit)="saveAvrech()">
+          <mat-panel-title>עדכון פרטי אברך</mat-panel-title>
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>נוכחות</mat-label>
+            <mat-select [(ngModel)]="selectedAvrech.isPresent" name="isPresent">
+              <mat-option value="כן">כן</mat-option>
+              <mat-option value="לא">לא</mat-option>
+              <mat-option value="בוקר">בוקר</mat-option>
+              <mat-option value="צהרים">צהרים</mat-option>
+            </mat-select>
+          </mat-form-field>
+    
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>דתות</mat-label>
+            <mat-select [(ngModel)]="selectedAvrech.datot" name="datot">
+              <mat-option value="לא_רשום">לא רשום</mat-option>
+              <mat-option value="יום_שלם">יום שלם</mat-option>
+              <mat-option value="חצי_יום">חצי יום</mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>סטטוס</mat-label>
+            <mat-select [(ngModel)]="selectedAvrech.status" name="status">
+              <mat-option value="ראש_קבוצה_בבוקר">ראש קבוצה בבוקר</mat-option>
+              <mat-option value="ראש_קבוצה_אחה_צ">ראש קבוצה אחה&quot;צ</mat-option>
+              <mat-option value="ר&quot;כ אחה&quot;צ והח חצי דתות">ר&quot;כ אחה&quot;צ והח חצי דתות</mat-option>          
+              <mat-option value="ראש_כולל">ראש כולל</mat-option>
+              <mat-option value="אברך_רצופות_יום_שלם">אברך רצופות יום שלם</mat-option>
+              <mat-option value="אברך_רצופות_חצי_יום">אברך רצופות חצי יום</mat-option>
+            </mat-select>
+          </mat-form-field>
+        
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>שם פרטי</mat-label>
+            <input matInput type="text" [(ngModel)]="firstName" name="firstName" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>שם משפחה</mat-label>
+            <input matInput type="text" [(ngModel)]="lastName" name="lastName" />
+          </mat-form-field>
+        
+          <!-- תעודת זהות -->
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>מספר זהות</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedAvrech.teudatZeut" name="teudatZeut" />
+          </mat-form-field>
+        
+          <!-- תאריך לידה -->
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>תאריך לידה</mat-label>
+            <input matInput type="date" [(ngModel)]="selectedAvrech.dateOfBirth" name="dateOfBirth" />
+            <button mat-icon-button matSuffix (click)="selectedAvrech.dateOfBirth = null">
+              <mat-icon>clear</mat-icon>
+            </button>          
+          </mat-form-field>
+        
+          <!-- כתובת -->
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>כתובת</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedAvrech.street" name="street" placeholder="רחוב" />
+          </mat-form-field>
+          
+          <!-- מספר בית -->
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>מספר בית</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedAvrech.houseNumber" name="houseNumber" placeholder="מספר בית" />
+          </mat-form-field>
+        
+          <!-- טלפון 1 -->
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>טלפון</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedAvrech.phone" name="phone" />
+          </mat-form-field>
+        
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>פלאפון</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedAvrech.cellPhone" name="cellPhone" />
+          </mat-form-field>
+
+          <!-- טלפון 2 -->
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>פלאפון 2</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedAvrech.cellPhone2" name="cellPhone2" />
+          </mat-form-field>
+
+          <!-- פרטי בנק -->
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>בנק</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedAvrech.bank" name="bank" />
+          </mat-form-field>
+        
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>סניף</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedAvrech.branch" name="branch" />
+          </mat-form-field>
+        
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>מספר חשבון</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedAvrech.accountNumber" name="accountNumber" />
+          </mat-form-field>
+        
+          <button mat-raised-button color="primary" type="submit" class="mt-3">שמור שינויים</button>
+        </form>
+        
+        <!-- </mat-expansion-panel> -->
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+  <!-- פאגינציה -->
+  <div class="paginator-container">
+    <mat-paginator  [length]="totalAvrechim" [pageSize]="pageSize" (page)="pageChanged($event)">
+    </mat-paginator>
+  </div>
+  

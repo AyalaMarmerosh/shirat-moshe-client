@@ -1,0 +1,68 @@
+/* Navbar container */
+.navbar {
+    transition: width 0.3s ease-in-out;
+    background-color: #673ab7; /* צבע סגול עמוק */
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Navigation list */
+  .nav-list {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+  
+  /* Navigation items */
+  .nav-item {
+    margin: 0 20px;
+  }
+  
+  /* Styling for the links */
+  .nav-item a {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  /* Active link color */
+  .nav-item a.active-link {
+    background-color: #ffd740;
+    color: white;
+  }
+  
+  /* Icon and text spacing */
+  .nav-item mat-icon {
+    margin-right: 8px;
+    font-size: 20px;
+  }
+  
+  /* Hover effect */
+  .nav-item a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffd740;
+    border-radius: 4px;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .nav-list {
+      flex-direction: column;
+    }
+  
+    .nav-item {
+      margin: 10px 0;
+    }
+  }
+  

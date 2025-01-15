@@ -1,0 +1,84 @@
+.container1 {
+    padding: 20px;
+    /* max-width: 1200px; */
+    margin: auto;
+  }
+  
+  .mat-table {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .mat-checkbox {
+    display: flex;
+    justify-content: center;
+  }
+  
+  input{
+    width: 80%;
+  }
+
+  .scrollable-container {
+    overflow-x: hidden;      /* להסתיר גלילה אופקית */
+    overflow-y: auto;        /* גלילה אנכית */
+    max-height: 500px;       /* גובה מקסימלי */
+    direction: rtl;          /* כיוון מימין לשמאל */
+    position: relative;
+    width: 100%;
+  }
+  
+  .scrollable-table {
+    direction: rtl !important;         /* כיוון של התוכן בתוך הטבלה עצמו */
+  }
+  
+  .scrollable-container::-webkit-scrollbar {
+    width: 9px;             /* רוחב הפס */
+    direction: rtl !important; 
+  }
+  
+  .scrollable-container::-webkit-scrollbar-thumb {
+    background-color: #673ab7;
+    border-radius: 4px;
+    direction: rtl !important; 
+
+  }
+  
+  .scrollable-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    direction: rtl !important; 
+
+  }
+  
+  mat-header-row {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    direction: rtl !important; 
+    font-weight: bold;
+  }
+  
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  button {
+    margin-top: 20px;
+  }
+  

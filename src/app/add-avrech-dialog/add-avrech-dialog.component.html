@@ -1,0 +1,111 @@
+<div class="body">
+<h2 mat-dialog-title style="color: #673ab7;">הוספת אברך חדש</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="saveNewAvrech()">
+    <!-- שם פרטי ושם משפחה -->
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>שם פרטי</mat-label>
+      <input matInput [(ngModel)]="newAvrech.firstName" name="firstName" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>שם משפחה</mat-label>
+      <input matInput [(ngModel)]="newAvrech.lastName" name="lastName" required />
+    </mat-form-field>
+
+    <!-- תעודת זהות -->
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>תעודת זהות</mat-label>
+      <input matInput type="text" [(ngModel)]="newAvrech.teudatZeut" name="teudatZeut" />
+    </mat-form-field>
+
+    <!-- תאריך לידה עם לוח שנה -->
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>תאריך לידה</mat-label>
+      <input matInput  type="date" [(ngModel)]="newAvrech.dateOfBirth" name="dateOfBirth" />
+      <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker> -->
+    </mat-form-field>
+
+    <!-- כתובת -->
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>רחוב</mat-label>
+      <input matInput type="text" [(ngModel)]="newAvrech.street" name="street" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>מספר בניין</mat-label>
+      <input matInput type="text" [(ngModel)]="newAvrech. houseNumber" name=" houseNumber" required />
+    </mat-form-field>
+
+    <!-- טלפונים -->
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>טלפון בבית</mat-label>
+      <input matInput type="text" [(ngModel)]="newAvrech.phone" name="phone" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>פלאפון</mat-label>
+      <input matInput type="text" [(ngModel)]="newAvrech.cellPhone" name="cellPhone" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>פלאפון 2</mat-label>
+      <input matInput type="text" [(ngModel)]="newAvrech.cellPhone2" name="cellPhone2" />
+    </mat-form-field>
+
+    <!-- פרטי בנק -->
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>בנק</mat-label>
+      <input matInput type="text" [(ngModel)]="newAvrech.bank" name="bank" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>סניף</mat-label>
+      <input matInput type="text" [(ngModel)]="newAvrech.branch" name="branch" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>מספר חשבון</mat-label>
+      <input matInput type="text" [(ngModel)]="newAvrech.accountNumber" name="accountNumber" />
+    </mat-form-field>
+
+    <!-- סטטוס עם בחירה מתוך רשימה -->
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>סטטוס</mat-label>
+      <mat-select [(ngModel)]="newAvrech.status" name="status">
+        <mat-option value=1>ראש קבוצה בבוקר</mat-option>
+        <mat-option value=2>ראש קבוצה אחה&quot;צ</mat-option>
+        <mat-option value=3>ר&quot;כ אחה&quot;צ והח חצי דתות</mat-option>          
+        <mat-option value=4>ראש כולל</mat-option>
+        <mat-option value=5>אברך רצופות יום שלם</mat-option>
+        <mat-option value=6>אברך רצופות חצי יום</mat-option>
+        <mat-option value=0 >אחר</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- דתות עם בחירה מתוך רשימה -->
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>דתות</mat-label>
+      <mat-select [(ngModel)]="newAvrech.datot" name="datot">
+        <mat-option value=1>לא רשום</mat-option>
+        <mat-option value=2>יום שלם</mat-option>
+        <mat-option value=3>חצי יום</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- נוכחות עם בחירה מתוך רשימה -->
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>נוכחות</mat-label>
+      <mat-select [(ngModel)]="newAvrech.isPresent" name="isPresent">
+        <mat-option value="כן">כן</mat-option>
+        <mat-option value="לא">לא</mat-option>
+        <mat-option value="בוקר">בוקר</mat-option>
+        <mat-option value="צהרים">צהרים</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">שמור אברך חדש</button>
+  </form>
+</mat-dialog-content>
+</div>

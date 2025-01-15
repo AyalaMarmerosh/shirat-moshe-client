@@ -1,0 +1,14 @@
+button{
+    background-color: #ffd740;
+    border-radius: 5px;
+    border: none;
+    height: 50px;
+}
+.body{
+    text-align: center;
+    direction: rtl;
+}
+mat-form-field {
+    display: block;
+    margin-bottom: 10px; /* ריווח בין האינפוטים */
+  }

@@ -1,0 +1,74 @@
+<div style="text-align: center; margin-top: 20px;">
+    <!-- <button mat-raised-button color="accent" (click)="saveData()">שמור נתונים</button> -->
+    <button mat-raised-button color="primary" (click)="exportToExcel()">ייצא לאקסל</button>
+  </div>
+  
+<!-- <div class="scrollable-container" dir="rtl"> -->
+    <div dir="rtl" class="form-section" style="display: flex; gap: 15px; flex-wrap: wrap; margin: 20px; width: 50%; margin-left: 400px;">
+        <mat-form-field appearance="outline" style="flex: 1; min-width: 200px;">
+          <mat-label>חודש</mat-label>
+          <input matInput type="text" [(ngModel)]="selectedMonth" (ngModelChange)="getRecords()" placeholder="לדוגמה: חשוון" />
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" style="flex: 1; min-width: 200px;">
+          <mat-label>שנה</mat-label>
+          <input matInput type="text" [(ngModel)]="selectedYear" (ngModelChange)="getRecords()" placeholder="לדוגמה: תשפ" />
+        </mat-form-field>
+      </div>
+    <div class="scrollable-container" dir="rtl">
+    <mat-card class="scrollable-table">
+      <mat-table [dataSource]="records" class="mat-elevation-z3">
+        <ng-container matColumnDef="index">
+          <mat-header-cell *matHeaderCellDef> מס' </mat-header-cell>
+          <mat-cell *matCellDef="let record; let i = index"> {{ i + 1 }} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> שם </mat-header-cell>
+          <mat-cell *matCellDef="let record" (click)="onAbrekClick(record.personId)"   style="cursor: pointer;"> {{ getAvrechName(record.personId) }} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="month">
+          <mat-header-cell *matHeaderCellDef> חודש </mat-header-cell>
+          <mat-cell *matCellDef="let record"> {{ record.month }} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="year">
+          <mat-header-cell *matHeaderCellDef> שנה </mat-header-cell>
+          <mat-cell *matCellDef="let record"> {{ record.year }} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="baseAllowance">
+          <mat-header-cell *matHeaderCellDef> מלגה בסיסית </mat-header-cell>
+          <mat-cell *matCellDef="let record"> {{ record.baseAllowance }} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="isChabura">
+          <mat-header-cell *matHeaderCellDef> מסר חבורה </mat-header-cell>
+          <mat-cell *matCellDef="let record">
+            {{ record.isChabura ? '✅' : '❌' }}
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="didLargeTest">
+          <mat-header-cell *matHeaderCellDef> מבחן </mat-header-cell>
+          <mat-cell *matCellDef="let record">
+            {{ record.didLargeTest ? '✅' : '❌' }}
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="datot">
+          <mat-header-cell *matHeaderCellDef> דתות </mat-header-cell>
+          <mat-cell *matCellDef="let record"> {{ record.datot }} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="totalAmount">
+          <mat-header-cell *matHeaderCellDef> סכום סופי </mat-header-cell>
+          <mat-cell *matCellDef="let record"> {{ record.totalAmount }} </mat-cell>
+        </ng-container>
+  
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </mat-card>
+  </div>
