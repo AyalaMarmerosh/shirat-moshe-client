@@ -9,6 +9,6 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(),
     provideAnimationsAsync(),
-    provideRouter(routes), provideAnimationsAsync()  // לא צריך wrap ב-object
+    provideRouter(routes)
   ]
 });
