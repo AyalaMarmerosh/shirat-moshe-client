@@ -24,11 +24,17 @@ export class LoginComponent {
   onLogin(): void {
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
-        this.authService.saveToken(response.token);
-        console.log("גבניחד")
-        this.router.navigate(['/action']); 
+        if(response && response.token ){
+          this.authService.saveToken(response.token);
+          console.log("ההתחברות הצליחה")
+          this.router.navigate(['/action']); 
+        }else{
+          console.error("שגיאה: התגובה מהשרת אינה מכילה את השדה 'token'");
+          alert("שגיאה: לא ניתן להתחבר. נסה שוב מאוחר יותר.");
+        }
       },
       (error) => {
+        console.error("שגיאה במהלך ההתחברות:", error);
         alert('Invalid credentials');
       }
     );
