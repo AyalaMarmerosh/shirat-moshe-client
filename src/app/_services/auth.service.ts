@@ -16,8 +16,8 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap(response => {
         console.log("Server response:", response);
-        if(response && response.Token){
-          this.saveToken(response.Token);
+        if(response && response.token){
+          this.saveToken(response.token);
         }else{
           console.error("No token found in response");
         }

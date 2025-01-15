@@ -24,9 +24,9 @@ export class LoginComponent {
   onLogin(): void {
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
-        if(response && response.Token ){
+        if(response && response.token ){
           console.log("open?");
-          this.authService.saveToken(response.Token);
+          this.authService.saveToken(response.token);
           console.log("ההתחברות הצליחה")
           this.router.navigate(['/action']); 
         }else{
