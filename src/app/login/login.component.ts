@@ -2,6 +2,7 @@ import { FormsModule } from '@angular/forms';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ import { Router, RouterModule } from '@angular/router';
 export class LoginComponent {
   username = 'שירת משה';
   password = 'אבא שלי';
-  apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login'; 
+  // apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login'; 
+  apiUrl = environment.apiUrl;
 
   constructor(private authService: AuthService, private router: Router) {}
 
