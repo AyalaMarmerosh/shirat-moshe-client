@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationStart, Router, RouterModule, RouterOutlet } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+// import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
 import { routes } from './app.routes';
 import { NavbarComponent } from "./navbar/navbar.component";
@@ -9,7 +9,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterOutlet, LoginComponent, NavbarComponent, MatDatepickerModule],
+  imports: [CommonModule, RouterModule, RouterOutlet, NavbarComponent, MatDatepickerModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
