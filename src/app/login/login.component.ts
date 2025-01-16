@@ -13,12 +13,14 @@ import { Router, RouterModule } from '@angular/router';
 export class LoginComponent {
   username = '';
   password = '';
+  private apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login'; 
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     console.log('LoginComponent Loaded');
     console.log('הערך של apiUrl1 בקומפוננטה:', this.authService.apiUrl1);
+    console.log('הערך של apiUrl1 כאן!!!:', this.apiUrl);
   }
 
   // פונקציה לטיפול בלחיצה על התחברות
