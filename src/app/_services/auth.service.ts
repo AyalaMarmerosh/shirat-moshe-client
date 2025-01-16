@@ -13,7 +13,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<any> {
     console.log("api:", this.apiUrl);
-  return this.http.post<any>(this.apiUrl, { username, password }).pipe(
+  return this.http.post<any>('https://shirat-moshe-server.onrender.com/api/MonthlyData/login', { username, password }).pipe(
     catchError(error => {
       console.error('Error occurred during login:', error);
       return throwError(() => error);  // להחזיר את השגיאה
