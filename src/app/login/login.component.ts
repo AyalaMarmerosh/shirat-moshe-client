@@ -11,8 +11,8 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  username = '';
-  password = '';
+  username = 'שירת משה';
+  password = 'אבא שלי';
   apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login'; 
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -21,6 +21,8 @@ export class LoginComponent {
     console.log('LoginComponent Loaded');
     console.log('הערך של apiUrl1 בקומפוננטה:', this.authService.apiUrl1);
     console.log('הערך של apiUrl1 כאן!!!:', this.apiUrl);
+    console.log('שם משתמש וססמה:', this.username, this.password);
+
   }
 
   // פונקציה לטיפול בלחיצה על התחברות
