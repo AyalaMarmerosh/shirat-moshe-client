@@ -13,7 +13,7 @@ import { Router, RouterModule } from '@angular/router';
 export class LoginComponent {
   username = '';
   password = '';
-  private apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login'; 
+  apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login'; 
 
   constructor(private authService: AuthService, private router: Router) {}
 
