@@ -25,6 +25,7 @@ export class LoginComponent {
 
   // פונקציה לטיפול בלחיצה על התחברות
   onLogin(): void {
+    console.log(this.username,"שם משתמשn");
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
         if(response && response.token ){
