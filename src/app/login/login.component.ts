@@ -18,6 +18,7 @@ export class LoginComponent {
 
   ngOnInit(): void {
     console.log('LoginComponent Loaded');
+    console.log('הערך של apiUrl1 בקומפוננטה:', this.authService.apiUrl1);
   }
 
   // פונקציה לטיפול בלחיצה על התחברות
