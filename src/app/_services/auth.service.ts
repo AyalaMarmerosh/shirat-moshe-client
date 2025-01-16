@@ -9,7 +9,9 @@ export class AuthService {
   private apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login'; 
   // private apiUrl = 'http://localhost:5038/api/MonthlyData'; 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    console.log(this.apiUrl,"מה קורה??????");
+  }
 
   login(username: string, password: string): Observable<any> {
     console.log("api:", this.apiUrl);
