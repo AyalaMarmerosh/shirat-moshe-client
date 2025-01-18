@@ -27,7 +27,13 @@ export class LoginComponent {
     console.log('הערך של apiUrl1 בקומפוננטה:', this.authService.apiUrl1);
     console.log('הערך של apiUrl1 כאן!!!:', this.apiUrl);
     console.log('שם משתמש וססמה:', this.username, this.password);
-    console.log('זה המייל שלי:', this.testUrl)
+    console.log('זה המייל שלי:', this.testUrl);
+    setTimeout(() => {
+      console.log('הערך של apiUrl אחרי 8 שניות:', this.apiUrl);
+    }, 8000);
+    setTimeout(() => {
+      console.log('הערך של apiUrl אחרי 8 שניות:', this.apiUrl99);
+    }, 8000);
   }
 
   // פונקציה לטיפול בלחיצה על התחברות
