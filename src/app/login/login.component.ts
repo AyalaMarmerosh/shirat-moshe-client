@@ -14,16 +14,16 @@ import { environment } from '../../environments/environment';
 export class LoginComponent {
   username = 'שירת משה';
   password = 'אבא שלי';
-  apiUrl = ''; 
-  te = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
+  apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
   testUrl = 'https://mail.google.com/mail/u/0/#inbox';
 
   // apiUrl = environment.apiUrl;
-  constructor(private authService: AuthService, private router: Router) {  console.log('apiUrl בקונסטרקטור:', this.te);  }
+  constructor(private authService: AuthService, private router: Router) {  console.log('apiUrl בקונסטרקטור:', this.apiUrl);  console.log("הסוג של apiUrl:", typeof this.apiUrl);
+  }
 
   ngOnInit(): void {
     console.log('LoginComponent Loaded');
-    this.apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
+    // this.apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
     console.log('הערך של apiUrl1 בקומפוננטה:', this.authService.apiUrl1);
     console.log('הערך של apiUrl1 כאן!!!:', this.apiUrl);
     console.log('שם משתמש וססמה:', this.username, this.password);
@@ -32,7 +32,7 @@ export class LoginComponent {
       console.log('הערך של apiUrl אחרי 8 שניות:', this.apiUrl);
     }, 8000);
     setTimeout(() => {
-      console.log('הערך של apiUrl אחרי 8 שניות:', this.te);
+      console.log('הערך של apiUrl אחרי 8 שניות:', this.apiUrl);
     }, 8000);
     console.log('ה-URL:', this.getApiUrl());
 

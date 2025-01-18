@@ -37903,18 +37903,17 @@ var LoginComponent = class _LoginComponent {
   router;
   username = "\u05E9\u05D9\u05E8\u05EA \u05DE\u05E9\u05D4";
   password = "\u05D0\u05D1\u05D0 \u05E9\u05DC\u05D9";
-  apiUrl = "";
-  te = "https://shirat-moshe-server.onrender.com/api/MonthlyData/login";
+  apiUrl = "https://shirat-moshe-server.onrender.com/api/MonthlyData/login";
   testUrl = "https://mail.google.com/mail/u/0/#inbox";
   // apiUrl = environment.apiUrl;
   constructor(authService, router) {
     this.authService = authService;
     this.router = router;
-    console.log("apiUrl \u05D1\u05E7\u05D5\u05E0\u05E1\u05D8\u05E8\u05E7\u05D8\u05D5\u05E8:", this.te);
+    console.log("apiUrl \u05D1\u05E7\u05D5\u05E0\u05E1\u05D8\u05E8\u05E7\u05D8\u05D5\u05E8:", this.apiUrl);
+    console.log("\u05D4\u05E1\u05D5\u05D2 \u05E9\u05DC apiUrl:", typeof this.apiUrl);
   }
   ngOnInit() {
     console.log("LoginComponent Loaded");
-    this.apiUrl = "https://shirat-moshe-server.onrender.com/api/MonthlyData/login";
     console.log("\u05D4\u05E2\u05E8\u05DA \u05E9\u05DC apiUrl1 \u05D1\u05E7\u05D5\u05DE\u05E4\u05D5\u05E0\u05E0\u05D8\u05D4:", this.authService.apiUrl1);
     console.log("\u05D4\u05E2\u05E8\u05DA \u05E9\u05DC apiUrl1 \u05DB\u05D0\u05DF!!!:", this.apiUrl);
     console.log("\u05E9\u05DD \u05DE\u05E9\u05EA\u05DE\u05E9 \u05D5\u05E1\u05E1\u05DE\u05D4:", this.username, this.password);
@@ -37923,7 +37922,7 @@ var LoginComponent = class _LoginComponent {
       console.log("\u05D4\u05E2\u05E8\u05DA \u05E9\u05DC apiUrl \u05D0\u05D7\u05E8\u05D9 8 \u05E9\u05E0\u05D9\u05D5\u05EA:", this.apiUrl);
     }, 8e3);
     setTimeout(() => {
-      console.log("\u05D4\u05E2\u05E8\u05DA \u05E9\u05DC apiUrl \u05D0\u05D7\u05E8\u05D9 8 \u05E9\u05E0\u05D9\u05D5\u05EA:", this.te);
+      console.log("\u05D4\u05E2\u05E8\u05DA \u05E9\u05DC apiUrl \u05D0\u05D7\u05E8\u05D9 8 \u05E9\u05E0\u05D9\u05D5\u05EA:", this.apiUrl);
     }, 8e3);
     console.log("\u05D4-URL:", this.getApiUrl());
   }
@@ -37951,39 +37950,44 @@ var LoginComponent = class _LoginComponent {
   static \u0275fac = function LoginComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _LoginComponent)(\u0275\u0275directiveInject(AuthService), \u0275\u0275directiveInject(Router));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LoginComponent, selectors: [["app-login"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 16, vars: 2, consts: [[1, "container", "d-flex", "justify-content-center", "align-items-center", "vh-100"], [1, "card", "shadow-lg", "p-3", 2, "max-width", "400px", "width", "100%"], [1, "text-center", "mb-4"], [3, "ngSubmit"], [1, "mb-3"], ["for", "username", 1, "form-label"], ["id", "username", "name", "username", "required", "", "placeholder", "\u05D4\u05DB\u05E0\u05E1 \u05E9\u05DD \u05DE\u05E9\u05EA\u05DE\u05E9", 1, "form-control", 3, "ngModelChange", "ngModel"], ["for", "password", 1, "form-label"], ["id", "password", "type", "password", "name", "password", "required", "", "placeholder", "\u05D4\u05DB\u05E0\u05E1 \u05E1\u05E1\u05DE\u05D4", 1, "form-control", 3, "ngModelChange", "ngModel"], [1, "d-grid"], ["type", "submit", 1, "btn", "btn-success"]], template: function LoginComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LoginComponent, selectors: [["app-login"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 18, vars: 3, consts: [[1, "container", "d-flex", "justify-content-center", "align-items-center", "vh-100"], [1, "card", "shadow-lg", "p-3", 2, "max-width", "400px", "width", "100%"], [1, "text-center", "mb-4"], [3, "ngSubmit"], [1, "mb-3"], ["for", "username", 1, "form-label"], ["id", "username", "name", "username", "required", "", "placeholder", "\u05D4\u05DB\u05E0\u05E1 \u05E9\u05DD \u05DE\u05E9\u05EA\u05DE\u05E9", 1, "form-control", 3, "ngModelChange", "ngModel"], ["for", "password", 1, "form-label"], ["id", "password", "type", "password", "name", "password", "required", "", "placeholder", "\u05D4\u05DB\u05E0\u05E1 \u05E1\u05E1\u05DE\u05D4", 1, "form-control", 3, "ngModelChange", "ngModel"], [1, "d-grid"], ["type", "submit", 1, "btn", "btn-success"]], template: function LoginComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 0)(1, "div", 1)(2, "h2", 2);
       \u0275\u0275text(3, "\u05D4\u05EA\u05D7\u05D1\u05E8\u05D5\u05EA \u05E9\u05D9\u05E8\u05EA \u05DE\u05E9\u05D4");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(4, "form", 3);
-      \u0275\u0275listener("ngSubmit", function LoginComponent_Template_form_ngSubmit_4_listener() {
+      \u0275\u0275elementStart(4, "p");
+      \u0275\u0275text(5);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(6, "form", 3);
+      \u0275\u0275listener("ngSubmit", function LoginComponent_Template_form_ngSubmit_6_listener() {
         return ctx.onLogin();
       });
-      \u0275\u0275elementStart(5, "div", 4)(6, "label", 5);
-      \u0275\u0275text(7, ":\u05E9\u05DD \u05DE\u05E9\u05EA\u05DE\u05E9");
+      \u0275\u0275elementStart(7, "div", 4)(8, "label", 5);
+      \u0275\u0275text(9, ":\u05E9\u05DD \u05DE\u05E9\u05EA\u05DE\u05E9");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(8, "input", 6);
-      \u0275\u0275twoWayListener("ngModelChange", function LoginComponent_Template_input_ngModelChange_8_listener($event) {
+      \u0275\u0275elementStart(10, "input", 6);
+      \u0275\u0275twoWayListener("ngModelChange", function LoginComponent_Template_input_ngModelChange_10_listener($event) {
         \u0275\u0275twoWayBindingSet(ctx.username, $event) || (ctx.username = $event);
         return $event;
       });
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(9, "div", 4)(10, "label", 7);
-      \u0275\u0275text(11, ":\u05E1\u05E1\u05DE\u05D4");
+      \u0275\u0275elementStart(11, "div", 4)(12, "label", 7);
+      \u0275\u0275text(13, ":\u05E1\u05E1\u05DE\u05D4");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(12, "input", 8);
-      \u0275\u0275twoWayListener("ngModelChange", function LoginComponent_Template_input_ngModelChange_12_listener($event) {
+      \u0275\u0275elementStart(14, "input", 8);
+      \u0275\u0275twoWayListener("ngModelChange", function LoginComponent_Template_input_ngModelChange_14_listener($event) {
         \u0275\u0275twoWayBindingSet(ctx.password, $event) || (ctx.password = $event);
         return $event;
       });
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(13, "div", 9)(14, "button", 10);
-      \u0275\u0275text(15, "\u05D4\u05EA\u05D7\u05D1\u05E8");
+      \u0275\u0275elementStart(15, "div", 9)(16, "button", 10);
+      \u0275\u0275text(17, "\u05D4\u05EA\u05D7\u05D1\u05E8");
       \u0275\u0275elementEnd()()()()();
     }
     if (rf & 2) {
-      \u0275\u0275advance(8);
+      \u0275\u0275advance(5);
+      \u0275\u0275textInterpolate(ctx.apiUrl);
+      \u0275\u0275advance(5);
       \u0275\u0275twoWayProperty("ngModel", ctx.username);
       \u0275\u0275advance(4);
       \u0275\u0275twoWayProperty("ngModel", ctx.password);
