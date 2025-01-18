@@ -37925,6 +37925,10 @@ var LoginComponent = class _LoginComponent {
     setTimeout(() => {
       console.log("\u05D4\u05E2\u05E8\u05DA \u05E9\u05DC apiUrl \u05D0\u05D7\u05E8\u05D9 8 \u05E9\u05E0\u05D9\u05D5\u05EA:", this.te);
     }, 8e3);
+    console.log("\u05D4-URL:", this.getApiUrl());
+  }
+  getApiUrl() {
+    return "https://shirat-moshe-server.onrender.com/api/MonthlyData/login";
   }
   // פונקציה לטיפול בלחיצה על התחברות
   onLogin() {

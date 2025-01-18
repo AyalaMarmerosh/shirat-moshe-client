@@ -34,6 +34,12 @@ export class LoginComponent {
     setTimeout(() => {
       console.log('הערך של apiUrl אחרי 8 שניות:', this.te);
     }, 8000);
+    console.log('ה-URL:', this.getApiUrl());
+
+  }
+
+  getApiUrl() {
+    return 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
   }
 
   // פונקציה לטיפול בלחיצה על התחברות
