@@ -37986,7 +37986,7 @@ var LoginComponent = class _LoginComponent {
     }
     if (rf & 2) {
       \u0275\u0275advance(5);
-      \u0275\u0275textInterpolate(ctx.apiUrl);
+      \u0275\u0275textInterpolate1("", ctx.apiUrl, "\u05D4\u05E1\u05E1\u05E1\u05E1\u05E1\u05E1\u05E1\u05E1\u05E1\u05E1\u05E1\u05E1\u05E1\u05E1\u05E1");
       \u0275\u0275advance(5);
       \u0275\u0275twoWayProperty("ngModel", ctx.username);
       \u0275\u0275advance(4);
