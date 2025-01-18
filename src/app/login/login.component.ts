@@ -14,13 +14,16 @@ import { environment } from '../../environments/environment';
 export class LoginComponent {
   username = 'שירת משה';
   password = 'אבא שלי';
-  apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login'; 
+  apiUrl = ''; 
+  apiUrl99 = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
+  testUrl = 'https://mail.google.com/mail/u/0/#inbox';
+
   // apiUrl = environment.apiUrl;
- testUrl = 'https://mail.google.com/mail/u/0/#inbox';
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {  console.log('apiUrl בקונסטרקטור:', this.apiUrl99);  }
 
   ngOnInit(): void {
     console.log('LoginComponent Loaded');
+    this.apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
     console.log('הערך של apiUrl1 בקומפוננטה:', this.authService.apiUrl1);
     console.log('הערך של apiUrl1 כאן!!!:', this.apiUrl);
     console.log('שם משתמש וססמה:', this.username, this.password);
