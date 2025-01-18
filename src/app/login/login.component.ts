@@ -16,7 +16,7 @@ export class LoginComponent {
   password = 'אבא שלי';
   // apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login'; 
   apiUrl = environment.apiUrl;
-
+ testUrl = 'https://mail.google.com/mail/u/0/#inbox';
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
@@ -24,7 +24,7 @@ export class LoginComponent {
     console.log('הערך של apiUrl1 בקומפוננטה:', this.authService.apiUrl1);
     console.log('הערך של apiUrl1 כאן!!!:', this.apiUrl);
     console.log('שם משתמש וססמה:', this.username, this.password);
-
+    console.log('זה המייל שלי:', this.testUrl)
   }
 
   // פונקציה לטיפול בלחיצה על התחברות
