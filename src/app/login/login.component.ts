@@ -15,11 +15,11 @@ export class LoginComponent {
   username = 'שירת משה';
   password = 'אבא שלי';
   apiUrl = ''; 
-  apiUrl99 = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
+  te = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
   testUrl = 'https://mail.google.com/mail/u/0/#inbox';
 
   // apiUrl = environment.apiUrl;
-  constructor(private authService: AuthService, private router: Router) {  console.log('apiUrl בקונסטרקטור:', this.apiUrl99);  }
+  constructor(private authService: AuthService, private router: Router) {  console.log('apiUrl בקונסטרקטור:', this.te);  }
 
   ngOnInit(): void {
     console.log('LoginComponent Loaded');
@@ -32,7 +32,7 @@ export class LoginComponent {
       console.log('הערך של apiUrl אחרי 8 שניות:', this.apiUrl);
     }, 8000);
     setTimeout(() => {
-      console.log('הערך של apiUrl אחרי 8 שניות:', this.apiUrl99);
+      console.log('הערך של apiUrl אחרי 8 שניות:', this.te);
     }, 8000);
   }
 

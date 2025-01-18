@@ -37904,13 +37904,13 @@ var LoginComponent = class _LoginComponent {
   username = "\u05E9\u05D9\u05E8\u05EA \u05DE\u05E9\u05D4";
   password = "\u05D0\u05D1\u05D0 \u05E9\u05DC\u05D9";
   apiUrl = "";
-  apiUrl99 = "https://shirat-moshe-server.onrender.com/api/MonthlyData/login";
+  te = "https://shirat-moshe-server.onrender.com/api/MonthlyData/login";
   testUrl = "https://mail.google.com/mail/u/0/#inbox";
   // apiUrl = environment.apiUrl;
   constructor(authService, router) {
     this.authService = authService;
     this.router = router;
-    console.log("apiUrl \u05D1\u05E7\u05D5\u05E0\u05E1\u05D8\u05E8\u05E7\u05D8\u05D5\u05E8:", this.apiUrl99);
+    console.log("apiUrl \u05D1\u05E7\u05D5\u05E0\u05E1\u05D8\u05E8\u05E7\u05D8\u05D5\u05E8:", this.te);
   }
   ngOnInit() {
     console.log("LoginComponent Loaded");
@@ -37923,7 +37923,7 @@ var LoginComponent = class _LoginComponent {
       console.log("\u05D4\u05E2\u05E8\u05DA \u05E9\u05DC apiUrl \u05D0\u05D7\u05E8\u05D9 8 \u05E9\u05E0\u05D9\u05D5\u05EA:", this.apiUrl);
     }, 8e3);
     setTimeout(() => {
-      console.log("\u05D4\u05E2\u05E8\u05DA \u05E9\u05DC apiUrl \u05D0\u05D7\u05E8\u05D9 8 \u05E9\u05E0\u05D9\u05D5\u05EA:", this.apiUrl99);
+      console.log("\u05D4\u05E2\u05E8\u05DA \u05E9\u05DC apiUrl \u05D0\u05D7\u05E8\u05D9 8 \u05E9\u05E0\u05D9\u05D5\u05EA:", this.te);
     }, 8e3);
   }
   // פונקציה לטיפול בלחיצה על התחברות
