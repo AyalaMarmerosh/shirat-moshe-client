@@ -1,7 +1,5 @@
-// src/environments/environment.ts
 export const environment = {
-    production: false,  // מציין שהסביבה היא פיתוח
-    apiUrl: 'httpapi.example.com',
-    // הוסף משתנים נוספים שצריך עבור פיתוח
+    production: false, // בגרסה לוקלית
+    apiUrl: "https://shirat-moshe-server.onrender.com/api/MonthlyData/login"
   };
   
