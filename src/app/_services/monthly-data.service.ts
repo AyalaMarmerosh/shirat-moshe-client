@@ -14,7 +14,7 @@ export class MonthlyDataService {
   constructor(private http: HttpClient) { }
   
   getAvrechim(page: number, pageSize: number): Observable<{avrechim : Avrech[], totalAvrechim: number}>{
-    return this.http.get<{ avrechim: Avrech[], totalAvrechim: number}>( `${this.apiUrl}?page=${page}&pageSize=${pageSize}`)
+    return this.http.get<{ avrechim: Avrech[], totalAvrechim: number}>( `https://shirat-moshe-server.onrender.com/api/MonthlyData?page=${page}&pageSize=${pageSize}`)
       .pipe(catchError(this.handleError1<{ avrechim: Avrech[], totalAvrechim: number }>('getAvrechim', {avrechim: [], totalAvrechim: 0}))
     );
   }
