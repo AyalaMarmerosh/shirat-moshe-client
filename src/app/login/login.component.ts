@@ -2,6 +2,7 @@ import { FormsModule } from '@angular/forms';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { environment } from '../../environments/environment';
 // import { environment } from '../../environments/environment';
 
 @Component({
@@ -18,7 +19,7 @@ export class LoginComponent {
   testUrl = 'https://mail.google.com/mail/u/0/#inbox';
 
   // apiUrl = environment.apiUrl;
-  constructor(private authService: AuthService, private router: Router) {  console.log('apiUrl בקונסטרקטור:', this.apiUrl);  console.log("הסוג של apiUrl:", typeof this.apiUrl);
+  constructor(private authService: AuthService, private router: Router) {  console.log('apiUrl בקונסטרקטור:', environment.apiUrl);  console.log("הסוג של apiUrl:", typeof this.apiUrl);
   }
 
   ngOnInit(): void {
