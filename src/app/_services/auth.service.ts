@@ -7,7 +7,6 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 })
 export class AuthService {
   public apiUrl1 = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login'; 
-  // private apiUrl = 'http://localhost:5038/api/MonthlyData'; 
   ngOnInit() {
     console.log('הערך של apiUrl1 ב-ngOnInit:', this.apiUrl1);
   }

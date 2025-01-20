@@ -2,7 +2,6 @@ import { FormsModule } from '@angular/forms';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router, RouterModule } from '@angular/router';
-import { environment } from '../../environments/environment';
 // import { environment } from '../../environments/environment';
 
 @Component({
@@ -13,35 +12,17 @@ import { environment } from '../../environments/environment';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  username = 'שירת משה';
-  password = 'אבא שלי';
-  apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
-  testUrl = 'https://mail.google.com/mail/u/0/#inbox';
+  username = '';
+  password = '';
 
-  // apiUrl = environment.apiUrl;
-  constructor(private authService: AuthService, private router: Router) {  console.log('apiUrl בקונסטרקטור:', environment.apiUrl);  console.log("הסוג של apiUrl:", typeof this.apiUrl);
-  }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     console.log('LoginComponent Loaded');
-    // this.apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
     console.log('הערך של apiUrl1 בקומפוננטה:', this.authService.apiUrl1);
-    console.log('הערך של apiUrl1 כאן!!!:', this.apiUrl);
-    console.log('שם משתמש וססמה:', this.username, this.password);
-    console.log('זה המייל שלי:', this.testUrl);
-    setTimeout(() => {
-      console.log('הערך של apiUrl אחרי 8 שניות:', this.apiUrl);
-    }, 8000);
-    setTimeout(() => {
-      console.log('הערך של apiUrl אחרי 8 שניות:', this.apiUrl);
-    }, 8000);
-    console.log('ה-URL:', this.getApiUrl());
-
   }
 
-  getApiUrl() {
-    return 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login';
-  }
+
 
   // פונקציה לטיפול בלחיצה על התחברות
   onLogin(): void {
