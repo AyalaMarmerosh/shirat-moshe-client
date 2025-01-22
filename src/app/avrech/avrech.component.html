@@ -167,7 +167,7 @@
         </mat-card-actions>
         
         <!-- טופס עדכון -->
-        <form *ngIf="selectedAvrech && selectedAvrech.id === avrech.id" (ngSubmit)="saveAvrech()">
+        <form *ngIf="isFormVisible && selectedAvrech.id === avrech.id" (ngSubmit)="saveAvrech()">
           <mat-panel-title>עדכון פרטי אברך</mat-panel-title>
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>נוכחות</mat-label>

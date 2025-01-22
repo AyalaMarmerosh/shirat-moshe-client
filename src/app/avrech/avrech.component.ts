@@ -53,8 +53,7 @@ export class AvrechComponent implements OnInit{
   filterStatus: string = '';
   filterDatot: string = '';
   filteredAvrechim: Avrech[] = [];
-  // lastName = '';
-  // firstName = '';
+  isFormVisible: boolean = false
 
   
   constructor(private myService: MonthlyDataService, private dialog: MatDialog){}
@@ -125,6 +124,8 @@ export class AvrechComponent implements OnInit{
     // if (this.selectedAvrech?.fullName) {
     // }    
     this.selectedAvrech = { ...avrech }; 
+    this.isFormVisible = true;
+
   }
   formatDate(date: Date | null | undefined): string {
     if(date != null){
@@ -143,7 +144,7 @@ export class AvrechComponent implements OnInit{
   // פונקציה לשמירה של השינויים
   saveAvrech(): void {
     if (this.selectedAvrech) {
-      console.log(      this.selectedAvrech);
+      console.log(this.selectedAvrech);
       // this.selectedAvrech.fullName = `${this.firstName} ${this.lastName}`;
 
       this.selectedAvrech.datot = this.replaceSpacesWithUnderscore(this.selectedAvrech.datot);
@@ -153,6 +154,7 @@ export class AvrechComponent implements OnInit{
       this.myService.updateAvrech(this.selectedAvrech).subscribe(
         () => {
           this.getAvrechim(); // רענון הרשימה אחרי עדכון
+          this.isFormVisible = false;
           // this.selectedAvrech = null; // סגירת הטופס
         },
         (error) => {
