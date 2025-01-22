@@ -53,8 +53,8 @@ export class AvrechComponent implements OnInit{
   filterStatus: string = '';
   filterDatot: string = '';
   filteredAvrechim: Avrech[] = [];
-  lastName = '';
-  firstName = '';
+  // lastName = '';
+  // firstName = '';
 
   
   constructor(private myService: MonthlyDataService, private dialog: MatDialog){}
@@ -144,11 +144,11 @@ export class AvrechComponent implements OnInit{
   saveAvrech(): void {
     if (this.selectedAvrech) {
       console.log(      this.selectedAvrech);
-      this.selectedAvrech.fullName = `${this.firstName} ${this.lastName}`;
+      // this.selectedAvrech.fullName = `${this.firstName} ${this.lastName}`;
 
       this.selectedAvrech.datot = this.replaceSpacesWithUnderscore(this.selectedAvrech.datot);
       this.selectedAvrech.status = this.replaceSpacesWithUnderscore(this.selectedAvrech.status);
-      console.log(      this.selectedAvrech);
+      console.log(this.selectedAvrech);
 
       this.myService.updateAvrech(this.selectedAvrech).subscribe(
         () => {
@@ -175,32 +175,6 @@ export class AvrechComponent implements OnInit{
       );
     }
   }
-  // applyFilters(): void {
-  //   let filtered = this.avrechim;
-  //   console.log("fnv?", this.totalAvrechim);
-  
-  //   if(this.searchQuery){
-  //     console.log("איפה אלעזר?")
-  //     filtered = filtered.filter(avrech => avrech.fullName === this.searchQuery);
-  //   }
-  //   // סינון לפי נוכחות
-  //   if (this.filterPresence) {
-  //     filtered = filtered.filter(avrech => avrech.isPresent === this.filterPresence);
-  //   }
-  
-  //   // סינון לפי דתות
-  //   if (this.filterDatot) {
-  //     filtered = filtered.filter(avrech => avrech.datot === this.filterDatot);
-  //   }
-  
-  //   // סינון לפי סטטוס
-  //   if (this.filterStatus) {
-  //     filtered = filtered.filter(avrech => avrech.status === this.filterStatus);
-  //   }
-  
-  //   // אם אין סינון, הצג את כל הרשימה
-  //   this.filteredAvrechim = filtered;
-  // }
-  
+
   
 }

@@ -57,7 +57,7 @@ export class MonthlyDataComponent implements OnInit{
     this.getAvrechim();
     this.myService.getRecords(this.selectedYear, this.selectedMonth).subscribe((data) => {
       console.log("nvnvnv", data)
-      this.records = data;
+      this.records = data.filter(rec => rec.year !== 'Default');
     },
     error => {
       console.error('Error loading data', error);
