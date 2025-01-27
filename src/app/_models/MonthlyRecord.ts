@@ -9,6 +9,6 @@ export interface MonthlyRecord
     datot: number,
     totalAmount: number,
     orElchanan: number,
-    add: number,
+    addAmount: number,
     notes: string
 }

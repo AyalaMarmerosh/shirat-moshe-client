@@ -32,7 +32,8 @@ export class AvrechComponent implements OnInit{
   monthlyData: { [key: number]: MonthlyRecord[] } = {};
   isMonthlyDataVisible: { [key: number]: boolean } = {}; // מצב הצגת הנתונים החודשיים
   selectedAvrech: Avrech = {
-    fullName: '',
+    firstName: '',
+    lastName: '',
     teudatZeut: '',
     dateOfBirth: null,
     street: '',

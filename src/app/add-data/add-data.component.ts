@@ -52,7 +52,7 @@ export class AddDataComponent implements OnInit{
     'datot',
     'totalAmount',
     'orElchanan',
-    'add',
+    'addAmount',
     'notes',
   ];
   avrechName: string = '';
@@ -119,7 +119,7 @@ calculateTotalAmount(record: any): void {
   record.totalAmount = baseAllowance + (isChabura ? 300 : 0) + (test ? 500 : 0) - datot;
 }
 calculateAdd(record: MonthlyRecord): void {
-  record.add = record.totalAmount - record.orElchanan;
+  record.addAmount = record.totalAmount - record.orElchanan;
 }
 // פונקציה שתפעל כאשר לוחצים על שם האברך
   // onAbrekClick(abrek: any): void {
@@ -154,7 +154,7 @@ calculateAdd(record: MonthlyRecord): void {
   }
 getAvrechName(id: number): string {
   const avrech = this.avrechim.find(a => a.id === id);
-  return avrech ? avrech.fullName : 'לא נמצא';
+  return avrech ? avrech.lastName + " " + avrech.firstName : 'לא נמצא';
 }
 getAvrech(id: number): Avrech | undefined{
   const avrech = this.avrechim.find(a => a.id === id);

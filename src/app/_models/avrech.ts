@@ -2,7 +2,8 @@ import { MonthlyRecord } from "./MonthlyRecord";
 
 export interface Avrech{
     id: number,
-    fullName: string,
+    firstName: string,
+    lastName: string,
     status: string,
     datot: string,
     isPresent: string    

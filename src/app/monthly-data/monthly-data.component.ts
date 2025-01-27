@@ -43,6 +43,9 @@ export class MonthlyDataComponent implements OnInit{
     'didLargeTest',
     'datot',
     'totalAmount',
+    'orElchanan',
+    'addAmount',
+    'notes'
   ];
   selectedMonth: string = '';
   selectedYear: string = '';
@@ -60,6 +63,7 @@ export class MonthlyDataComponent implements OnInit{
       this.records = data.filter(rec => rec.year !== 'Default');
     },
     error => {
+      alert("יש שגיאה בטעינת הנתונים")
       console.error('Error loading data', error);
     }
   );
@@ -71,7 +75,7 @@ getAvrechim(): void {
 }
 getAvrechName(id: number): string {
 const avrech = this.avrechim.find(a => a.id === id);
-return avrech ? avrech.fullName : 'לא נמצא';
+return avrech ? avrech.lastName + " " + avrech.firstName : 'לא נמצא';
 }
 getAvrech(id: number): Avrech | undefined{
   const avrech = this.avrechim.find(a => a.id === id);

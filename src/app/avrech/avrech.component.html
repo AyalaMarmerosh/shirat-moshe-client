@@ -61,7 +61,7 @@
             <button mat-raised-button color="warn" style="width: 110px;" (click)="deleteAvrech(avrech.id)">מחק</button>
           </div>
           <mat-card-title class="font-weight-bold" style="font-size: 2.5em; font-weight:bold; text-align: center; flex-grow: 1;">
-              {{ avrech.fullName }}
+              {{ avrech.lastName + " " + avrech.firstName }}
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>
@@ -201,15 +201,15 @@
           </mat-form-field>
         
           <mat-form-field appearance="fill" class="w-100">
-            <mat-label>שם</mat-label>
-            <input matInput type="text" [(ngModel)]="selectedAvrech.fullName" name="fullName" />
+            <mat-label>שם משפחה</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedAvrech.lastName" name="lastName" />
           </mat-form-field>
 
-          <!-- <mat-form-field appearance="fill" class="w-100">
-            <mat-label>שם משפחה</mat-label>
-            <input matInput type="text" [(ngModel)]="lastName" name="lastName" />
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>שם פרטי</mat-label>
+            <input matInput type="text" [(ngModel)]="selectedAvrech.firstName" name="firstName" />
           </mat-form-field>
-         -->
+
           <!-- תעודת זהות -->
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>מספר זהות</mat-label>

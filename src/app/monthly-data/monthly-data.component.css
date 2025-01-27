@@ -81,3 +81,12 @@
     white-space: normal;  /* מבטיח שהתוכן לא יהיה במצב שורה אחת */
     padding: 10px; /* יש לוודא מרווחים נוחים */
   }
+
+  .mat-header-cell, .mat-cell {
+    display: flex;
+    align-items: center; /* מיקום אנכי */
+    justify-content: center; /* מיקום אופקי */
+    text-align: center; /* גיבוי למקרה של טקסט */
+  }
+  
+  
