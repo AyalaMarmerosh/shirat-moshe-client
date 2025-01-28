@@ -15,11 +15,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAvrechDialogComponent } from '../add-avrech-dialog/add-avrech-dialog.component';
-
+import { PopupComponent } from './updatePopup.component'
 @Component({
   selector: 'app-avrech',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatPaginatorModule, RouterModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatExpansionModule, MatSelectModule, MatIcon],
+  imports: [CommonModule, FormsModule, MatPaginatorModule, RouterModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatExpansionModule, MatSelectModule],
   templateUrl: './avrech.component.html',
   styleUrl: './avrech.component.css'
 })
@@ -31,30 +31,12 @@ export class AvrechComponent implements OnInit{
   pageSize: number = 9;
   monthlyData: { [key: number]: MonthlyRecord[] } = {};
   isMonthlyDataVisible: { [key: number]: boolean } = {}; // מצב הצגת הנתונים החודשיים
-  selectedAvrech: Avrech = {
-    firstName: '',
-    lastName: '',
-    teudatZeut: '',
-    dateOfBirth: null,
-    street: '',
-    houseNumber: '',
-    phone: '',
-    cellPhone: '',
-    cellPhone2: '',
-    bank: '',
-    branch: '',
-    accountNumber: '',
-    status: '',
-    datot: '',
-    isPresent: '',
-    id: 0
-  }; // אברך שנבחר לעדכון
   searchQuery = '';
   filterPresence: string = '';
   filterStatus: string = '';
   filterDatot: string = '';
   filteredAvrechim: Avrech[] = [];
-  isFormVisible: boolean = false
+  // isFormVisible: boolean = false
 
   
   constructor(private myService: MonthlyDataService, private dialog: MatDialog){}
@@ -96,6 +78,11 @@ export class AvrechComponent implements OnInit{
       console.log('הפופ-אפ נסגר');
     });
   }
+
+  openEditDialog(avrech: Avrech): void {
+    const dialogRef = this.dialog.open(PopupComponent, {height:'75%', width: '500px', data: avrech });
+    dialogRef.afterClosed().subscribe(() => this.getAvrechim());
+  }
   loadMonthlyData(id: number, year: string, month: string): void {
     console.log("check", id, year, month);
     this.myService.GetMonthlyData(id, year, month).subscribe(
@@ -120,14 +107,7 @@ export class AvrechComponent implements OnInit{
     this.getAvrechim();
   }
   
-  // פונקציה לעדכון אברך
-  editAvrech(avrech: Avrech): void {
-    // if (this.selectedAvrech?.fullName) {
-    // }    
-    this.selectedAvrech = { ...avrech }; 
-    this.isFormVisible = true;
-
-  }
+ 
   formatDate(date: Date | null | undefined): string {
     if(date != null){
     const formattedDate = new Date(date);
@@ -138,32 +118,6 @@ export class AvrechComponent implements OnInit{
   }
 }
 
-  replaceSpacesWithUnderscore(input: string): string {
-    return input.replace(/\s+/g, '_'); // מחליף את כל הרווחים ב-_
-  }
-
-  // פונקציה לשמירה של השינויים
-  saveAvrech(): void {
-    if (this.selectedAvrech) {
-      console.log(this.selectedAvrech);
-      // this.selectedAvrech.fullName = `${this.firstName} ${this.lastName}`;
-
-      this.selectedAvrech.datot = this.replaceSpacesWithUnderscore(this.selectedAvrech.datot);
-      this.selectedAvrech.status = this.replaceSpacesWithUnderscore(this.selectedAvrech.status);
-      console.log(this.selectedAvrech);
-
-      this.myService.updateAvrech(this.selectedAvrech).subscribe(
-        () => {
-          this.getAvrechim(); // רענון הרשימה אחרי עדכון
-          this.isFormVisible = false;
-          // this.selectedAvrech = null; // סגירת הטופס
-        },
-        (error) => {
-          console.error('Error saving avrech data', error);
-        }
-      );
-    }
-  }
 
   // פונקציה למחיקת אברך
   deleteAvrech(id: number): void {
