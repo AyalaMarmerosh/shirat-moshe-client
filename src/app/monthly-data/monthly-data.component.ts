@@ -59,8 +59,25 @@ export class MonthlyDataComponent implements OnInit{
   getRecords(){
     this.getAvrechim();
     this.myService.getRecords(this.selectedYear, this.selectedMonth).subscribe((data) => {
-      console.log("nvnvnv", data)
-      this.records = data.filter(rec => rec.year !== 'Default');
+      console.log("nvnvnv", data);
+      const hebrewMonthsOrder = [
+        'תשרי', 'חשון', 'כסלו', 'טבת', 'שבט', 'אדר', 'אדר א', 'אדר ב',
+        'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול'
+      ];
+
+      this.records = data
+      .filter(rec => rec.year !== 'Default')
+      .sort((a, b) => {
+        // מיון לפי שנה (בסדר יורד)
+        if (a.year !== b.year) {
+          return b.year.localeCompare(a.year);
+        }
+
+          // מיון לפי חודש (על פי הסדר במערך)
+          const monthAIndex = hebrewMonthsOrder.indexOf(a.month);
+          const monthBIndex = hebrewMonthsOrder.indexOf(b.month);
+          return monthBIndex - monthAIndex;
+        });
     },
     error => {
       alert("יש שגיאה בטעינת הנתונים")

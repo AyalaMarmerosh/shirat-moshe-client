@@ -105,6 +105,8 @@ export class AvrechComponent implements OnInit{
     this.pageSize = event.pageSize;
     this.page = event.pageIndex;
     this.getAvrechim();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
   }
   
  

@@ -57,7 +57,7 @@ export class MonthlyDataService {
   }
 
   getRecords(year?: string, month?: string): Observable< MonthlyRecord[] > {
-    let query = ``; // תמיד הוסף שנה
+    let query = ``; 
 
     if (year && year.trim() !== '') {
       const encodedyear = encodeURIComponent(year);
