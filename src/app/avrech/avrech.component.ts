@@ -38,6 +38,8 @@ export class AvrechComponent implements OnInit{
   filterDatot: string = '';
   filteredAvrechim: Avrech[] = [];
   // isFormVisible: boolean = false
+  isLoading = false; // משתנה למעקב אחרי מצב הטעינה
+
 
   
   constructor(private myService: MonthlyDataService, private dialog: MatDialog){}
@@ -47,6 +49,7 @@ export class AvrechComponent implements OnInit{
   }
 
   getAvrechim(): void {
+    this.isLoading = true; // התחלת טעינה
     if (this.searchQuery || this.filterDatot || this.filterPresence || this.filterStatus) {
       this.myService.getSearchAvrech(this.searchQuery || '', this.filterPresence || '', this.filterDatot || '', this.filterStatus || '').subscribe((data) => {
         console.log("data", data);
@@ -54,16 +57,21 @@ export class AvrechComponent implements OnInit{
 
         this.avrechim = data;
         this.totalAvrechim = data.length;
+        this.isLoading = false; // סיום טעינה
+
         // this.applyFilters(); // עדכון הרשימה המסוננת
       });
     } else {
     this.myService.getAvrechim(this.page + 1, this.pageSize).subscribe((data) => {
         this.avrechim = data.avrechim;
         this.totalAvrechim = data.totalAvrechim;
+        this.isLoading = false; // סיום טעינה
+
         // this.applyFilters(); // עדכון הרשימה המסוננת
 
       },
       error => {
+        this.isLoading = false; // סיום טעינה
         console.error('Error loading data', error);
       }
     );

@@ -1,9 +1,9 @@
-<div class="container d-flex justify-content-center align-items-center vh-100">
+<div dir="rtl" class="container d-flex justify-content-center align-items-center vh-100">
   <div class="card shadow-lg p-3" style="max-width: 400px; width: 100%;">
     <h2 class="text-center mb-4">התחברות שירת משה</h2>
     <form (ngSubmit)="onLogin()" *ngIf="!isLoading">
       <div class="mb-3">
-        <label for="username" class="form-label">:שם משתמש</label>
+        <label for="username" class="form-label">שם משתמש:</label>
         <input
           id="username"
           [(ngModel)]="username"
@@ -14,7 +14,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">:ססמה</label>
+        <label for="password" class="form-label">ססמה:</label>
         <input
           id="password"
           type="password"
@@ -26,7 +26,7 @@
         />
       </div>
       <div class="d-grid">
-        <button type="submit" class="btn btn-success">התחבר</button>
+        <button style="background-color: #673ab7; border: #673ab7;" type="submit" class="btn btn-success">התחבר</button>
       </div>
     </form>
     <div *ngIf="isLoading" class="text-center">

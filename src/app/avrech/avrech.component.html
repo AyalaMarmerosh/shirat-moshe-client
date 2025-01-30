@@ -173,6 +173,10 @@
         </mat-card-actions>
       </mat-card>
     </div>
+    <div *ngIf="isLoading" class="text-center">
+      <div class="spinner"></div>
+      <p>טוען נתונים, אנא המתן...</p>
+    </div>
   </div>
 </div>
 

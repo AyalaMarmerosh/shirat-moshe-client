@@ -7,7 +7,7 @@ import { NavbarComponent } from "../navbar/navbar.component";
 @Component({
   selector: 'app-action-squares',
   standalone: true,
-  imports: [FormsModule, MatIconModule, NavbarComponent],
+  imports: [FormsModule, MatIconModule],
   templateUrl: './action-squares.component.html',
   styleUrl: './action-squares.component.css'
 })

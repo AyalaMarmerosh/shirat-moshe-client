@@ -49,6 +49,9 @@ export class MonthlyDataComponent implements OnInit{
   ];
   selectedMonth: string = '';
   selectedYear: string = '';
+  searchName: string = '';
+  isLoading = false; // משתנה למעקב אחרי מצב הטעינה
+
   
   constructor(private myService: MonthlyDataService, private snackBar: MatSnackBar, private dialog: MatDialog   ){}
 
@@ -57,8 +60,10 @@ export class MonthlyDataComponent implements OnInit{
   }
 
   getRecords(){
+    this.isLoading = true;
     this.getAvrechim();
     this.myService.getRecords(this.selectedYear, this.selectedMonth).subscribe((data) => {
+      this.isLoading = false; // סיום טעינה
       console.log("nvnvnv", data);
       const hebrewMonthsOrder = [
         'תשרי', 'חשון', 'כסלו', 'טבת', 'שבט', 'אדר', 'אדר א', 'אדר ב',
@@ -66,6 +71,7 @@ export class MonthlyDataComponent implements OnInit{
       ];
 
       this.records = data
+      .filter(rec => this.searchName ? this.getAvrechName(rec.personId).includes(this.searchName) : true)
       .filter(rec => rec.year !== 'Default')
       .sort((a, b) => {
         // מיון לפי שנה (בסדר יורד)
@@ -80,6 +86,7 @@ export class MonthlyDataComponent implements OnInit{
         });
     },
     error => {
+      this.isLoading = false; // סיום טעינה
       alert("יש שגיאה בטעינת הנתונים")
       console.error('Error loading data', error);
     }

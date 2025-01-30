@@ -1,5 +1,4 @@
 <div style="text-align: center; margin-top: 20px;">
-    <!-- <button mat-raised-button color="accent" (click)="saveData()">שמור נתונים</button> -->
     <button mat-raised-button color="primary" (click)="exportToExcel()">ייצא לאקסל</button>
   </div>
   
@@ -14,6 +13,12 @@
           <mat-label>שנה</mat-label>
           <input matInput type="text" [(ngModel)]="selectedYear" (ngModelChange)="getRecords()" placeholder="לדוגמה: תשפ" />
         </mat-form-field>
+
+        <mat-form-field appearance="outline" style="flex: 1; min-width: 200px;">
+          <mat-label>שם</mat-label>
+          <input matInput type="text" [(ngModel)]="searchName" (ngModelChange)="getRecords()" placeholder="חפש לפי שם" />
+        </mat-form-field>
+        
       </div>
     <div class="scrollable-container" dir="rtl">
     <mat-card class="scrollable-table">
@@ -86,4 +91,10 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
     </mat-card>
+
+
+  </div>
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner"></div>
+    <p>טוען נתונים, אנא המתן...</p>
   </div>
