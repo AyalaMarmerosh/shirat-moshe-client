@@ -58,7 +58,7 @@ export class AddDataComponent implements OnInit{
   avrechName: string = '';
   selectedAbrek: any = null;
   showPopup: boolean = false;
-  
+   
 
   constructor(private myService: MonthlyDataService, private snackBar: MatSnackBar, private dialog: MatDialog   ){}
 
@@ -119,6 +119,52 @@ calculateTotalAmount(record: any): void {
   // חישוב הסכום הסופי
   record.totalAmount = baseAllowance + (isChabura ? 300 : 0) + (test ? 500 : 0) - datot;
 }
+calculateOrElchanan(record: MonthlyRecord): void{
+  console.log(record.isChabura, "vvvvv");
+  let avrech = this.getAvrechByPersonId(record.personId);
+  if( avrech && avrech.status != "חצי יום" ){
+    if(record.isChabura){
+      if( record.totalAmount <= 2300 ){
+        record.orElchanan = record.totalAmount
+      } else{
+        record.orElchanan = 2300;
+        record.addAmount = record.totalAmount - record.orElchanan;
+      }
+    }else{
+      if( record.totalAmount <= 2000 ){
+        record.orElchanan = record.totalAmount
+      } else{
+        console.log(record);
+        record.orElchanan = 2000;
+        record.addAmount = record.totalAmount - record.orElchanan;
+      }
+    }
+  }else{
+    if(record.isChabura){
+      if( record.totalAmount <= 1300 ){
+        record.orElchanan = record.totalAmount
+      } else{
+        record.orElchanan = 1300;
+        record.addAmount = record.totalAmount - record.orElchanan;
+      }
+    }else{
+      if( record.totalAmount <= 1000 ){
+        record.orElchanan = record.totalAmount
+      } else{
+        console.log(record);
+        record.orElchanan = 1000;
+        record.addAmount = record.totalAmount - record.orElchanan;
+      }
+    }
+  }
+    
+
+}
+
+getAvrechByPersonId(personId: number): Avrech | undefined {
+  return this.avrechim.find(avrech => avrech.id === personId);
+}
+
 calculateAdd(record: MonthlyRecord): void {
   record.addAmount = record.totalAmount - record.orElchanan;
 }

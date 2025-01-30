@@ -27,7 +27,7 @@
   
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> שם </mat-header-cell>
-          <mat-cell  *matCellDef="let record" (click)="onAbrekClick(record.personId)"   style="cursor: pointer;">     
+          <mat-cell  *matCellDef="let record" (ngModelChange)="calculateOrElchanan(record)" (click)="onAbrekClick(record.personId)"   style="cursor: pointer;">     
             {{ getAvrechName(record.personId) }}
         </mat-cell>
         </ng-container>
@@ -45,49 +45,49 @@
         <ng-container matColumnDef="baseAllowance">
           <mat-header-cell *matHeaderCellDef> מלגה בסיסית </mat-header-cell>
           <mat-cell *matCellDef="let record">
-            <input matInput type="number" [(ngModel)]="record.baseAllowance" (ngModelChange)="calculateTotalAmount(record)" />
+            <input matInput type="number" [(ngModel)]="record.baseAllowance"(ngModelChange)="calculateTotalAmount(record)"(ngModelChange)="calculateOrElchanan(record)"  (ngModelChange)="calculateAdd(record)"/>
           </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="isChabura">
           <mat-header-cell *matHeaderCellDef> חבורה  </mat-header-cell>
           <mat-cell *matCellDef="let record">
-            <mat-checkbox [(ngModel)]="record.isChabura" (ngModelChange)="calculateTotalAmount(record)" ></mat-checkbox>
+            <mat-checkbox [(ngModel)]="record.isChabura" (ngModelChange)="calculateTotalAmount(record)" (ngModelChange)="calculateOrElchanan(record)"  (ngModelChange)="calculateAdd(record)"></mat-checkbox>
           </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="didLargeTest">
           <mat-header-cell *matHeaderCellDef> מבחן  </mat-header-cell>
           <mat-cell *matCellDef="let record">
-            <mat-checkbox [(ngModel)]="record.didLargeTest" (ngModelChange)="calculateTotalAmount(record)"></mat-checkbox>
+            <mat-checkbox [(ngModel)]="record.didLargeTest" (ngModelChange)="calculateTotalAmount(record)" (ngModelChange)="calculateOrElchanan(record)" (ngModelChange)="calculateAdd(record)"></mat-checkbox>
           </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="datot">
           <mat-header-cell *matHeaderCellDef> דתות </mat-header-cell>
           <mat-cell *matCellDef="let record">
-            <input matInput type="number" [(ngModel)]="record.datot" (ngModelChange)="calculateTotalAmount(record)"/>
+            <input matInput type="number" [(ngModel)]="record.datot"  (ngModelChange)="calculateTotalAmount(record)" (ngModelChange)="calculateOrElchanan(record)" (ngModelChange)="calculateAdd(record)"/>
           </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="totalAmount">
           <mat-header-cell *matHeaderCellDef> סכום סופי </mat-header-cell>
           <mat-cell *matCellDef="let record">
-            <input matInput type="number" [(ngModel)]="record.totalAmount" [value]="record.totalAmount" readonly />
+            <input matInput type="number" [(ngModel)]="record.totalAmount" (ngModelChange)="calculateOrElchanan(record)" [value]="record.totalAmount" readonly />
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="orElchanan">
           <mat-header-cell *matHeaderCellDef> אור אלחנן</mat-header-cell>
           <mat-cell *matCellDef="let record">
-            <input matInput type="number"  [(ngModel)]="record.orElchanan" (ngModelChange)="calculateAdd(record)"/>
+            <input matInput type="number"  [(ngModel)]="record.orElchanan" (ngModelChange)="calculateAdd(record)" [value]="record.orElchanan" readonly/>
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="addAmount">
           <mat-header-cell *matHeaderCellDef> יתרה</mat-header-cell>
           <mat-cell *matCellDef="let record">
-            <input matInput type="number"  [(ngModel)]="record.addAmount" [value]="record.addAmount" readonly/>
+            <input matInput type="number"  [(ngModel)]="record.addAmount" [value]="record.addAmount"/>
           </mat-cell>
         </ng-container>
   

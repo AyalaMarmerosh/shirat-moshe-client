@@ -100,8 +100,12 @@ export class AvrechComponent implements OnInit{
           this.monthlyData[id] = data; // אחסון לפי ID
           this.isMonthlyDataVisible[id] = true;  // הצגת הנתונים
           console.log('Monthly Data for ID', id, ':', this.monthlyData);
+          if(data.length == 0){
+            alert("לא נמצאו נתונים לשנה/לחודש שנבחרו")
+          }
         },
       (error) => {
+        alert("שגיאה")
         console.error('Error loading monthly data for id:', id, error);
         this.monthlyData[id] = [];
       }

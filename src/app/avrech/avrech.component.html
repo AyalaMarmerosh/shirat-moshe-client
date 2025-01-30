@@ -99,7 +99,7 @@
                 <p><strong>טלפון: </strong>{{ avrech.phone }}</p>
               </div>
             </mat-expansion-panel>
-<br>
+            <br>
             <mat-expansion-panel class="custom-expansion" style="width: 190px;">
               <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -130,14 +130,14 @@
           <!-- </button> -->
         </mat-panel-title>
       </mat-expansion-panel-header>
-          <mat-form-field appearance="fill" class="w-80 mb-2" >
+          <mat-form-field appearance="fill" class="w-50 mb-2" >
             <mat-label>הזן שנה</mat-label>
-            <input matInput type="text" #yearInput (keydown.enter)="loadMonthlyData(avrech.id, yearInput.value, monthInput.value)" />
+            <input matInput type="text" #yearInput (keydown.enter)="loadMonthlyData(avrech.id, yearInput.value, monthInput.value)" placeholder="תשפ&quot;ה"/>
           </mat-form-field>
           <br>
-          <mat-form-field appearance="fill" class="w-80 mb-2">
+          <mat-form-field appearance="fill" class="w-50 mb-2">
             <mat-label>הזן חודש</mat-label>
-            <input matInput type="text" #monthInput (keydown.enter)="loadMonthlyData(avrech.id, yearInput.value, monthInput.value)" />
+            <input matInput type="text" #monthInput (keydown.enter)="loadMonthlyData(avrech.id, yearInput.value, monthInput.value)" placeholder="חשון"/>
           </mat-form-field>
           <!-- </div> -->
         </mat-expansion-panel>
