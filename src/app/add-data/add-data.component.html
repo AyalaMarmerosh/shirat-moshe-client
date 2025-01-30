@@ -50,7 +50,7 @@
         </ng-container>
   
         <ng-container matColumnDef="isChabura">
-          <mat-header-cell *matHeaderCellDef>מסר חבורה  </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> חבורה  </mat-header-cell>
           <mat-cell *matCellDef="let record">
             <mat-checkbox [(ngModel)]="record.isChabura" (ngModelChange)="calculateTotalAmount(record)" ></mat-checkbox>
           </mat-cell>
@@ -85,7 +85,7 @@
         </ng-container>
 
         <ng-container matColumnDef="addAmount">
-          <mat-header-cell *matHeaderCellDef> צריך להוסיף:</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> יתרה</mat-header-cell>
           <mat-cell *matCellDef="let record">
             <input matInput type="number"  [(ngModel)]="record.addAmount" [value]="record.addAmount" readonly/>
           </mat-cell>

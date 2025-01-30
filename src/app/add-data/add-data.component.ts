@@ -96,6 +96,7 @@ saveData(): void {
   this.myService.addMonthlyRecords(this.records).subscribe({
     next: (response) => {
       console.log('נתונים נשמרו בהצלחה', response);
+      alert("נתונים נשמרו בהצלחה");
     },
     error: (error) => {
       console.error('שגיאה בשמירת נתונים', error);

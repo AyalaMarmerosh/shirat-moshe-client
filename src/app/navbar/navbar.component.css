@@ -1,7 +1,7 @@
 /* Navbar container */
 .navbar {
     transition: width 0.3s ease-in-out;
-    background-color: #673ab7; /* צבע סגול עמוק */
+    background-color: #34495e; 
     padding: 10px;
     position: sticky;
     top: 0;
@@ -64,5 +64,9 @@
     .nav-item {
       margin: 10px 0;
     }
+  }
+  
+  .nav-bar-home {
+    background-color: #673ab7 !important;
   }
   

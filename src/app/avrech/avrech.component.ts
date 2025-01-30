@@ -12,14 +12,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
-import { MatIcon } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAvrechDialogComponent } from '../add-avrech-dialog/add-avrech-dialog.component';
 import { PopupComponent } from './updatePopup.component'
 @Component({
   selector: 'app-avrech',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatPaginatorModule, RouterModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatExpansionModule, MatSelectModule],
+  imports: [    MatIconModule,
+  CommonModule, FormsModule, MatPaginatorModule, RouterModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatExpansionModule, MatSelectModule],
   templateUrl: './avrech.component.html',
   styleUrl: './avrech.component.css'
 })

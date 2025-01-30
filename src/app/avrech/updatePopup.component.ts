@@ -221,9 +221,11 @@ export class PopupComponent {
         () => {
           console.log('Avrech updated successfully');
           this.dialogRef.close(); // סגירת הדיאלוג לאחר שמירה
+          alert("הפרטים שונו בהצלחה!");
         },
         (error: any) => {
           console.error('Error saving avrech data', error);
+          alert("הייתה שגיאה בעדכון הנתונים");
         }
       );
     }

@@ -10,7 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
   ],
   template: `
     <div class="popup-container">
-      <h1 mat-dialog-title>{{ data.abrek.fullName || 'האברך' }}</h1>
+      <h1 mat-dialog-title>{{ data.abrek.lastName + " " + data.abrek.firstName}}</h1>
       <mat-divider></mat-divider>
       <div mat-dialog-content class="popup-content">
       <p><strong>סטטוס: </strong>{{ data.abrek.status }}</p>

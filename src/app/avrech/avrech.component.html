@@ -52,6 +52,12 @@
       <button class="primary" style="margin: 3% 85% 2%; background-color: #673ab7; color: white; border: 1px solid white; width: 130px; height: 50px; border-radius: 8px;" (click)="openAddAvrechDialog()">הוספת אברך חדש</button>
     </div>
 
+      <!-- פאגינציה -->
+  <div class="paginator-container">
+    <mat-paginator style="flex-direction: row-reverse;" dir="ltr" [length]="totalAvrechim" [pageSize]="pageSize" (page)="pageChanged($event)">
+    </mat-paginator>
+  </div>
+
   <div class="row">
     <div *ngFor="let avrech of avrechim" class="col-sm-12 mb-4">
       <mat-card class="card border" style="border-radius: 8px; border: 1px solid #333 !important; width: 65%; margin-right: 30%; margin-left: 5%;">
@@ -170,9 +176,5 @@
   </div>
 </div>
 
-  <!-- פאגינציה -->
-  <div class="paginator-container">
-    <mat-paginator  [length]="totalAvrechim" [pageSize]="pageSize" (page)="pageChanged($event)">
-    </mat-paginator>
-  </div>
+
   

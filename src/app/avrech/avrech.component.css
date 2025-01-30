@@ -11,10 +11,16 @@
   z-index: 1000; /* לוודא שהיא מעל אלמנטים אחרים */
 }
 
+.paginator-container .mat-paginator {
+  flex-direction: row-reverse;
+}
+
 
 .paginator-container {
- margin-left: 27.5%;
+ /* margin-left: 27.5%; */
+ margin-right: 50%;
   display: flex;
+  /* direction:ltr; */
   /* justify-content: center; 
   align-items: center;       */
 }
