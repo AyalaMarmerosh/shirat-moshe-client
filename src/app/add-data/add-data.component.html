@@ -27,7 +27,7 @@
   
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> שם </mat-header-cell>
-          <mat-cell  *matCellDef="let record" (ngModelChange)="calculateOrElchanan(record)" (click)="onAbrekClick(record.personId)"   style="cursor: pointer;">     
+          <mat-cell  *matCellDef="let record"  (click)="onAbrekClick(record.personId)"   style="cursor: pointer;">     
             {{ getAvrechName(record.personId) }}
         </mat-cell>
         </ng-container>
@@ -73,7 +73,7 @@
         <ng-container matColumnDef="totalAmount">
           <mat-header-cell *matHeaderCellDef> סכום סופי </mat-header-cell>
           <mat-cell *matCellDef="let record">
-            <input matInput type="number" [(ngModel)]="record.totalAmount" (ngModelChange)="calculateOrElchanan(record)" [value]="record.totalAmount" readonly />
+            <input matInput type="number" [(ngModel)]="record.totalAmount" (ngModelChange)="calculateOrElchanan(record)" (ngModelChange)="calculateAdd(record)" [value]="record.totalAmount" readonly />
           </mat-cell>
         </ng-container>
 

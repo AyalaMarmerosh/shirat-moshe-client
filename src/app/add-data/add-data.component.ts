@@ -111,6 +111,8 @@ saveData(): void {
 }
 
 calculateTotalAmount(record: any): void {
+  console.log(record, "calculateTotalAmount");
+
   const baseAllowance = record.baseAllowance || 0;
   const isChabura = record.isChabura;
   const datot = record.datot || 0;
@@ -121,8 +123,10 @@ calculateTotalAmount(record: any): void {
 }
 calculateOrElchanan(record: MonthlyRecord): void{
   console.log(record.isChabura, "vvvvv");
+  console.log(record, "calculateOrElchanan");
   let avrech = this.getAvrechByPersonId(record.personId);
-  if( avrech && avrech.status != "חצי יום" ){
+  if( avrech && ( avrech.status == "אברך רצופות יום שלם" || avrech?.status == "ראש כולל" )){
+    console.log("אברך יום שלם");
     if(record.isChabura){
       if( record.totalAmount <= 2300 ){
         record.orElchanan = record.totalAmount
@@ -139,7 +143,7 @@ calculateOrElchanan(record: MonthlyRecord): void{
         record.addAmount = record.totalAmount - record.orElchanan;
       }
     }
-  }else{
+  }else if(avrech && ( avrech.status == "אברך רצופות חצי יום" || avrech.status == "ראש קבוצה בבוקר" || avrech.status == "ראש קבוצה אחה צ" )){
     if(record.isChabura){
       if( record.totalAmount <= 1300 ){
         record.orElchanan = record.totalAmount
@@ -156,6 +160,8 @@ calculateOrElchanan(record: MonthlyRecord): void{
         record.addAmount = record.totalAmount - record.orElchanan;
       }
     }
+  }else{
+    record.orElchanan = record.totalAmount;
   }
     
 
@@ -166,6 +172,7 @@ getAvrechByPersonId(personId: number): Avrech | undefined {
 }
 
 calculateAdd(record: MonthlyRecord): void {
+  console.log(record, "calculateAdd");
   record.addAmount = record.totalAmount - record.orElchanan;
 }
 // פונקציה שתפעל כאשר לוחצים על שם האברך

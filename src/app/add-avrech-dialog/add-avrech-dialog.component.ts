@@ -53,6 +53,7 @@ export class AddAvrechDialogComponent {
 
      this.serv.addAvrech(this.newAvrech).subscribe(
       (response) => {
+        alert("אברך נוסף בהצלחה!");
         this.message = 'אברך נוסף בהצלחה';
         console.log(response);
       },
