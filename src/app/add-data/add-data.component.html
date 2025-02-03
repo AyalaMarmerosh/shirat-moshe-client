@@ -89,7 +89,7 @@
         <ng-container matColumnDef="orElchanan">
           <mat-header-cell *matHeaderCellDef> אור אלחנן</mat-header-cell>
           <mat-cell *matCellDef="let record">
-            <input matInput type="number"  [(ngModel)]="record.orElchanan" (ngModelChange)="calculateAdd(record)" [value]="record.orElchanan" readonly/>
+            <input matInput type="number"  [(ngModel)]="record.orElchanan" (ngModelChange)="calculateAdd(record)" [value]="record.orElchanan"/>
           </mat-cell>
           <mat-footer-cell *matFooterCellDef>סה"כ {{ totalOrElchanan }} </mat-footer-cell>
         </ng-container>
