@@ -58,6 +58,9 @@ export class AddDataComponent implements OnInit{
   avrechName: string = '';
   selectedAbrek: any = null;
   showPopup: boolean = false;
+  totalOrElchanan: number = 62980;
+  totalAddAmount: number = 5920;
+
    
 
   constructor(private myService: MonthlyDataService, private snackBar: MatSnackBar, private dialog: MatDialog   ){}
@@ -78,12 +81,13 @@ export class AddDataComponent implements OnInit{
   );
 }
 saveData(): void {
+  console.log("נכנס לשמירה");
       // בדיקה אם המשתמש מילא חודש ושנה
       if (!this.selectedMonth || !this.selectedYear) {
         this.snackBar.open('אנא מלא את החודש והשנה לפני שמירת השינויים', 'סגור', {
-          duration: 3000, // משך זמן הצגת ההודעה (במילישניות)
+          duration: 9000, // משך זמן הצגת ההודעה (במילישניות)
           horizontalPosition: 'center',
-          verticalPosition: 'top'
+          verticalPosition: 'bottom'
         });
         return; // עצירה מיידית של הפעולה
       }
@@ -100,14 +104,18 @@ saveData(): void {
     },
     error: (error) => {
       console.error('שגיאה בשמירת נתונים', error);
-      this.snackBar.open('אירעה שגיאה בשמירת הנתונים. נסי שוב.', 'סגור', {
+      this.snackBar.open('אירעה שגיאה בשמירת הנתונים.', 'סגור', {
         duration: 3000,
         horizontalPosition: 'center',
-        verticalPosition: 'top'
       });
     }
   });
   // כאן ניתן להוסיף קריאה לשרת לשמירת הנתונים
+}
+
+calculateTotals(): void {
+  this.totalOrElchanan = this.records.reduce((sum, record) => sum + (record.orElchanan || 0), 0);
+  this.totalAddAmount = this.records.reduce((sum, record) => sum + (record.addAmount || 0), 0);
 }
 
 calculateTotalAmount(record: any): void {
@@ -120,6 +128,7 @@ calculateTotalAmount(record: any): void {
 
   // חישוב הסכום הסופי
   record.totalAmount = baseAllowance + (isChabura ? 300 : 0) + (test ? 500 : 0) - datot;
+  this.calculateTotals();
 }
 calculateOrElchanan(record: MonthlyRecord): void{
   console.log(record.isChabura, "vvvvv");
@@ -164,7 +173,7 @@ calculateOrElchanan(record: MonthlyRecord): void{
     record.orElchanan = record.totalAmount;
   }
     
-
+  this.calculateTotals();
 }
 
 getAvrechByPersonId(personId: number): Avrech | undefined {
@@ -174,6 +183,7 @@ getAvrechByPersonId(personId: number): Avrech | undefined {
 calculateAdd(record: MonthlyRecord): void {
   console.log(record, "calculateAdd");
   record.addAmount = record.totalAmount - record.orElchanan;
+  this.calculateTotals();
 }
 // פונקציה שתפעל כאשר לוחצים על שם האברך
   // onAbrekClick(abrek: any): void {

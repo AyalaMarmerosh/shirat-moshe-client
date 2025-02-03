@@ -26,26 +26,31 @@
         <ng-container matColumnDef="index">
           <mat-header-cell *matHeaderCellDef> מס' </mat-header-cell>
           <mat-cell *matCellDef="let record; let i = index"> {{ i + 1 }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> שם </mat-header-cell>
           <mat-cell *matCellDef="let record" (click)="onAbrekClick(record.personId)"   style="cursor: pointer;"> {{ getAvrechName(record.personId) }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="month">
           <mat-header-cell *matHeaderCellDef> חודש </mat-header-cell>
           <mat-cell *matCellDef="let record"> {{ record.month }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="year">
           <mat-header-cell *matHeaderCellDef> שנה </mat-header-cell>
           <mat-cell *matCellDef="let record"> {{ record.year }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="baseAllowance">
           <mat-header-cell *matHeaderCellDef> מלגת בסיס </mat-header-cell>
           <mat-cell *matCellDef="let record"> {{ record.baseAllowance }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="isChabura">
@@ -53,6 +58,7 @@
           <mat-cell *matCellDef="let record">
             {{ record.isChabura ? '✅' : '❌' }}
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="didLargeTest">
@@ -60,35 +66,43 @@
           <mat-cell *matCellDef="let record">
             {{ record.didLargeTest ? '✅' : '❌' }}
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="datot">
           <mat-header-cell *matHeaderCellDef> דתות </mat-header-cell>
           <mat-cell *matCellDef="let record"> {{ record.datot }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="totalAmount">
           <mat-header-cell *matHeaderCellDef> סכום סופי </mat-header-cell>
           <mat-cell *matCellDef="let record"> {{ record.totalAmount }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="orElchanan">
           <mat-header-cell *matHeaderCellDef> אור אלחנן </mat-header-cell>
           <mat-cell *matCellDef="let record"> {{ record.orElchanan }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> סה"כ: {{ getTotalOrElchanan() }} </mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="addAmount">
           <mat-header-cell *matHeaderCellDef> יתרה </mat-header-cell>
           <mat-cell *matCellDef="let record"> {{ record.addAmount }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> סה"כ: {{ getTotalAddAmount() }} </mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="notes">
           <mat-header-cell *matHeaderCellDef> הערה </mat-header-cell>
           <mat-cell *matCellDef="let record"> {{ record.notes }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+
       </mat-table>
     </mat-card>
 

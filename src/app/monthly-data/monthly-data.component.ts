@@ -105,6 +105,14 @@ getAvrech(id: number): Avrech | undefined{
   const avrech = this.avrechim.find(a => a.id === id);
   return avrech ? avrech : undefined;
 }
+getTotalOrElchanan(): number {
+  return this.records.reduce((sum, record) => sum + (record.orElchanan || 0), 0);
+}
+
+getTotalAddAmount(): number {
+  return this.records.reduce((sum, record) => sum + (record.addAmount || 0), 0);
+}
+
 onAbrekClick(abrechId: number): void {
     const abrek = this.getAvrech(abrechId);
     const dialogRef = this.dialog.open(PopupComponent, {

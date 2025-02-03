@@ -23,6 +23,7 @@
         <ng-container matColumnDef="index">
           <mat-header-cell *matHeaderCellDef> מס' </mat-header-cell>
           <mat-cell *matCellDef="let record; let i = index"> {{ i + 1 }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="id">
@@ -30,16 +31,19 @@
           <mat-cell  *matCellDef="let record"  (click)="onAbrekClick(record.personId)"   style="cursor: pointer;">     
             {{ getAvrechName(record.personId) }}
         </mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="month">
           <mat-header-cell *matHeaderCellDef> חודש </mat-header-cell>
           <mat-cell *matCellDef="let record"> {{ selectedMonth  || '-' }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="year">
           <mat-header-cell *matHeaderCellDef> שנה </mat-header-cell>
           <mat-cell *matCellDef="let record"> {{ selectedYear || '-' }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="baseAllowance">
@@ -47,6 +51,7 @@
           <mat-cell *matCellDef="let record">
             <input matInput type="number" [(ngModel)]="record.baseAllowance"(ngModelChange)="calculateTotalAmount(record)"(ngModelChange)="calculateOrElchanan(record)"  (ngModelChange)="calculateAdd(record)"/>
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="isChabura">
@@ -54,6 +59,7 @@
           <mat-cell *matCellDef="let record">
             <mat-checkbox [(ngModel)]="record.isChabura" (ngModelChange)="calculateTotalAmount(record)" (ngModelChange)="calculateOrElchanan(record)"  (ngModelChange)="calculateAdd(record)"></mat-checkbox>
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="didLargeTest">
@@ -61,6 +67,7 @@
           <mat-cell *matCellDef="let record">
             <mat-checkbox [(ngModel)]="record.didLargeTest" (ngModelChange)="calculateTotalAmount(record)" (ngModelChange)="calculateOrElchanan(record)" (ngModelChange)="calculateAdd(record)"></mat-checkbox>
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="datot">
@@ -68,6 +75,7 @@
           <mat-cell *matCellDef="let record">
             <input matInput type="number" [(ngModel)]="record.datot"  (ngModelChange)="calculateTotalAmount(record)" (ngModelChange)="calculateOrElchanan(record)" (ngModelChange)="calculateAdd(record)"/>
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="totalAmount">
@@ -75,6 +83,7 @@
           <mat-cell *matCellDef="let record">
             <input matInput type="number" [(ngModel)]="record.totalAmount" (ngModelChange)="calculateOrElchanan(record)" (ngModelChange)="calculateAdd(record)" [value]="record.totalAmount" readonly />
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="orElchanan">
@@ -82,6 +91,7 @@
           <mat-cell *matCellDef="let record">
             <input matInput type="number"  [(ngModel)]="record.orElchanan" (ngModelChange)="calculateAdd(record)" [value]="record.orElchanan" readonly/>
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef>סה"כ {{ totalOrElchanan }} </mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="addAmount">
@@ -89,6 +99,7 @@
           <mat-cell *matCellDef="let record">
             <input matInput type="number"  [(ngModel)]="record.addAmount" [value]="record.addAmount"/>
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef>סה"כ {{ totalAddAmount }} </mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="notes">
@@ -96,10 +107,12 @@
           <mat-cell *matCellDef="let record">
             <input style="width: 100px;" matInput type="text"  [(ngModel)]="record.notes"/>
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
       </mat-table>
     </mat-card>
     </div>
