@@ -152,9 +152,12 @@
                   <th>חודש</th>
                   <th>מלגה בסיסית</th>
                   <th>חבורה</th>
-                  <th>מבחן גדול</th>
+                  <th>מבחן</th>
                   <th>דתות</th>
-                  <th>סך הכל</th>
+                  <th>סכום סופי</th>
+                  <th>אור אלחנן</th>
+                  <th>יתרה</th>
+                  <th>הערות</th>
                 </tr>
               </thead>
               <tbody>
@@ -166,6 +169,9 @@
                   <td>{{ record.didLargeTest ? '✅' : '❌' }}</td>
                   <td>{{ record.datot }}</td>
                   <td>{{ record.totalAmount }}</td>
+                  <td>{{ record.orElchanan }}</td>
+                  <td>{{ record.addAmount }}</td>
+                  <td>{{ record.notes }}</td>
                 </tr>
               </tbody>
             </table>
