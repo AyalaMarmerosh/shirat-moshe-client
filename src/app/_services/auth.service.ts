@@ -6,24 +6,31 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  public apiUrl1 = 'https://shirat-moshe-server.onrender.com/api/MonthlyData/login'; 
-  ngOnInit() {
-    console.log('הערך של apiUrl1 ב-ngOnInit:', this.apiUrl1);
-  }
+  public apiUrl1 = 'https://shirat-moshe-server.onrender.com/api/MonthlyData'; 
+
   
-  constructor(private http: HttpClient) {
-    console.log(this.apiUrl1,"מה קורה??????");
-  }
+  constructor(private http: HttpClient) { }
 
   login(username: string, password: string): Observable<any> {
-    console.log("api:", this.apiUrl1);
-  return this.http.post<any>(this.apiUrl1, { username, password }).pipe(
+  return this.http.post<any>(`${this.apiUrl1}/login`, { username, password }).pipe(
     catchError(error => {
-      console.error('Error occurred during login:', error);
       return throwError(() => error);  // להחזיר את השגיאה
     })
   );
 }
+
+updateCredentials(oldUsername: string, newUsername: string, newPassword: string): Observable<any> {
+  const body = { oldUsername, newUsername, newPassword };
+
+  return this.http.post<string>(`${this.apiUrl1}/update-credentials`, body, { responseType: 'text' as 'json' })
+    .pipe(
+      catchError(error => {
+        console.log("Error:", error);
+        return throwError(() => error);  // החזרת השגיאה
+      })
+    );
+}
+
 
   // בדיקת אם יש טוקן שמאוחסן
   getToken(): string | null {

@@ -5,6 +5,7 @@ import { ActionSquaresComponent } from './action-squares/action-squares.componen
 import { AddDataComponent } from './add-data/add-data.component';
 import { NavbarComponent } from './navbar/navbar.component'
 import { MonthlyDataComponent } from './monthly-data/monthly-data.component';
+import { SettingsComponent } from './settings/settings.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -12,7 +13,8 @@ export const routes: Routes = [
     { path: 'action', component: ActionSquaresComponent },
     { path: 'avrechim-list', component: AvrechComponent },
     { path: 'add-data', component: AddDataComponent },
-    { path: 'monthly', component: MonthlyDataComponent}
+    { path: 'monthly', component: MonthlyDataComponent},
+    { path: 'settings', component: SettingsComponent}
 ];
 
 

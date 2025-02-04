@@ -1,0 +1,50 @@
+<div class="update-login" style="margin: 3% auto; display: flex; justify-content: center; ">
+    <mat-expansion-panel dir="rtl" style="width: 30%;">
+        <mat-expansion-panel-header style="display: flex; justify-content: center; align-items: center;">
+            <mat-panel-title>
+        עדכון שם משתמש וסיסמה
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  
+    <mat-card dir="rtl" class="update-card" style="box-shadow: none;">
+      <mat-card-content>
+        <form (submit)="updateCredentials()" >
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>שם משתמש קיים</mat-label>
+            <input matInput [(ngModel)]="oldUsername" name="oldUsername" required>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>שם משתמש חדש</mat-label>
+            <input matInput [(ngModel)]="newUsername" name="newUsername" required>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>סיסמה חדשה</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" 
+                   [(ngModel)]="newPassword" name="newPassword" required>
+            <button style="background: none; color: #ffd740;" mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+  
+          <div class="button-container">
+            <button mat-raised-button color="primary" type="submit">עדכון</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </mat-expansion-panel>
+</div>
+
+  
+  
+<!-- <div>
+    <label>סכום חבורה:</label>
+    <input type="number" [(ngModel)]="sumIsChabura">
+  </div>
+  <div>
+    <label>סכום מבחן גדול:</label>
+    <input type="number" [(ngModel)]="sumTest">
+  </div>
+   -->

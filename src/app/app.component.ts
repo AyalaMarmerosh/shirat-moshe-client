@@ -26,7 +26,7 @@ export class AppComponent {
   constructor(private router: Router, private renderer: Renderer2) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        if (event.url === '/add-data' || event.url === '/action' || event.url === '/avrechim-list' || event.url === '/monthly') {
+        if (event.url === '/add-data' || event.url === '/action' || event.url === '/avrechim-list' || event.url === '/monthly' || event.url === '/settings') {
           this.showNavBar = true;
           // הוספת המחלקה דרך Renderer2
           const navElement = document.querySelector('nav');

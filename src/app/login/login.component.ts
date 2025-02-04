@@ -3,12 +3,23 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatFormField, MatFormFieldControl, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 // import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [    
+    MatFormFieldModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -16,16 +27,13 @@ export class LoginComponent {
   username = '';
   password = '';
   isLoading = false; // משתנה למעקב אחרי מצב הטעינה
+  hidePassword: boolean = true;  // ברירת מחדל: הסיסמה מוסתרת
 
   constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit(): void {
-    console.log('LoginComponent Loaded');
-    console.log('הערך של apiUrl1 בקומפוננטה:', this.authService.apiUrl1);
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;  // מתחלף בין הסתרה להצגה
   }
-
-
-
   // פונקציה לטיפול בלחיצה על התחברות
   onLogin(): void {
     this.isLoading = true; // התחלת טעינה
@@ -46,7 +54,7 @@ export class LoginComponent {
       (error) => {
         this.isLoading = false; // סיום טעינה במקרה של שגיאה
         console.error("שגיאה במהלך ההתחברות:", error);
-        alert('Invalid credentials');
+        alert('שגיאה במהלך ההתחברות');
       }
     );
   }

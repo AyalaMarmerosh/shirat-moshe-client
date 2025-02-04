@@ -14,6 +14,7 @@ import { Avrech } from '../_models/avrech';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PopupComponent } from './popup.component';
+import { CalculationConfigService } from '../_services/calculation-config.service';
 
 
 
@@ -63,7 +64,12 @@ export class AddDataComponent implements OnInit{
 
    
 
-  constructor(private myService: MonthlyDataService, private snackBar: MatSnackBar, private dialog: MatDialog   ){}
+  constructor(
+    private myService: MonthlyDataService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    // private configService: CalculationConfigService
+   ){}
 
   ngOnInit(): void {
     this.getRecords();
@@ -80,6 +86,14 @@ export class AddDataComponent implements OnInit{
     }
   );
 }
+
+// get sumIsChabura(): number {
+//   return this.configService.sumIsChabura;
+// }
+
+// get sumTest(): number {
+//   return this.configService.sumTest;
+// }
 saveData(): void {
   console.log("נכנס לשמירה");
       // בדיקה אם המשתמש מילא חודש ושנה
@@ -92,6 +106,17 @@ saveData(): void {
         return; // עצירה מיידית של הפעולה
       }
 
+      if (!this.isValidHebrewYear(this.selectedYear)) {
+        console.log( "knv??");
+        this.snackBar.open('שנה עברית לא תקינה. אנא הזן שנה בתצורת "תשפ"ה"', 'סגור', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+        return;
+      }
+
+      
   this.records.forEach((record) => {
     record.year = this.selectedYear; // שנה נבחרת
     record.month = this.selectedMonth; // חודש נבחר
@@ -104,14 +129,31 @@ saveData(): void {
     },
     error: (error) => {
       console.error('שגיאה בשמירת נתונים', error);
-      this.snackBar.open('אירעה שגיאה בשמירת הנתונים.', 'סגור', {
-        duration: 3000,
-        horizontalPosition: 'center',
-      });
+      if (error === 'נתונים עבור החודש והשנה הללו כבר קיימים.') {
+        this.snackBar.open(error, 'סגור', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['conflict-snackbar'] // מחלקה ייחודית לעיצוב
+        });
+      } else {
+        this.snackBar.open('אירעה שגיאה בשמירת הנתונים.', 'סגור', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+      }
     }
   });
-  // כאן ניתן להוסיף קריאה לשרת לשמירת הנתונים
 }
+
+isValidHebrewYear(year: string): boolean {
+  const regex = /^תש[א-ת]"[א-ת]$/;
+  return regex.test(year);
+}
+
+
+
 
 calculateTotals(): void {
   this.totalOrElchanan = this.records.reduce((sum, record) => sum + (record.orElchanan || 0), 0);

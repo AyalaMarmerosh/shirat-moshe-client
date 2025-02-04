@@ -76,12 +76,24 @@ export class MonthlyDataService {
   }
   
   addMonthlyRecords(monthlyRecords: MonthlyRecord[]): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/addData`, monthlyRecords);
+    return this.http.post<any>(`${this.apiUrl}/addData`, monthlyRecords).pipe(
+      catchError(this.handleErrorData)
+    );
   }
   addAvrech(avrech: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/add`, avrech).pipe(
       catchError(this.handleError)
     );
+  }
+  private handleErrorData(error: HttpErrorResponse) {
+    if (error.status === 409) {
+      // שגיאה של נתונים קיימים, נוכל להחזיר את ההודעה ללקוח
+      console.log("נתונים עבור החודש והשנה הללו כבר קיימים");
+      return throwError('נתונים עבור החודש והשנה הללו כבר קיימים.');
+      
+    } else {
+      return throwError('אירעה שגיאה בשמירת הנתונים.');
+    }
   }
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
