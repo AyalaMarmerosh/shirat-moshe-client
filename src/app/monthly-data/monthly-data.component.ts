@@ -16,6 +16,7 @@ import * as XLSX from 'xlsx';
 import { PopupComponent } from '../add-data/popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-monthly-data',
@@ -28,6 +29,7 @@ import { MatIcon } from '@angular/material/icon';
     MatCardModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatTooltipModule,
   MatIcon],
   templateUrl: './monthly-data.component.html',
   styleUrl: './monthly-data.component.css'
@@ -173,7 +175,81 @@ isValidHebrewYear(year: string): boolean {
 }
 // פונקציה לביטול העריכה
 cancelEdit(): void {
+  this.getRecords();
   this.editingIndex = null; // ביטול העריכה
+}
+
+calculateTotals(): void {
+  this.getTotalOrElchanan();
+  this.getTotalAddAmount();
+}
+
+calculateTotalAmount(record: any): void {
+  console.log(record, "calculateTotalAmount");
+
+  const baseAllowance = record.baseAllowance || 0;
+  const isChabura = record.isChabura;
+  const datot = record.datot || 0;
+  const test = record.didLargeTest || 0;
+
+  // חישוב הסכום הסופי
+  record.totalAmount = baseAllowance + (isChabura ? 300 : 0) + (test ? 500 : 0) - datot;
+  this.calculateTotals();
+}
+calculateOrElchanan(record: MonthlyRecord): void{
+  console.log(record.isChabura, "vvvvv");
+  console.log(record, "calculateOrElchanan");
+  let avrech = this.getAvrechByPersonId(record.personId);
+  if( avrech && ( avrech.status == "אברך רצופות יום שלם" || avrech?.status == "ראש כולל" )){
+    console.log("אברך יום שלם");
+    if(record.isChabura){
+      if( record.totalAmount <= 2300 ){
+        record.orElchanan = record.totalAmount
+      } else{
+        record.orElchanan = 2300;
+        record.addAmount = record.totalAmount - record.orElchanan;
+      }
+    }else{
+      if( record.totalAmount <= 2000 ){
+        record.orElchanan = record.totalAmount
+      } else{
+        console.log(record);
+        record.orElchanan = 2000;
+        record.addAmount = record.totalAmount - record.orElchanan;
+      }
+    }
+  }else if(avrech && ( avrech.status == "אברך רצופות חצי יום" || avrech.status == "ראש קבוצה בבוקר" || avrech.status == "ראש קבוצה אחה צ" )){
+    if(record.isChabura){
+      if( record.totalAmount <= 1300 ){
+        record.orElchanan = record.totalAmount
+      } else{
+        record.orElchanan = 1300;
+        record.addAmount = record.totalAmount - record.orElchanan;
+      }
+    }else{
+      if( record.totalAmount <= 1000 ){
+        record.orElchanan = record.totalAmount
+      } else{
+        console.log(record);
+        record.orElchanan = 1000;
+        record.addAmount = record.totalAmount - record.orElchanan;
+      }
+    }
+  }else{
+    record.orElchanan = record.totalAmount;
+  }
+    
+  this.calculateTotals();
+}
+
+getAvrechByPersonId(personId: number): Avrech | undefined {
+  return this.avrechim.find(avrech => avrech.id === personId);
+}
+
+calculateAdd(record: MonthlyRecord): void {
+  console.log(record, "calculateAdd");
+  record.addAmount = record.totalAmount - record.orElchanan;
+  this.calculateTotals();
 }
 
 onAbrekClick(abrechId: number): void {

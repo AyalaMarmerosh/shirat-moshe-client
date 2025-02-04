@@ -34,12 +34,8 @@
               </button>
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
-              <button mat-icon-button (click)="saveRow(record)">
-                <mat-icon>save</mat-icon>
-              </button>
-              <button mat-icon-button (click)="cancelEdit()">
-                <mat-icon>close</mat-icon>
-              </button>
+                <mat-icon class="clickable-icon" (click)="saveRow(record)" matTooltip="שמור" matTooltipPosition="above">save</mat-icon>
+                <mat-icon class="clickable-icon" (click)="cancelEdit()" matTooltip="ביטול" matTooltipPosition="above">close</mat-icon>
             </ng-container> 
 
 
@@ -68,7 +64,7 @@
               {{ record.month }}
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
-              <input class="i" matInput [(ngModel)]="record.month" />
+              <input class="i" matInput [(ngModel)]="record.month" (ngModelChange)="calculateTotalAmount(record)"(ngModelChange)="calculateOrElchanan(record)"  (ngModelChange)="calculateAdd(record)"/>
             </ng-container>         
          </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
@@ -81,7 +77,7 @@
               {{ record.year }}
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
-              <input class="i" matInput [(ngModel)]="record.year" />
+              <input class="i" matInput [(ngModel)]="record.year" (ngModelChange)="calculateTotalAmount(record)"(ngModelChange)="calculateOrElchanan(record)"  (ngModelChange)="calculateAdd(record)"/>
             </ng-container>
           </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
@@ -94,7 +90,7 @@
               {{ record.baseAllowance }}
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
-              <input class="i" type="number" matInput [(ngModel)]="record.baseAllowance" />
+              <input class="i" type="number" matInput [(ngModel)]="record.baseAllowance" (ngModelChange)="calculateTotalAmount(record)"(ngModelChange)="calculateOrElchanan(record)"  (ngModelChange)="calculateAdd(record)"/>
             </ng-container>            </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
@@ -106,7 +102,7 @@
               {{ record.isChabura ? '✅' : '❌' }}
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
-              <mat-checkbox [(ngModel)]="record.isChabura"></mat-checkbox> 
+              <mat-checkbox [(ngModel)]="record.isChabura" (ngModelChange)="calculateTotalAmount(record)"(ngModelChange)="calculateOrElchanan(record)"  (ngModelChange)="calculateAdd(record)"></mat-checkbox> 
             </ng-container>          </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
@@ -118,7 +114,7 @@
               {{ record.didLargeTest ? '✅' : '❌' }}
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
-              <mat-checkbox [(ngModel)]="record.didLargeTest"></mat-checkbox>
+              <mat-checkbox [(ngModel)]="record.didLargeTest" (ngModelChange)="calculateTotalAmount(record)"(ngModelChange)="calculateOrElchanan(record)"  (ngModelChange)="calculateAdd(record)"></mat-checkbox>
             </ng-container>          </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
@@ -130,7 +126,7 @@
               {{ record.datot }}
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
-              <input class="i" type="number" matInput [(ngModel)]="record.datot" />
+              <input class="i" type="number" matInput [(ngModel)]="record.datot" (ngModelChange)="calculateTotalAmount(record)"(ngModelChange)="calculateOrElchanan(record)"  (ngModelChange)="calculateAdd(record)"/>
             </ng-container>             </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
@@ -142,7 +138,7 @@
               {{ record.totalAmount }}
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
-              <input class="i" type="number" matInput [(ngModel)]="record.totalAmount" />
+              <input class="i" type="number" matInput [(ngModel)]="record.totalAmount" (ngModelChange)="calculateOrElchanan(record)"  (ngModelChange)="calculateAdd(record)"/>
             </ng-container>            </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
@@ -154,7 +150,7 @@
               {{ record.orElchanan }}
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
-              <input class="i" type="number" matInput [(ngModel)]="record.orElchanan" />
+              <input class="i" type="number" matInput [(ngModel)]="record.orElchanan" (ngModelChange)="calculateAdd(record)"/>
             </ng-container>            </mat-cell>
           <mat-footer-cell *matFooterCellDef> סה"כ: {{ getTotalOrElchanan() }} </mat-footer-cell>
         </ng-container>
