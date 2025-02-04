@@ -11,17 +11,17 @@
         <form (submit)="updateCredentials()" >
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>שם משתמש קיים</mat-label>
-            <input matInput [(ngModel)]="oldUsername" name="oldUsername" required>
+            <input style="background: none;" matInput [(ngModel)]="oldUsername" name="oldUsername" required>
           </mat-form-field>
   
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>שם משתמש חדש</mat-label>
-            <input matInput [(ngModel)]="newUsername" name="newUsername" required>
+            <input style="background: none;" matInput [(ngModel)]="newUsername" name="newUsername" required>
           </mat-form-field>
   
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>סיסמה חדשה</mat-label>
-            <input matInput [type]="hidePassword ? 'password' : 'text'" 
+            <input style="background: none;" matInput [type]="hidePassword ? 'password' : 'text'" 
                    [(ngModel)]="newPassword" name="newPassword" required>
             <button style="background: none; color: #ffd740;" mat-icon-button matSuffix (click)="togglePasswordVisibility()">
               <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
