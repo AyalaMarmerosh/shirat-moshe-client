@@ -2,6 +2,7 @@
     <button mat-raised-button color="primary" (click)="exportToExcel()">ייצא לאקסל</button>
   </div>
   
+
 <!-- <div class="scrollable-container" dir="rtl"> -->
     <div dir="rtl" class="form-section" style="display: flex; gap: 15px; flex-wrap: wrap; margin: 20px; width: 50%; margin-left: 400px;">
         <mat-form-field appearance="outline" style="flex: 1; min-width: 200px;">
@@ -23,6 +24,29 @@
     <div class="scrollable-container" dir="rtl">
     <mat-card class="scrollable-table">
       <mat-table [dataSource]="records" class="mat-elevation-z3">
+        <ng-container matColumnDef="edit">
+          <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+          <mat-cell *matCellDef="let record; let i = index">
+
+            <ng-container *ngIf="!isEditing(i)">
+              <button mat-icon-button (click)="editRow(i)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="isEditing(i)">
+              <button mat-icon-button (click)="saveRow(record)">
+                <mat-icon>save</mat-icon>
+              </button>
+              <button mat-icon-button (click)="cancelEdit()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </ng-container> 
+
+
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+
         <ng-container matColumnDef="index">
           <mat-header-cell *matHeaderCellDef> מס' </mat-header-cell>
           <mat-cell *matCellDef="let record; let i = index"> {{ i + 1 }} </mat-cell>
@@ -31,71 +55,131 @@
   
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> שם </mat-header-cell>
-          <mat-cell *matCellDef="let record" (click)="onAbrekClick(record.personId)"   style="cursor: pointer;"> {{ getAvrechName(record.personId) }} </mat-cell>
+          <mat-cell *matCellDef="let record" (click)="onAbrekClick(record.personId)"   style="cursor: pointer;"> 
+              {{ getAvrechName(record.personId) }} 
+          </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="month">
           <mat-header-cell *matHeaderCellDef> חודש </mat-header-cell>
-          <mat-cell *matCellDef="let record"> {{ record.month }} </mat-cell>
+          <mat-cell *matCellDef="let record; let i = index">
+            <ng-container *ngIf="!isEditing(i)">
+              {{ record.month }}
+            </ng-container>
+            <ng-container *ngIf="isEditing(i)">
+              <input class="i" matInput [(ngModel)]="record.month" />
+            </ng-container>         
+         </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="year">
           <mat-header-cell *matHeaderCellDef> שנה </mat-header-cell>
-          <mat-cell *matCellDef="let record"> {{ record.year }} </mat-cell>
+          <mat-cell *matCellDef="let record; let i = index">
+            <ng-container *ngIf="!isEditing(i)">
+              {{ record.year }}
+            </ng-container>
+            <ng-container *ngIf="isEditing(i)">
+              <input class="i" matInput [(ngModel)]="record.year" />
+            </ng-container>
+          </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="baseAllowance">
           <mat-header-cell *matHeaderCellDef> מלגת בסיס </mat-header-cell>
-          <mat-cell *matCellDef="let record"> {{ record.baseAllowance }} </mat-cell>
+          <mat-cell *matCellDef="let record; let i = index">
+            <ng-container *ngIf="!isEditing(i)">
+              {{ record.baseAllowance }}
+            </ng-container>
+            <ng-container *ngIf="isEditing(i)">
+              <input class="i" type="number" matInput [(ngModel)]="record.baseAllowance" />
+            </ng-container>            </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="isChabura">
           <mat-header-cell *matHeaderCellDef>  חבורה </mat-header-cell>
-          <mat-cell *matCellDef="let record">
-            {{ record.isChabura ? '✅' : '❌' }}
-          </mat-cell>
+          <mat-cell *matCellDef="let record; let i = index">
+            <ng-container *ngIf="!isEditing(i)">
+              {{ record.isChabura ? '✅' : '❌' }}
+            </ng-container>
+            <ng-container *ngIf="isEditing(i)">
+              <mat-checkbox [(ngModel)]="record.isChabura"></mat-checkbox> 
+            </ng-container>          </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="didLargeTest">
           <mat-header-cell *matHeaderCellDef> מבחן </mat-header-cell>
-          <mat-cell *matCellDef="let record">
-            {{ record.didLargeTest ? '✅' : '❌' }}
-          </mat-cell>
+          <mat-cell *matCellDef="let record; let i = index">
+            <ng-container *ngIf="!isEditing(i)">
+              {{ record.didLargeTest ? '✅' : '❌' }}
+            </ng-container>
+            <ng-container *ngIf="isEditing(i)">
+              <mat-checkbox [(ngModel)]="record.didLargeTest"></mat-checkbox>
+            </ng-container>          </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="datot">
           <mat-header-cell *matHeaderCellDef> דתות </mat-header-cell>
-          <mat-cell *matCellDef="let record"> {{ record.datot }} </mat-cell>
+          <mat-cell *matCellDef="let record; let i = index">
+            <ng-container *ngIf="!isEditing(i)">
+              {{ record.datot }}
+            </ng-container>
+            <ng-container *ngIf="isEditing(i)">
+              <input class="i" type="number" matInput [(ngModel)]="record.datot" />
+            </ng-container>             </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
         <ng-container matColumnDef="totalAmount">
           <mat-header-cell *matHeaderCellDef> סכום סופי </mat-header-cell>
-          <mat-cell *matCellDef="let record"> {{ record.totalAmount }} </mat-cell>
+          <mat-cell *matCellDef="let record; let i = index">
+            <ng-container *ngIf="!isEditing(i)">
+              {{ record.totalAmount }}
+            </ng-container>
+            <ng-container *ngIf="isEditing(i)">
+              <input class="i" type="number" matInput [(ngModel)]="record.totalAmount" />
+            </ng-container>            </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="orElchanan">
           <mat-header-cell *matHeaderCellDef> אור אלחנן </mat-header-cell>
-          <mat-cell *matCellDef="let record"> {{ record.orElchanan }} </mat-cell>
+          <mat-cell *matCellDef="let record; let i = index">
+            <ng-container *ngIf="!isEditing(i)">
+              {{ record.orElchanan }}
+            </ng-container>
+            <ng-container *ngIf="isEditing(i)">
+              <input class="i" type="number" matInput [(ngModel)]="record.orElchanan" />
+            </ng-container>            </mat-cell>
           <mat-footer-cell *matFooterCellDef> סה"כ: {{ getTotalOrElchanan() }} </mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="addAmount">
           <mat-header-cell *matHeaderCellDef> יתרה </mat-header-cell>
-          <mat-cell *matCellDef="let record"> {{ record.addAmount }} </mat-cell>
+          <mat-cell *matCellDef="let record; let i = index">
+            <ng-container *ngIf="!isEditing(i)">
+              {{ record.addAmount }}
+            </ng-container>
+            <ng-container *ngIf="isEditing(i)">
+              <input class="i" type="number" matInput [(ngModel)]="record.addAmount" />
+            </ng-container>            </mat-cell>
           <mat-footer-cell *matFooterCellDef> סה"כ: {{ getTotalAddAmount() }} </mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="notes">
           <mat-header-cell *matHeaderCellDef> הערה </mat-header-cell>
-          <mat-cell *matCellDef="let record"> {{ record.notes }} </mat-cell>
+          <mat-cell *matCellDef="let record; let i = index">
+            <ng-container *ngIf="!isEditing(i)">
+              {{ record.notes }}
+            </ng-container>
+            <ng-container *ngIf="isEditing(i)">
+              <input class="i" matInput [(ngModel)]="record.notes" />
+            </ng-container>            </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
   
@@ -105,7 +189,6 @@
 
       </mat-table>
     </mat-card>
-
 
   </div>
   <div *ngIf="isLoading" class="text-center">

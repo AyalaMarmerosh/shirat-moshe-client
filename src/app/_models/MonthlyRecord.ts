@@ -1,5 +1,6 @@
 export interface MonthlyRecord
 {
+    id: number,
     personId: number,
     month: string;
     year: string,

@@ -52,6 +52,11 @@ export class MonthlyDataService {
     return this.http.put(`${this.apiUrl}/${avrech.id}`, avrech);
   }
 
+  updateData(data: MonthlyRecord): Observable<any> {
+    console.log("data", data)
+    return this.http.put(`${this.apiUrl}/${data.id}/data`, data);
+  }
+
   deleteAvrech(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }

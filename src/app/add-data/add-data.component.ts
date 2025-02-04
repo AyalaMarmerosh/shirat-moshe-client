@@ -117,12 +117,15 @@ saveData(): void {
       }
 
       
-  this.records.forEach((record) => {
-    record.year = this.selectedYear; // שנה נבחרת
-    record.month = this.selectedMonth; // חודש נבחר
-  });
-  console.log('שומר נתונים:', this.records);
-  this.myService.addMonthlyRecords(this.records).subscribe({
+      const newRecords = this.records.map(record => ({
+        ...record, // העתקת כל הנתונים הקיימים
+        id: 0, // איפוס ה-ID כדי שהשרת ייצור חדש
+        year: this.selectedYear,
+        month: this.selectedMonth
+      }));
+
+  console.log('שומר נתונים:', newRecords);
+  this.myService.addMonthlyRecords(newRecords).subscribe({
     next: (response) => {
       console.log('נתונים נשמרו בהצלחה', response);
       alert("נתונים נשמרו בהצלחה");

@@ -15,6 +15,7 @@ import { MonthlyDataService } from '../_services/monthly-data.service';
 import * as XLSX from 'xlsx';
 import { PopupComponent } from '../add-data/popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-monthly-data',
@@ -26,7 +27,8 @@ import { MatDialog } from '@angular/material/dialog';
     MatTableModule,
     MatCardModule,
     MatPaginatorModule,
-    MatSnackBarModule],
+    MatSnackBarModule,
+  MatIcon],
   templateUrl: './monthly-data.component.html',
   styleUrl: './monthly-data.component.css'
 })
@@ -34,6 +36,7 @@ export class MonthlyDataComponent implements OnInit{
   records: MonthlyRecord[] = [];
   avrechim: Avrech[] = [];
   displayedColumns: string[] = [
+    'edit',
     'index',
     'id',
     'month',
@@ -51,6 +54,8 @@ export class MonthlyDataComponent implements OnInit{
   selectedYear: string = '';
   searchName: string = '';
   isLoading = false; // משתנה למעקב אחרי מצב הטעינה
+  editingIndex: number | null = null; // משתנה למעקב אחרי השורה המהווה מצב עריכה
+
 
   
   constructor(private myService: MonthlyDataService, private snackBar: MatSnackBar, private dialog: MatDialog   ){}
@@ -111,6 +116,64 @@ getTotalOrElchanan(): number {
 
 getTotalAddAmount(): number {
   return this.records.reduce((sum, record) => sum + (record.addAmount || 0), 0);
+}
+
+isEditing(index: number): boolean {
+  return this.editingIndex === index;
+}
+
+// פונקציה שמבצעת את ההפעלה לעריכת שורה
+editRow(index: number): void {
+  console.log("ID", this.records)
+  this.editingIndex = index; // קובעים שהשורה בתהליך עריכה
+}
+
+
+saveRow(record: MonthlyRecord): void {
+        // בדיקה אם המשתמש מילא חודש ושנה
+        if (!record.month || !record.year) {
+          this.snackBar.open('אנא מלא את החודש והשנה לפני שמירת השינויים', 'סגור', {
+            duration: 9000, // משך זמן הצגת ההודעה (במילישניות)
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
+          });
+          return; // עצירה מיידית של הפעולה
+        }
+
+        if (!this.isValidHebrewYear(record.year)) {
+          console.log( "knv??");
+          this.snackBar.open('שנה עברית לא תקינה. אנא הזן שנה בתצורת "תשפ"ה"', 'סגור', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
+          });
+          return;
+        }
+  this.myService.updateData(record).subscribe(
+    () => {
+      console.log('data updated successfully');
+      this.snackBar.open('הפרטים שונו בהצלחה!', 'סגור', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom'
+      });      this.getRecords();
+      this.editingIndex = null; // מחזירים את השורה למצב קריאה
+    },
+    (error: any) => {
+      console.error('Error saving avrech data', error);
+      alert("הייתה שגיאה בעדכון הנתונים");
+    }
+  );  
+
+}
+
+isValidHebrewYear(year: string): boolean {
+  const regex = /^תש[א-ת]"[א-ת]$/;
+  return regex.test(year);
+}
+// פונקציה לביטול העריכה
+cancelEdit(): void {
+  this.editingIndex = null; // ביטול העריכה
 }
 
 onAbrekClick(abrechId: number): void {
