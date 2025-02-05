@@ -155,9 +155,6 @@ isValidHebrewYear(year: string): boolean {
   return regex.test(year);
 }
 
-
-
-
 calculateTotals(): void {
   this.totalOrElchanan = this.records.reduce((sum, record) => sum + (record.orElchanan || 0), 0);
   this.totalAddAmount = this.records.reduce((sum, record) => sum + (record.addAmount || 0), 0);

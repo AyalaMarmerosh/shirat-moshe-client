@@ -61,6 +61,10 @@ export class MonthlyDataService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
+  deleteData(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}/data`);
+  }
+
   getRecords(year?: string, month?: string): Observable< MonthlyRecord[] > {
     let query = ``; 
 
@@ -85,6 +89,11 @@ export class MonthlyDataService {
       catchError(this.handleErrorData)
     );
   }
+  addOenData(data: MonthlyRecord): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/add-one-data`, data).pipe(
+      catchError(this.handleErrorData)
+    );
+  }
   addAvrech(avrech: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/add`, avrech).pipe(
       catchError(this.handleError)
@@ -93,8 +102,8 @@ export class MonthlyDataService {
   private handleErrorData(error: HttpErrorResponse) {
     if (error.status === 409) {
       // שגיאה של נתונים קיימים, נוכל להחזיר את ההודעה ללקוח
-      console.log("נתונים עבור החודש והשנה הללו כבר קיימים");
-      return throwError('נתונים עבור החודש והשנה הללו כבר קיימים.');
+      console.log(" עבור אברך זה נתונים עבור החודש והשנה הללו כבר קיימים");
+      return throwError(' עבור אברך זה נתונים עבור החודש והשנה הללו כבר קיימים.');
       
     } else {
       return throwError('אירעה שגיאה בשמירת הנתונים.');

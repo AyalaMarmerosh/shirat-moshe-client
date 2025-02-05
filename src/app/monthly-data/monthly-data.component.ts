@@ -14,6 +14,7 @@ import { Avrech } from '../_models/avrech';
 import { MonthlyDataService } from '../_services/monthly-data.service';
 import * as XLSX from 'xlsx';
 import { PopupComponent } from '../add-data/popup.component';
+import { InsertOneDataComponent } from './insertOneDataPopup.component'
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -180,6 +181,19 @@ cancelEdit(): void {
   this.editingIndex = null; // ביטול העריכה
 }
 
+deleteData(id: number): void {
+  if (confirm('האם אתה בטוח שברצונך למחוק את הנתון הזה?')) {
+    this.myService.deleteData(id).subscribe(
+      () => {
+        this.getRecords();
+      },
+      (error) => {
+        console.error('Error deleting data', error);
+      }
+    );
+  }
+}
+
 calculateTotals(): void {
   this.getTotalOrElchanan();
   this.getTotalAddAmount();
@@ -251,6 +265,18 @@ calculateAdd(record: MonthlyRecord): void {
   console.log(record, "calculateAdd");
   record.addAmount = record.totalAmount - record.orElchanan;
   this.calculateTotals();
+}
+
+openPopup(): void {
+  const dialogRef = this.dialog.open(InsertOneDataComponent, {
+    width: '500px',
+    height: '500px',
+    data: {} // ניתן להעביר כאן נתונים לפי הצורך
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('Popup closed', result);
+  });
 }
 
 onAbrekClick(abrechId: number): void {
