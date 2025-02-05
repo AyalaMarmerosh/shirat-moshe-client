@@ -38,6 +38,7 @@ export class MonthlyDataComponent implements OnInit{
   records: MonthlyRecord[] = [];
   avrechim: Avrech[] = [];
   displayedColumns: string[] = [
+    // 'remove',
     'edit',
     'index',
     'id',
@@ -73,7 +74,7 @@ export class MonthlyDataComponent implements OnInit{
       this.isLoading = false; // סיום טעינה
       console.log("nvnvnv", data);
       const hebrewMonthsOrder = [
-        'תשרי', 'חשון', 'כסלו', 'טבת', 'שבט', 'אדר', 'אדר א', 'אדר ב',
+        'תשרי', 'חשון','חשוון', 'כסליו', 'טבת', 'שבט', 'אדר', 'אדר א', 'אדר ב',
         'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול'
       ];
 

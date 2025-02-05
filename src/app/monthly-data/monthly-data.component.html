@@ -24,31 +24,39 @@
     <div class="scrollable-container" dir="rtl">
     <mat-card class="scrollable-table">
       <mat-table [dataSource]="records" class="mat-elevation-z3">
+        <!-- <ng-container matColumnDef="remove">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let record; let i = index"> 
+            <button mat-icon-button >
+              <mat-icon>delete</mat-icon>
+            </button>          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container> -->
         <ng-container matColumnDef="edit">
-          <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
-          <mat-cell *matCellDef="let record; let i = index">
-
+          <mat-header-cell *matHeaderCellDef style="flex: 2;"> </mat-header-cell>
+          <mat-cell *matCellDef="let record; let i = index" style="flex: 2;">
             <ng-container *ngIf="!isEditing(i)">
-              <button mat-icon-button (click)="editRow(i)">
+              <button mat-icon-button matTooltip="מחק" matTooltipPosition="above">
+                <mat-icon style="color: rgb(202, 0, 0);" >delete</mat-icon>
+              </button>
+              <button mat-icon-button (click)="editRow(i)" matTooltip="ערוך" matTooltipPosition="above">
                 <mat-icon>edit</mat-icon>
               </button>
             </ng-container>
             <ng-container *ngIf="isEditing(i)">
-                <mat-icon class="clickable-icon" (click)="saveRow(record)" matTooltip="שמור" matTooltipPosition="above">save</mat-icon>
-                <mat-icon class="clickable-icon" (click)="cancelEdit()" matTooltip="ביטול" matTooltipPosition="above">close</mat-icon>
-            </ng-container> 
-
-
+              <mat-icon class="clickable-icon" (click)="saveRow(record)" matTooltip="שמור" matTooltipPosition="above">save</mat-icon>
+              <mat-icon class="clickable-icon" (click)="cancelEdit()" matTooltip="בטל" matTooltipPosition="above">close</mat-icon>
+            </ng-container>
           </mat-cell>
-          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          <mat-footer-cell *matFooterCellDef style="flex: 2;"></mat-footer-cell>
         </ng-container>
-
+        
         <ng-container matColumnDef="index">
-          <mat-header-cell *matHeaderCellDef> מס' </mat-header-cell>
-          <mat-cell *matCellDef="let record; let i = index"> {{ i + 1 }} </mat-cell>
-          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          <mat-header-cell *matHeaderCellDef style="flex: 1;"> מס' </mat-header-cell>
+          <mat-cell *matCellDef="let record; let i = index" style="flex: 1;"> {{ i + 1 }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef style="flex: 1;"></mat-footer-cell>
         </ng-container>
-  
+        
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> שם </mat-header-cell>
           <mat-cell *matCellDef="let record" (click)="onAbrekClick(record.personId)"   style="cursor: pointer;"> 

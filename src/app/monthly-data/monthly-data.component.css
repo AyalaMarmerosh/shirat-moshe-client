@@ -49,7 +49,7 @@
   .mat-cell {
     font-size: 1em;
     color: #555; /* צבע כהה אך לא שחור */
-    padding: 10px;
+    /* padding: 10px; */
     word-wrap: break-word; /* מונע חיתוך של מילים */
     white-space: normal;  /* מבטיח שהתוכן לא יהיה במצב שורה אחת */
   }
@@ -116,4 +116,8 @@
     margin: auto 2px;
     cursor: pointer; /* משנה את סמל העכבר ליד כשמרחפים על האייקון */
   }
+
   
+  mat-header-cell:first-of-type:not(:only-of-type), [dir=rtl] mat-footer-cell:first-of-type:not(:only-of-type){
+    padding: auto !important;
+  }
