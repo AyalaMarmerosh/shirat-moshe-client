@@ -33,14 +33,21 @@ export class SettingsComponent {
  constructor(  private configService: CalculationConfigService, private authService: AuthService){}
 
  sendVerificationCode() {
-  this.authService.sendVerificationCode(this.oldUsername, this.newUsername, this.newPassword)
+  if(this.oldUsername === '' || this.newPassword === '' || this.newUsername === ''){
+    this.message = 'אנא מלא קודם את השדות הנדרשים';
+  }else{
+      this.authService.sendVerificationCode(this.oldUsername, this.newUsername, this.newPassword)
     .subscribe({
       next: () => {
         this.codeSent = true; // אם הקוד נשלח בהצלחה, נעדכן את המשתמש
         this.message = 'קוד האימות נשלח למייל שלך.';
       },
-      error: err => this.message = `שגיאה: ${err}`
+      error: (err) => {
+        console.log(err)
+        this.message = `שגיאה: ${err}`
+      }
     });
+  }
 }
 
 updateCredentials() {
