@@ -19,10 +19,20 @@ export class AuthService {
   );
 }
 
-updateCredentials(oldUsername: string, newUsername: string, newPassword: string): Observable<any> {
+sendVerificationCode(oldUsername: string, newUsername: string, newPassword: string): Observable<any> {
+  const body = { oldUsername, newUsername, newPassword };
+  return this.http.post<any>(`${this.apiUrl1}/send-verification-code`, body, { responseType: 'text' as 'json' })
+    .pipe(
+      catchError(error => {
+        return throwError(() => error);  // להחזיר את השגיאה
+      })
+    );
+}
+
+updateCredentials(oldUsername: string, newUsername: string, newPassword: string, verificationCode: string): Observable<any> {
   const body = { oldUsername, newUsername, newPassword };
 
-  return this.http.post<string>(`${this.apiUrl1}/update-credentials`, body, { responseType: 'text' as 'json' })
+  return this.http.post<string>(`${this.apiUrl1}/update-credentials?code=${verificationCode}`, body, { responseType: 'text' as 'json' })
     .pipe(
       catchError(error => {
         console.log("Error:", error);

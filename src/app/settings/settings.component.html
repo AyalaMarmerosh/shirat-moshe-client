@@ -1,43 +1,51 @@
 <div class="update-login" style="margin: 3% auto; display: flex; justify-content: center; ">
-    <mat-expansion-panel dir="rtl" style="width: 30%;">
-        <mat-expansion-panel-header style="display: flex; justify-content: center; align-items: center;">
-            <mat-panel-title>
-        עדכון שם משתמש וסיסמה
-      </mat-panel-title>
+  <mat-expansion-panel dir="rtl" style="width: 30%;">
+    <mat-expansion-panel-header style="display: flex; justify-content: center; align-items: center;">
+      <mat-panel-title>עדכון שם משתמש וסיסמה</mat-panel-title>
     </mat-expansion-panel-header>
-  
+
     <mat-card dir="rtl" class="update-card" style="box-shadow: none;">
       <mat-card-content>
-        <form (submit)="updateCredentials()" >
+        <form (submit)="updateCredentials()">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>שם משתמש קיים</mat-label>
             <input style="background: none;" matInput [(ngModel)]="oldUsername" name="oldUsername" required>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>שם משתמש חדש</mat-label>
             <input style="background: none;" matInput [(ngModel)]="newUsername" name="newUsername" required>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>סיסמה חדשה</mat-label>
-            <input style="background: none;" matInput [type]="hidePassword ? 'password' : 'text'" 
+            <input style="background: none;" matInput [type]="hidePassword ? 'password' : 'text'"
                    [(ngModel)]="newPassword" name="newPassword" required>
             <button style="background: none; color: #ffd740;" mat-icon-button matSuffix (click)="togglePasswordVisibility()">
               <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
           </mat-form-field>
-  
+
+          <!-- שדה לקוד אימות -->
+          <mat-form-field appearance="outline" class="full-width" *ngIf="codeSent">
+            <mat-label>קוד אימות</mat-label>
+            <input style="background: none;" matInput [(ngModel)]="verificationCode" name="verificationCode" required>
+          </mat-form-field>
+
           <div class="button-container">
-            <button mat-raised-button color="primary" type="submit">עדכון</button>
+            <!-- כפתור לשליחת הקוד -->
+            <button mat-raised-button color="primary" type="button" (click)="sendVerificationCode()">שלח קוד אימות</button>
+            <!-- כפתור לעדכון אם הקוד נשלח -->
+            <button mat-raised-button color="primary" type="submit" [disabled]="!codeSent">עדכון</button>
           </div>
         </form>
+
+        <div *ngIf="message" class="message">{{ message }}</div>
       </mat-card-content>
     </mat-card>
   </mat-expansion-panel>
 </div>
 
-  
   
 <!-- <div>
     <label>סכום חבורה:</label>

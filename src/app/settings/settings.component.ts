@@ -26,12 +26,30 @@ export class SettingsComponent {
   oldUsername = '';
   newUsername = '';
   newPassword = '';
+  verificationCode = ''; // שדה חדש לקוד אימות
   message = '';
+  codeSent = false; // מצב למעקב אם קוד האימות נשלח
 
  constructor(  private configService: CalculationConfigService, private authService: AuthService){}
 
- updateCredentials() {
-  this.authService.updateCredentials(this.oldUsername, this.newUsername, this.newPassword)
+ sendVerificationCode() {
+  this.authService.sendVerificationCode(this.oldUsername, this.newUsername, this.newPassword)
+    .subscribe({
+      next: () => {
+        this.codeSent = true; // אם הקוד נשלח בהצלחה, נעדכן את המשתמש
+        this.message = 'קוד האימות נשלח למייל שלך.';
+      },
+      error: err => this.message = `שגיאה: ${err}`
+    });
+}
+
+updateCredentials() {
+  if (!this.codeSent) {
+    this.message = 'יש לשלוח קודם קוד אימות.';
+    return;
+  }
+  
+  this.authService.updateCredentials(this.oldUsername, this.newUsername, this.newPassword, this.verificationCode)
     .subscribe({
       next: () => this.message = 'הנתונים עודכנו בהצלחה',
       error: err => this.message = `שגיאה: ${err}`
