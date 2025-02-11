@@ -276,6 +276,7 @@ openPopup(): void {
 
   dialogRef.afterClosed().subscribe(result => {
     console.log('Popup closed', result);
+    this.getRecords();
   });
 }
 

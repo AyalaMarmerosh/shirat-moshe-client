@@ -11,7 +11,6 @@ body, html {
   color: #ffffff;
 }
 
-/* עיצוב של החלק המרכזי */
 .home-container {
   height: 100%;
   display: flex;
@@ -27,12 +26,12 @@ body, html {
 .hero-title {
   font-size: 3.5em;
   font-weight: bold;
-  color: #34495e;
+  color: #673ab7;
   margin-bottom: 20px;
   animation: titleColorChange 4s ease-in-out infinite;
 }
 
-@keyframes backgroundAnimation {
+/* @keyframes backgroundAnimation {
   0% {
     background-color: #ffd740;
   }
@@ -42,20 +41,19 @@ body, html {
   100% {
     background-color: #ffd740;
   }
-}
+}  */
 
-/* כותרת משנית */
 .hero-small-title {
   font-size: 2em;
   font-weight: bold;
-  color: #34495e;
+  color: #673ab7;
   margin-bottom: 15px;
   animation: smallTitlePulse 2s ease-in-out infinite;
 }
 
 .hero-description {
   font-size: 1.5em;
-  color: #34495e;
+  color: #673ab7;
   margin-bottom: 20px;
   line-height: 1.4;
   animation: descriptionMove 3s ease-in-out infinite alternate;
@@ -64,9 +62,14 @@ body, html {
 
 .location {
   font-size: 1.2em;
-  color: #34495e;
+  color: #673ab7;
   margin-top: 10px;
   font-weight: bold;
   animation: locationBounce 1.5s ease-in-out infinite;
 }
 
+
+img {
+  width: 35%;
+  margin-left: 80px;
+}
