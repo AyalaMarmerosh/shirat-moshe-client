@@ -13,6 +13,11 @@ export class AuthService {
 
   login(username: string, password: string): Observable<any> {
   return this.http.post<any>(`${this.apiUrl1}/login`, { username, password }).pipe(
+    tap(res => {
+      if(res.token){
+        this.saveToken(res.token);
+      }
+    }),
     catchError(error => {
       return throwError(() => error);  // להחזיר את השגיאה
     })
@@ -44,17 +49,18 @@ updateCredentials(oldUsername: string, newUsername: string, newPassword: string,
 
   // בדיקת אם יש טוקן שמאוחסן
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   // שמירת הטוקן ב-LocalStorage
   saveToken(token: string): void {
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
+    console.log(sessionStorage.getItem('token'));
   }
 
   // הסרת הטוקן
   logout(): void {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   }
   
 }

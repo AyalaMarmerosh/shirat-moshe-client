@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MonthlyRecord } from '../_models/MonthlyRecord';
 import { catchError, Observable, of, throwError } from 'rxjs';
@@ -12,15 +12,27 @@ export class MonthlyDataService {
   private apiUrl = 'https://shirat-moshe-server.onrender.com/api/MonthlyData'; 
 
   constructor(private http: HttpClient) { }
+
+  private createAuthorizationHeaders(): HttpHeaders {
+    const token = sessionStorage.getItem('token');
+    console.log("token???", token);
+    if (token) {
+      console.log("token!");
+      return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    }
+    return new HttpHeaders();  // אם אין טוקן, מחזירים header ריק
+  }
   
   getAvrechim(page: number, pageSize: number): Observable<{avrechim : Avrech[], totalAvrechim: number}>{
-    return this.http.get<{ avrechim: Avrech[], totalAvrechim: number}>( `https://shirat-moshe-server.onrender.com/api/MonthlyData?page=${page}&pageSize=${pageSize}`)
+    const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+    return this.http.get<{ avrechim: Avrech[], totalAvrechim: number}>( `${this.apiUrl}?page=${page}&pageSize=${pageSize}`, { headers })
       .pipe(catchError(this.handleError1<{ avrechim: Avrech[], totalAvrechim: number }>('getAvrechim', {avrechim: [], totalAvrechim: 0}))
     );
   }
 
   getSearchAvrech(query: string = '', filterPresence: string = '', filterDatot: string = '', filterStatus: string = ''): Observable<Avrech[]>{
-    return this.http.get< Avrech[]>( `${this.apiUrl}/search?query=${query}&presence=${filterPresence}&datot=${filterDatot}&status=${filterStatus}`)
+    const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+    return this.http.get< Avrech[]>( `${this.apiUrl}/search?query=${query}&presence=${filterPresence}&datot=${filterDatot}&status=${filterStatus}`, {headers})
       .pipe(catchError(this.handleError1< Avrech[] >('SearchAvrech', []))
     );
   }
@@ -35,9 +47,9 @@ export class MonthlyDataService {
       const encodedMonth = encodeURIComponent(month);
       query += `&month=${encodedMonth}`;
   }
-
+    const headers = this.createAuthorizationHeaders();
     return this.http
-      .get<MonthlyRecord[]>(`${this.apiUrl}/${id}/monthlydata?${query}`)
+      .get<MonthlyRecord[]>(`${this.apiUrl}/${id}/monthlydata?${query}`, {headers})
       .pipe(catchError(this.handleError1< MonthlyRecord[]>('GetMonthlyData', [])));
   }
   
@@ -49,20 +61,24 @@ export class MonthlyDataService {
   }
 
   updateAvrech(avrech: Avrech): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${avrech.id}`, avrech);
+    const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+    return this.http.put(`${this.apiUrl}/${avrech.id}`, avrech, {headers});
   }
 
   updateData(data: MonthlyRecord): Observable<any> {
+    const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
     console.log("data", data)
-    return this.http.put(`${this.apiUrl}/${data.id}/data`, data);
+    return this.http.put(`${this.apiUrl}/${data.id}/data`, data, {headers});
   }
 
   deleteAvrech(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+    return this.http.delete(`${this.apiUrl}/${id}`, {headers});
   }
 
   deleteData(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}/data`);
+    const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+    return this.http.delete(`${this.apiUrl}/${id}/data`, {headers});
   }
 
   getRecords(year?: string, month?: string): Observable< MonthlyRecord[] > {
@@ -77,25 +93,29 @@ export class MonthlyDataService {
         const encodedMonth = encodeURIComponent(month);
         query += `&month=${encodedMonth}`;
     }
-  
-    return this.http.get< MonthlyRecord[] >(`${this.apiUrl}/last-month?${query}`)
+    const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+    return this.http.get< MonthlyRecord[] >(`${this.apiUrl}/last-month?${query}`, {headers})
   }
   getAvrechById(id: number): Observable<Avrech> {
-    return this.http.get<Avrech>(`${this.apiUrl}/${id}/avrech`);
+    const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+    return this.http.get<Avrech>(`${this.apiUrl}/${id}/avrech`, {headers});
   }
   
   addMonthlyRecords(monthlyRecords: MonthlyRecord[]): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/addData`, monthlyRecords).pipe(
+    const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+    return this.http.post<any>(`${this.apiUrl}/addData`, monthlyRecords, {headers}).pipe(
       catchError(this.handleErrorData)
     );
   }
   addOenData(data: MonthlyRecord): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/add-one-data`, data).pipe(
+    const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+    return this.http.post<any>(`${this.apiUrl}/add-one-data`, data, {headers}).pipe(
       catchError(this.handleErrorData)
     );
   }
   addAvrech(avrech: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add`, avrech).pipe(
+    const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+    return this.http.post(`${this.apiUrl}/add`, avrech, {headers}).pipe(
       catchError(this.handleError)
     );
   }
