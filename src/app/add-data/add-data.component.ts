@@ -224,7 +224,12 @@ getAvrechByPersonId(personId: number): Avrech | undefined {
 
 calculateAdd(record: MonthlyRecord): void {
   console.log(record, "calculateAdd");
-  record.addAmount = record.totalAmount - record.orElchanan;
+  if(record.totalAmount - record.orElchanan >=0){
+    record.addAmount = record.totalAmount - record.orElchanan;
+  }
+  else{
+    record.addAmount = 0;
+  }
   this.calculateTotals();
 }
 // פונקציה שתפעל כאשר לוחצים על שם האברך

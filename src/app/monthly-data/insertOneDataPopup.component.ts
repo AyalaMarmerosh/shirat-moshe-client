@@ -33,7 +33,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
   template: `
     <div dir="rtl" class="popup-container">
-      <h2>הוספת נתונים עבור</h2>
+      <h2>הוספת נתונים עבור{{ selectedAvrech ? " " + selectedAvrech.lastName + " " + selectedAvrech.firstName : ''}}</h2>
       <form>
         <mat-form-field>
           <mat-label>בחר אברך</mat-label>
@@ -88,7 +88,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
           <input name="note" matInput type="text" [(ngModel)]="record.notes">
         </mat-form-field>
 
-        <button mat-button (click)="saveRecord()">שמירה</button>
+        <button style="background-color: #ffd740 ;" mat-button (click)="saveRecord()">שמירה</button>
       </form>
     </div>
   `,
@@ -117,6 +117,7 @@ export class InsertOneDataComponent {
   record: MonthlyRecord = {} as MonthlyRecord;
   month: string = '';
   year: string = '';
+  selectedAvrech: Avrech | undefined;
 
   constructor(
     private myService: MonthlyDataService,
@@ -132,6 +133,7 @@ export class InsertOneDataComponent {
       this.avrechim = data.avrechim;
     });
   }
+
  calculateTotalAmount(): void {
     console.log(this.record, "calculateTotalAmount");
   
@@ -196,7 +198,8 @@ export class InsertOneDataComponent {
     if (!this.selectedAvrechId) {
         return;
       }
-  
+      this.selectedAvrech = this.getAvrechByPersonId(this.selectedAvrechId);
+
       console.log("Loading data for:", this.selectedAvrechId, 'Default', 'Default');
   
       this.myService.GetMonthlyData(this.selectedAvrechId, 'Default', 'Default').subscribe(
@@ -213,8 +216,12 @@ export class InsertOneDataComponent {
 
  calculateAdd(): void {
     console.log(this.record, "calculateAdd");
-    this.record.addAmount = this.record.totalAmount - this.record.orElchanan;
-  }
+    if(this.record.totalAmount - this.record.orElchanan >=0){
+      this.record.addAmount = this.record.totalAmount - this.record.orElchanan;
+    }
+    else{
+      this.record.addAmount = 0;
+    }  }
 
   isValidHebrewYear(year: string): boolean {
     console.log(this.record.year);
