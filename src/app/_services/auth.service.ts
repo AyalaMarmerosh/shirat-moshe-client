@@ -11,6 +11,27 @@ export class AuthService {
   
   constructor(private http: HttpClient) { }
 
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    if (!token) {
+      return false; // אם אין טוקן, המשתמש לא מחובר
+    }
+        // בדיקת תוקף הטוקן
+        const tokenData = this.decodeToken(token);
+        if (!tokenData || tokenData.exp * 1000 < Date.now()) {
+          return false; // אם התוקף פג, המשתמש לא מחובר
+        }
+    
+        return true; // אחרת המשתמש מחובר
+      }
+      private decodeToken(token: string): any {
+        try {
+          const payload = token.split('.')[1];  // לוקח את החלק השני של ה-JWT (payload)
+          return JSON.parse(atob(payload));  // מפענח את ה-Base64 ומחזיר אובייקט JSON
+        } catch (e) {
+          return null;
+        }
+      }
   login(username: string, password: string): Observable<any> {
   return this.http.post<any>(`${this.apiUrl1}/login`, { username, password }).pipe(
     tap(res => {
