@@ -165,6 +165,14 @@ saveRow(record: MonthlyRecord): void {
     },
     (error: any) => {
       console.error('Error saving avrech data', error);
+      if( error.status === 403 ){
+        this.snackBar.open('אין לך הרשאות לערוך נתונים', 'סגור', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['conflict-snackbar']
+        });
+      }else
       alert("הייתה שגיאה בעדכון הנתונים");
     }
   );  
@@ -189,7 +197,21 @@ deleteData(id: number): void {
       },
       (error) => {
         console.error('Error deleting data', error);
+        if( error.status === 403 ){
+          this.snackBar.open('אין לך הרשאות למחוק נתונים', 'סגור', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            panelClass: ['conflict-snackbar']
+          });
+      } else {
+        this.snackBar.open('אירעה שגיאה.', 'סגור', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
       }
+    }
     );
   }
 }

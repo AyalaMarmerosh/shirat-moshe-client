@@ -58,6 +58,9 @@ export class AddAvrechDialogComponent {
         console.log(response);
       },
       (error) => {
+        if( error.status === 403 ){
+          this.message = 'אין לך הרשאה לפעולה זו'
+        }
         this.message = error;
         console.log(error);
       }

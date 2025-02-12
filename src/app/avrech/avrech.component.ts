@@ -143,6 +143,11 @@ export class AvrechComponent implements OnInit{
         },
         (error) => {
           console.error('Error deleting avrech', error);
+          if(error.status === 403){
+            alert("אין לך הרשאות למחוק נתונים'");
+          }else{
+            alert("יש שגיאה במחיקת הנתונים");
+          }
         }
       );
     }

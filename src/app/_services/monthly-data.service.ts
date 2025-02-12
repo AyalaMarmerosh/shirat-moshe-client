@@ -111,7 +111,7 @@ export class MonthlyDataService {
   addOenData(data: MonthlyRecord): Observable<any> {
     const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
     return this.http.post<any>(`${this.apiUrl}/add-one-data`, data, {headers}).pipe(
-      catchError(this.handleErrorData)
+      // catchError(this.handleErrorData)
     );
   }
   addAvrech(avrech: any): Observable<any> {
