@@ -70,7 +70,9 @@ export class MonthlyDataComponent implements OnInit{
 
   getRecords(){
     this.isLoading = true;
-    this.getAvrechim();
+    this.myService.getAvrechim(1, 100).subscribe(avrechimData => {  
+      this.avrechim = avrechimData.avrechim; // שמירת האברכים בזיכרון
+
     this.myService.getRecords(this.selectedYear, this.selectedMonth).subscribe((data) => {
       this.isLoading = false; // סיום טעינה
       console.log("nvnvnv", data);
@@ -82,7 +84,11 @@ export class MonthlyDataComponent implements OnInit{
       this.records = data
       .filter(rec => this.searchName ? this.getAvrechName(rec.personId).includes(this.searchName) : true)
       .filter(rec => rec.year !== 'Default')
-      .sort((a, b) => {
+      .map(rec => ({
+        ...rec,
+        avrechName: this.getAvrechName(rec.personId) // הוספת שם האברך לכל רשומה
+      }))
+  .sort((a, b) => {
         // מיון לפי שנה (בסדר יורד)
         if (a.year !== b.year) {
           return b.year.localeCompare(a.year);
@@ -91,15 +97,21 @@ export class MonthlyDataComponent implements OnInit{
           // מיון לפי חודש (על פי הסדר במערך)
           const monthAIndex = hebrewMonthsOrder.indexOf(a.month);
           const monthBIndex = hebrewMonthsOrder.indexOf(b.month);
-          return monthBIndex - monthAIndex;
+          if(monthAIndex !== monthBIndex) {
+            return monthBIndex - monthAIndex;
+          }
+
+          // const nameA = this.getAvrechName(a.personId);
+          // const nameB = this.getAvrechName(b.personId);
+          return a.avrechName.localeCompare(b.avrechName, 'he');
         });
     },
     error => {
       this.isLoading = false; // סיום טעינה
       alert("יש שגיאה בטעינת הנתונים")
       console.error('Error loading data', error);
-    }
-  );
+    });
+  });
 }
 getAvrechim(): void {
   this.myService.getAvrechim(1, 100).subscribe((data) => {
