@@ -103,8 +103,9 @@ export class MonthlyDataService {
   
   addMonthlyRecords(monthlyRecords: MonthlyRecord[]): Observable<any> {
     const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+
     return this.http.post<any>(`${this.apiUrl}/addData`, monthlyRecords, {headers}).pipe(
-      catchError(this.handleErrorData)
+      // catchError(this.handleErrorData)
     );
   }
   addOenData(data: MonthlyRecord): Observable<any> {
@@ -120,12 +121,17 @@ export class MonthlyDataService {
     );
   }
   private handleErrorData(error: HttpErrorResponse) {
+    console.log("מה הסטטוס של השגיאה???", error, error.status)
     if (error.status === 409) {
       // שגיאה של נתונים קיימים, נוכל להחזיר את ההודעה ללקוח
       console.log(" עבור אברך זה נתונים עבור החודש והשנה הללו כבר קיימים");
       return throwError(' עבור אברך זה נתונים עבור החודש והשנה הללו כבר קיימים.');
       
-    } else {
+    } else if(error.status === 403){
+      console.log("אין לך הרשאות להוסיף נתונים");
+      return throwError('אין לך הרשאות להוסיף נתונים');
+    }
+     else {
       return throwError('אירעה שגיאה בשמירת הנתונים.');
     }
   }

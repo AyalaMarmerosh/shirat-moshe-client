@@ -132,8 +132,17 @@ saveData(): void {
     },
     error: (error) => {
       console.error('שגיאה בשמירת נתונים', error);
-      if (error === 'נתונים עבור החודש והשנה הללו כבר קיימים.') {
-        this.snackBar.open(error, 'סגור', {
+      console.log('סטטוס שגיאה:', error.status);  // הדפסת סטטוס השגיאה
+
+      if(error.status === 403){
+        this.snackBar.open('אין לך הרשאות להוסיף נתונים','סגור',  {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['conflict-snackbar']
+        });
+      } else if (error.status === 409 ) {
+        this.snackBar.open('נתונים עבור החודש והשנה הללו כבר קיימים', 'סגור', {
           duration: 5000,
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
