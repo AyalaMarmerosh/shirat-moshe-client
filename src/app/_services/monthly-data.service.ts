@@ -117,7 +117,7 @@ export class MonthlyDataService {
   addAvrech(avrech: any): Observable<any> {
     const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
     return this.http.post(`${this.apiUrl}/add`, avrech, {headers}).pipe(
-      catchError(this.handleError)
+      // catchError(this.handleError)
     );
   }
   private handleErrorData(error: HttpErrorResponse) {

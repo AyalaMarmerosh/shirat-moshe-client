@@ -227,10 +227,11 @@ export class PopupComponent {
           console.error('Error saving avrech data', error);
           if(error.status === 403){
             alert("אין לך הרשאות לעדכון נתונים")
-          }
+          }else
           alert("הייתה שגיאה בעדכון הנתונים");
         }
       );
+      this.dialogRef.close();
     }
   }
 }

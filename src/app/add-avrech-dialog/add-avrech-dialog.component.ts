@@ -58,15 +58,14 @@ export class AddAvrechDialogComponent {
         console.log(response);
       },
       (error) => {
+        console.log("רררררררררררר",error,"SSSSSSS",error.status);
         if( error.status === 403 ){
-          this.message = 'אין לך הרשאה לפעולה זו'
+          alert('אין לך הרשאה לפעולה זו');
         }
         this.message = error;
         console.log(error);
       }
-     )
-
-      // סגור את הפופ-אפ
+     )      // סגור את הפופ-אפ
       this.dialogRef.close();
     } else {
       alert('אנא מלא את כל השדות הדרושים');

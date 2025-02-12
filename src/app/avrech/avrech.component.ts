@@ -82,7 +82,6 @@ export class AvrechComponent implements OnInit{
     const dialogRef = this.dialog.open(AddAvrechDialogComponent, {
       width: '500px', 
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('הפופ-אפ נסגר');
     });
