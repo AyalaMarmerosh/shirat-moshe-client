@@ -331,37 +331,32 @@ onAbrekClick(abrechId: number): void {
     });
   }
   exportToExcel(): void {
-    // מיפוי שמות השדות לכותרות בעברית
-    const mappedRecords = this.records.map(record => ({
-      'שם': this.getAvrechName(record.personId),
-      'חודש': record.month,
-      'שנה': record.year,
-      'מלגת בסיס': record.baseAllowance,
-      'חבורה': record.isChabura ? '✅' : '❌',
-      'מבחן': record.didLargeTest ? '✅' : '❌',
-      'דתות': record.datot,
-      'סכום סופי': record.totalAmount,
-      'אור אלחנן': record.orElchanan,
-      'יתרה': record.addAmount,
-      'הערה': record.notes
-    }));
-  
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(mappedRecords, { skipHeader: true }); // הסרת הכותרות באנגלית
-  
-    // הוספת כותרות מותאמות בראש הגיליון
-    XLSX.utils.sheet_add_aoa(ws, [[
-       'שם', 'חודש', 'שנה', 'מלגת בסיס', 'חבורה', 'מבחן', 'דתות', 'סכום סופי', 'אור אלחנן', 'יתרה', 'הערה'
-    ]], { origin: "A1" });
 
-      // הוספת הנתונים מהשורה השנייה והלאה
-  XLSX.utils.sheet_add_json(ws, mappedRecords, { origin: "A2", skipHeader: true });
+    const filePath = 'assets/template.xlsx'; // נתיב לקובץ התבנית
+    fetch(filePath).then(response => response.arrayBuffer()).then(data => {
+      const wb: XLSX.WorkBook = XLSX.read(data, { type: 'array' });
+      const ws: XLSX.WorkSheet = wb.Sheets[wb.SheetNames[0]]; // לוקח את הגיליון הראשון
+      
+      // מיפוי הנתונים בפורמט עברי
+      const mappedRecords = this.records.map(record => ({
+        'שם': this.getAvrechName(record.personId),
+        'חודש': record.month,
+        'שנה': record.year,
+        'מלגת בסיס': record.baseAllowance,
+        'חבורה': record.isChabura ? '✅' : '❌',
+        'מבחן': record.didLargeTest ? '✅' : '❌',
+        'דתות': record.datot,
+        'סכום סופי': record.totalAmount,
+        'אור אלחנן': record.orElchanan,
+        'יתרה': record.addAmount,
+        'הערה': record.notes
+      }));
   
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'נתונים חודשיים');
+      // הוספת הנתונים לגיליון מהשורה השנייה
+      XLSX.utils.sheet_add_json(ws, mappedRecords, { origin: "A2", skipHeader: true });
   
-    // יצירת הקובץ והורדה
-    XLSX.writeFile(wb, 'נתונים חודשיים להורדה.xlsx');
+      // שמירת הקובץ
+      XLSX.writeFile(wb, 'נתונים חודשיים להורדה.xlsx');
+    });  
   }
-  
-
 }

@@ -60,8 +60,8 @@ import { MatIconModule } from '@angular/material/icon';
               <mat-option value="ראש_קבוצה_אחה_צ">ראש קבוצה אחה&quot;צ</mat-option>
               <mat-option value="ר&quot;כ אחה&quot;צ והח חצי דתות">ר&quot;כ אחה&quot;צ והח חצי דתות</mat-option>     
               <mat-option value="ראש_כולל">ראש כולל</mat-option>
-              <mat-option value="אברך_רצופות_יום_שלם">אברך רצופות יום שלם</mat-option>
-              <mat-option value="אברך_רצופות_חצי_יום">אברך רצופות חצי יום</mat-option>
+              <mat-option value="אברך_רצופות_יום_שלם">יום שלם</mat-option>
+              <mat-option value="אברך_רצופות_חצי_יום">חצי יום</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
