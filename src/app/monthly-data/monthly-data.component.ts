@@ -18,6 +18,7 @@ import { InsertOneDataComponent } from './insertOneDataPopup.component'
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-monthly-data',
@@ -62,7 +63,7 @@ export class MonthlyDataComponent implements OnInit{
 
 
   
-  constructor(private myService: MonthlyDataService, private snackBar: MatSnackBar, private dialog: MatDialog   ){}
+  constructor(private myService: MonthlyDataService, private snackBar: MatSnackBar, private dialog: MatDialog, private authService: AuthService   ){}
 
   ngOnInit(): void {
     this.getRecords();
@@ -140,12 +141,32 @@ isEditing(index: number): boolean {
 
 // פונקציה שמבצעת את ההפעלה לעריכת שורה
 editRow(index: number): void {
+      // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+      if (this.authService.getUsernameFromToken()=='Viewer') {
+        this.snackBar.open('אין לך הרשאות לערוך נתונים', 'סגור', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+        });
+        return; // עוצר את שמירת הנתונים
+      }
   console.log("ID", this.records)
   this.editingIndex = index; // קובעים שהשורה בתהליך עריכה
 }
 
 
 saveRow(record: MonthlyRecord): void {
+      // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+      if (this.authService.getUsernameFromToken()=='Viewer') {
+        this.snackBar.open('אין לך הרשאות לשמור נתונים', 'סגור', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+        });
+        return; // עוצר את שמירת הנתונים
+      }
         // בדיקה אם המשתמש מילא חודש ושנה
         if (!record.month || !record.year) {
           this.snackBar.open('אנא מלא את החודש והשנה לפני שמירת השינויים', 'סגור', {
@@ -202,6 +223,16 @@ cancelEdit(): void {
 }
 
 deleteData(id: number): void {
+      // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+      if (this.authService.getUsernameFromToken()=='Viewer') {
+        this.snackBar.open('אין לך הרשאות למחוק נתונים', 'סגור', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+        });
+        return; // עוצר את שמירת הנתונים
+      }
   if (confirm('האם אתה בטוח שברצונך למחוק את הנתון הזה?')) {
     this.myService.deleteData(id).subscribe(
       () => {
@@ -306,6 +337,16 @@ calculateAdd(record: MonthlyRecord): void {
 }
 
 openPopup(): void {
+      // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+      if (this.authService.getUsernameFromToken()=='Viewer') {
+        this.snackBar.open('אין לך הרשאות להוסיף נתונים', 'סגור', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+        });
+        return; // עוצר את שמירת הנתונים
+      }
   const dialogRef = this.dialog.open(InsertOneDataComponent, {
     width: '500px',
     height: '500px',

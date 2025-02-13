@@ -12,6 +12,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { Avrech } from '../_models/avrech';
 import { MonthlyDataService } from '../_services/monthly-data.service';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../_services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-popup',
@@ -192,6 +194,8 @@ import { MatIconModule } from '@angular/material/icon';
 export class PopupComponent {
   constructor(
     private myService: MonthlyDataService,
+    private authService: AuthService,
+    private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<PopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data?: Avrech
   ) {}
@@ -213,6 +217,16 @@ export class PopupComponent {
   }
 
   saveAvrech(): void {
+        // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+        if (this.authService.getUsernameFromToken()=='Viewer') {
+          this.snackBar.open('אין לך הרשאות לשמור נתונים', 'סגור', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+          });
+          return; // עוצר את שמירת הנתונים
+        }
     if (this.selectedAvrech) {
       this.selectedAvrech.datot = this.replaceSpacesWithUnderscore(this.selectedAvrech.datot);
       this.selectedAvrech.status = this.replaceSpacesWithUnderscore(this.selectedAvrech.status);

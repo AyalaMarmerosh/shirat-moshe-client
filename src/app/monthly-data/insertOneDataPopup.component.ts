@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { AddDataComponent } from '../add-data/add-data.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-popup',
@@ -121,6 +122,7 @@ export class InsertOneDataComponent {
 
   constructor(
     private myService: MonthlyDataService,
+    private authService: AuthService,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<InsertOneDataComponent>,
   ) {}
@@ -230,6 +232,16 @@ export class InsertOneDataComponent {
   }
 
   saveRecord(): void {
+        // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+        if (this.authService.getUsernameFromToken()=='Viewer') {
+          this.snackBar.open('אין לך הרשאות לשמור נתונים', 'סגור', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+          });
+          return; // עוצר את שמירת הנתונים
+        }
     console.log("נכנס לשמירה");
     if(!this.selectedAvrechId){
         this.snackBar.open('אנא בחר את האברך שברצונך להוסיף לו נתונים', 'סגור', {

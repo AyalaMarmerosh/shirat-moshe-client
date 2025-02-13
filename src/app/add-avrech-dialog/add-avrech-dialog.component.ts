@@ -10,9 +10,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelect } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MonthlyDataService } from '../_services/monthly-data.service';
+import { AuthService } from '../_services/auth.service';
 // import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
@@ -43,9 +44,20 @@ export class AddAvrechDialogComponent {
   message = '';
 
 
-  constructor(private serv: MonthlyDataService, public dialogRef: MatDialogRef<AddAvrechDialogComponent>) {}
+  constructor(private serv: MonthlyDataService, public dialogRef: MatDialogRef<AddAvrechDialogComponent>,     private authService: AuthService,
+      private snackBar: MatSnackBar) {}
 
   saveNewAvrech() {
+        // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+        if (this.authService.getUsernameFromToken()=='Viewer') {
+          this.snackBar.open('אין לך הרשאות להוסיף נתונים', 'סגור', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+          });
+          return; // עוצר את שמירת הנתונים
+        }
     this.newAvrech.status = Number(this.newAvrech.status);
     this.newAvrech.datot = Number(this.newAvrech.datot);
     if (this.newAvrech.firstName && this.newAvrech.lastName && this.newAvrech.teudatZeut) {

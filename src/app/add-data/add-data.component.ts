@@ -15,6 +15,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PopupComponent } from './popup.component';
 import { CalculationConfigService } from '../_services/calculation-config.service';
+import { AuthService } from '../_services/auth.service';
 
 
 
@@ -66,6 +67,7 @@ export class AddDataComponent implements OnInit{
 
   constructor(
     private myService: MonthlyDataService,
+    private authService: AuthService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     // private configService: CalculationConfigService
@@ -97,16 +99,16 @@ export class AddDataComponent implements OnInit{
 saveData(): void {
   console.log("נכנס לשמירה");
 
-    // // בדיקה אם המשתמש לא מורשה להוסיף נתונים
-    // if (!this.isUserAuthorizedToSave()) {
-    //   this.snackBar.open('אין לך הרשאות לשמור נתונים', 'סגור', {
-    //     duration: 5000,
-    //     horizontalPosition: 'center',
-    //     verticalPosition: 'bottom',
-    //     panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
-    //   });
-    //   return; // עוצר את שמירת הנתונים
-    // }
+    // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+    if (this.authService.getUsernameFromToken()=='Viewer') {
+      this.snackBar.open('אין לך הרשאות לשמור נתונים', 'סגור', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+      });
+      return; // עוצר את שמירת הנתונים
+    }
 
       // בדיקה אם המשתמש מילא חודש ושנה
       if (!this.selectedMonth || !this.selectedYear) {

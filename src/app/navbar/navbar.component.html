@@ -25,6 +25,15 @@
           <mat-icon>settings</mat-icon> הגדרות
         </a>
       </li>
+      <!-- <li class="nav-item">
+        <mat-icon>account_circle</mat-icon>
+        <span *ngIf="username"> {{ username }}</span>
+      </li> -->
     </ul>
+    <div class="user-info">
+      <mat-icon>account_circle</mat-icon>
+      <span *ngIf="username">{{ username }}</span>
+    </div>
+    
   </nav>
   

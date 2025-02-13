@@ -70,3 +70,19 @@
     background-color: #673ab7 !important;
   }
   
+  .user-info {
+    background-color: #ffd740;
+    border: 2px #ffd740;
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .user-info span {
+    margin-top: -6px; /* מקרב את הטקסט לאייקון */
+  }
+  
+  

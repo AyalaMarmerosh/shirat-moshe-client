@@ -83,5 +83,20 @@ updateCredentials(oldUsername: string, newUsername: string, newPassword: string,
   logout(): void {
     sessionStorage.removeItem('token');
   }
+
+  getUsernameFromToken(): string | null {
+    console.log("נכנס לפונקציה");
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    console.log("נכנס לפונקציה", token);
+
+    const tokenData = this.decodeToken(token);
+    console.log("נכנס לפונקציה", tokenData);
+
+    return tokenData ? tokenData.role : null;
+  }
+  
   
 }

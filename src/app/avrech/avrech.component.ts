@@ -16,6 +16,8 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAvrechDialogComponent } from '../add-avrech-dialog/add-avrech-dialog.component';
 import { PopupComponent } from './updatePopup.component'
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../_services/auth.service';
 @Component({
   selector: 'app-avrech',
   standalone: true,
@@ -42,7 +44,8 @@ export class AvrechComponent implements OnInit{
 
 
   
-  constructor(private myService: MonthlyDataService, private dialog: MatDialog){}
+  constructor(private myService: MonthlyDataService, private dialog: MatDialog,     private authService: AuthService,
+    private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
     this.getAvrechim();
@@ -79,6 +82,16 @@ export class AvrechComponent implements OnInit{
   }
   
   openAddAvrechDialog() {
+        // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+        if (this.authService.getUsernameFromToken()=='Viewer') {
+          this.snackBar.open('אין לך הרשאות להוסיף נתונים', 'סגור', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+          });
+          return; // עוצר את שמירת הנתונים
+        }
     const dialogRef = this.dialog.open(AddAvrechDialogComponent, {
       width: '500px', 
     });
@@ -88,6 +101,16 @@ export class AvrechComponent implements OnInit{
   }
 
   openEditDialog(avrech: Avrech): void {
+        // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+        if (this.authService.getUsernameFromToken()=='Viewer') {
+          this.snackBar.open('אין לך הרשאות לעדכן נתונים', 'סגור', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+          });
+          return; // עוצר את שמירת הנתונים
+        }
     const dialogRef = this.dialog.open(PopupComponent, {height:'75%', width: '500px', data: avrech });
     dialogRef.afterClosed().subscribe(() => this.getAvrechim());
   }
@@ -135,6 +158,16 @@ export class AvrechComponent implements OnInit{
 
   // פונקציה למחיקת אברך
   deleteAvrech(id: number): void {
+        // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+        if (this.authService.getUsernameFromToken()=='Viewer') {
+          this.snackBar.open('אין לך הרשאות למחוק נתונים', 'סגור', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+          });
+          return; // עוצר את שמירת הנתונים
+        }
     if (confirm('האם אתה בטוח שברצונך למחוק את האברך הזה?')) {
       this.myService.deleteAvrech(id).subscribe(
         () => {
