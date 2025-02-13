@@ -249,7 +249,7 @@ calculateOrElchanan(record: MonthlyRecord): void{
   console.log(record.isChabura, "vvvvv");
   console.log(record, "calculateOrElchanan");
   let avrech = this.getAvrechByPersonId(record.personId);
-  if( avrech && ( avrech.status == "אברך רצופות יום שלם" || avrech?.status == "ראש כולל" )){
+  if( avrech && ( avrech.status == "יום שלם" || avrech?.status == "ראש כולל" )){
     console.log("אברך יום שלם");
     if(record.isChabura){
       if( record.totalAmount <= 2300 ){
@@ -267,7 +267,7 @@ calculateOrElchanan(record: MonthlyRecord): void{
         record.addAmount = record.totalAmount - record.orElchanan;
       }
     }
-  }else if(avrech && ( avrech.status == "אברך רצופות חצי יום" || avrech.status == "ראש קבוצה בבוקר" || avrech.status == "ראש קבוצה אחה צ" )){
+  }else if(avrech && ( avrech.status == "חצי יום" || avrech.status == "ראש קבוצה בבוקר" || avrech.status == "ראש קבוצה אחה צ" )){
     if(record.isChabura){
       if( record.totalAmount <= 1300 ){
         record.orElchanan = record.totalAmount

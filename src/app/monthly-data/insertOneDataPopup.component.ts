@@ -153,7 +153,7 @@ export class InsertOneDataComponent {
  calculateOrElchanan(): void{
 
     let avrech = this.getAvrechByPersonId(this.record.personId);
-    if( avrech && ( avrech.status == "אברך רצופות יום שלם" || avrech?.status == "ראש כולל" )){
+    if( avrech && ( avrech.status == "יום שלם" || avrech?.status == "ראש כולל" )){
       console.log("אברך יום שלם");
       if(this.record.isChabura){
         if( this.record.totalAmount <= 2300 ){
@@ -171,7 +171,7 @@ export class InsertOneDataComponent {
           this.record.addAmount = this.record.totalAmount - this.record.orElchanan;
         }
       }
-    }else if(avrech && ( avrech.status == "אברך רצופות חצי יום" || avrech.status == "ראש קבוצה בבוקר" || avrech.status == "ראש קבוצה אחה צ" )){
+    }else if(avrech && ( avrech.status == "חצי יום" || avrech.status == "ראש קבוצה בבוקר" || avrech.status == "ראש קבוצה אחה צ" )){
       if(this.record.isChabura){
         if( this.record.totalAmount <= 1300 ){
           this.record.orElchanan = this.record.totalAmount

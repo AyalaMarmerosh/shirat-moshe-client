@@ -96,6 +96,18 @@ export class AddDataComponent implements OnInit{
 // }
 saveData(): void {
   console.log("נכנס לשמירה");
+
+    // // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+    // if (!this.isUserAuthorizedToSave()) {
+    //   this.snackBar.open('אין לך הרשאות לשמור נתונים', 'סגור', {
+    //     duration: 5000,
+    //     horizontalPosition: 'center',
+    //     verticalPosition: 'bottom',
+    //     panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+    //   });
+    //   return; // עוצר את שמירת הנתונים
+    // }
+
       // בדיקה אם המשתמש מילא חודש ושנה
       if (!this.selectedMonth || !this.selectedYear) {
         this.snackBar.open('אנא מלא את החודש והשנה לפני שמירת השינויים', 'סגור', {
@@ -185,7 +197,7 @@ calculateOrElchanan(record: MonthlyRecord): void{
   console.log(record.isChabura, "vvvvv");
   console.log(record, "calculateOrElchanan");
   let avrech = this.getAvrechByPersonId(record.personId);
-  if( avrech && ( avrech.status == "אברך רצופות יום שלם" || avrech?.status == "ראש כולל" )){
+  if( avrech && ( avrech.status == "יום שלם" || avrech?.status == "ראש כולל" )){
     console.log("אברך יום שלם");
     if(record.isChabura){
       if( record.totalAmount <= 2300 ){
@@ -203,7 +215,7 @@ calculateOrElchanan(record: MonthlyRecord): void{
         record.addAmount = record.totalAmount - record.orElchanan;
       }
     }
-  }else if(avrech && ( avrech.status == "אברך רצופות חצי יום" || avrech.status == "ראש קבוצה בבוקר" || avrech.status == "ראש קבוצה אחה צ" )){
+  }else if(avrech && ( avrech.status == "חצי יום" || avrech.status == "ראש קבוצה בבוקר" || avrech.status == "ראש קבוצה אחה צ" )){
     if(record.isChabura){
       if( record.totalAmount <= 1300 ){
         record.orElchanan = record.totalAmount
