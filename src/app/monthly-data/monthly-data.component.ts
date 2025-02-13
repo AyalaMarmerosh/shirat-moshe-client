@@ -337,6 +337,18 @@ onAbrekClick(abrechId: number): void {
       const wb: XLSX.WorkBook = XLSX.read(data, { type: 'array' });
       const ws: XLSX.WorkSheet = wb.Sheets[wb.SheetNames[0]]; // לוקח את הגיליון הראשון
       
+      const headers = [
+        'שם', 'חודש', 'שנה', 'מלגת בסיס', 'חבורה', 'מבחן', 'דתות', 'סכום סופי', 'אור אלחנן', 'יתרה', 'הערה'
+      ];
+      XLSX.utils.sheet_add_aoa(ws, [headers], { origin: "A1" });
+
+      headers.forEach((header, index) => {
+        const cellAddress = XLSX.utils.encode_cell({ r: 0, c: index }); // כתובת התא (A1, B1 וכו')
+        if (!ws[cellAddress]) return;
+        ws[cellAddress].s = { font: { bold: true } }; // הופך את הטקסט למודגש
+      });
+
+      
       // מיפוי הנתונים בפורמט עברי
       const mappedRecords = this.records.map(record => ({
         'שם': this.getAvrechName(record.personId),
@@ -352,9 +364,24 @@ onAbrekClick(abrechId: number): void {
         'הערה': record.notes
       }));
   
+
       // הוספת הנתונים לגיליון מהשורה השנייה
       XLSX.utils.sheet_add_json(ws, mappedRecords, { origin: "A2", skipHeader: true });
   
+      ws['!cols'] = [
+        { wch: 15 }, // שם
+        { wch: 10 }, // חודש
+        { wch: 10 }, // שנה
+        { wch: 15 }, // מלגת בסיס
+        { wch: 10 }, // חבורה
+        { wch: 10 }, // מבחן
+        { wch: 10 }, // דתות
+        { wch: 15 }, // סכום סופי
+        { wch: 15 }, // אור אלחנן
+        { wch: 10 }, // יתרה
+        { wch: 20 }  // הערה
+      ];
+
       // שמירת הקובץ
       XLSX.writeFile(wb, 'נתונים חודשיים להורדה.xlsx');
     });  
