@@ -81,8 +81,14 @@ export class AddDataComponent implements OnInit{
     this.getAvrechim();
     this.myService.getRecords(this.year, this.month).subscribe((data) => {
       console.log("nvnvnv", data)
-      this.records = data;
-    },
+
+            // מיון הרשומות לפי שם האברך
+            this.records = data.sort((a, b) => {
+              const nameA = this.getAvrechName(a.personId);
+              const nameB = this.getAvrechName(b.personId);
+              return nameA.localeCompare(nameB, 'he');
+            });
+      },
     error => {
       console.error('Error loading data', error);
     }
