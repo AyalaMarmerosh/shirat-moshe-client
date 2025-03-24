@@ -96,7 +96,7 @@ updateCredentials(oldUsername: string, newUsername: string, newPassword: string,
         alert('החיבור שלך פג, נא להתחבר מחדש.');
         this.logout();
       }
-    }, 5000); // כל 5 שניות
+    }, 50000); // כל 5 שניות
   }
 
   // 🔄 בדיקה כשחוזרים לכרטיסייה אם הטוקן עדיין תקף
