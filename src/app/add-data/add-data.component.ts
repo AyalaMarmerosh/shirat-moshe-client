@@ -62,10 +62,13 @@ export class AddDataComponent implements OnInit{
   avrechName: string = '';
   selectedAbrek: any = null;
   showPopup: boolean = false;
-  totalOrElchanan: number = 64280;
+  totalOrElchanan: number = 63280;
   totalAddAmount: number = 8400;
+  totalBase: number = 96500;
+  totalAmount: number = 100700;
+  totalDatot: number = 29020;
+  totalGinusar: number = 0;
 
-   
 
   constructor(
     private myService: MonthlyDataService,
@@ -209,6 +212,10 @@ isValidHebrewYear(year: string): boolean {
 calculateTotals(): void {
   this.totalOrElchanan = this.records.reduce((sum, record) => sum + (record.orElchanan || 0), 0);
   this.totalAddAmount = this.records.reduce((sum, record) => sum + (record.addAmount || 0), 0);
+  this.totalBase = this.records.reduce((sum, record) => sum + (record.baseAllowance || 0), 0);
+  this.totalAmount = this.records.reduce((sum, record) => sum + (record.totalAmount || 0), 0);
+  this.totalDatot = this.records.reduce((sum, record) => sum + (record.datot || 0), 0);
+  this.totalGinusar = this.records.reduce((sum, record) => sum + (record.ginusar || 0), 0);
 }
 
 // calculateTotalAmount(record: any): void {

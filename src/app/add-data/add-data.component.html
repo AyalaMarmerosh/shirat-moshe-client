@@ -117,7 +117,7 @@
       (ngModelChange)="calculateTotalAmount(record)"
     />
   </mat-cell>
-  <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+  <mat-footer-cell *matFooterCellDef> סה"כ {{ totalBase }} </mat-footer-cell>
 </ng-container>
 
 <!-- חבורה -->
@@ -155,7 +155,7 @@
       readonly
     />
   </mat-cell>
-  <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+  <mat-footer-cell *matFooterCellDef> סה"כ {{ totalAmount }} </mat-footer-cell>
 </ng-container>
 
 <!-- דתות -->
@@ -169,7 +169,7 @@
       (ngModelChange)="calculateOrElchanan(record)"
     />
   </mat-cell>
-  <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+  <mat-footer-cell *matFooterCellDef> סה"כ {{ totalDatot }} </mat-footer-cell>
 </ng-container>
 
 <!-- אור אלחנן -->
@@ -193,8 +193,8 @@
     <input
       matInput
       type="number"
-      [value]="record.addAmount"
-
+      [(ngModel)]="record.addAmount"
+      (ngModelChange)="calculateTotals()"
     />
   </mat-cell>
   <mat-footer-cell *matFooterCellDef> סה"כ {{ totalAddAmount }} </mat-footer-cell>
@@ -211,7 +211,7 @@
       [(ngModel)]="record.ginusar"      
     />
   </mat-cell>
-  <mat-footer-cell *matFooterCellDef>  </mat-footer-cell>
+  <mat-footer-cell *matFooterCellDef>  סה"כ {{ totalGinusar }}  </mat-footer-cell>
 </ng-container>
 
 
