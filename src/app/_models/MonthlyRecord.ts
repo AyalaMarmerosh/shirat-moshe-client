@@ -11,5 +11,6 @@ export interface MonthlyRecord
     totalAmount: number,
     orElchanan: number,
     addAmount: number,
+    ginusar: number,
     notes: string
 }

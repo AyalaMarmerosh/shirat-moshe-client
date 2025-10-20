@@ -49,10 +49,11 @@ export class MonthlyDataComponent implements OnInit{
     'baseAllowance',
     'isChabura',
     'didLargeTest',
-    'datot',
     'totalAmount',
+    'datot',
     'orElchanan',
     'addAmount',
+    'ginusar',
     'notes'
   ];
   selectedMonth: string = '';
@@ -269,11 +270,10 @@ calculateTotalAmount(record: any): void {
 
   const baseAllowance = record.baseAllowance || 0;
   const isChabura = record.isChabura;
-  const datot = record.datot || 0;
   const test = record.didLargeTest || 0;
 
   // חישוב הסכום הסופי
-  record.totalAmount = baseAllowance + (isChabura ? 300 : 0) + (test ? 500 : 0) - datot;
+  record.totalAmount = baseAllowance + (isChabura ? 300 : 0) + (test ? 500 : 0) ;
   this.calculateTotals();
 }
 calculateOrElchanan(record: MonthlyRecord): void{
@@ -379,7 +379,7 @@ onAbrekClick(abrechId: number): void {
       const ws: XLSX.WorkSheet = wb.Sheets[wb.SheetNames[0]]; // לוקח את הגיליון הראשון
       
       const headers = [
-        'שם', 'חודש', 'שנה', 'מלגת בסיס', 'חבורה', 'מבחן', 'דתות', 'סכום סופי', 'אור אלחנן', 'יתרה', 'הערה'
+        'שם', 'חודש', 'שנה', 'מלגת בסיס', 'חבורה', 'מבחן', 'סכום סופי', 'דתות', 'אור אלחנן', 'יתרה', 'פירות גינוסר', 'הערה'
       ];
       XLSX.utils.sheet_add_aoa(ws, [headers], { origin: "A1" });
 
@@ -396,12 +396,13 @@ onAbrekClick(abrechId: number): void {
         'חודש': record.month,
         'שנה': record.year,
         'מלגת בסיס': record.baseAllowance,
-        'חבורה': record.isChabura ? '✅' : '❌',
-        'מבחן': record.didLargeTest ? '✅' : '❌',
-        'דתות': record.datot,
+        'חבורה': record.isChabura ? '300' : '',
+        'מבחן': record.didLargeTest ? '500' : '',
         'סכום סופי': record.totalAmount,
+        'דתות': record.datot,
         'אור אלחנן': record.orElchanan,
         'יתרה': record.addAmount,
+        'פירות גינוסר': record.ginusar,
         'הערה': record.notes
       }));
   
@@ -416,10 +417,11 @@ onAbrekClick(abrechId: number): void {
         { wch: 15 }, // מלגת בסיס
         { wch: 10 }, // חבורה
         { wch: 10 }, // מבחן
-        { wch: 10 }, // דתות
         { wch: 15 }, // סכום סופי
+        { wch: 10 }, // דתות
         { wch: 15 }, // אור אלחנן
         { wch: 10 }, // יתרה
+        { wch: 10 }, // פירות גינוסר
         { wch: 20 }  // הערה
       ];
 
