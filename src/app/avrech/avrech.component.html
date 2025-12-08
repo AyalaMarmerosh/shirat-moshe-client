@@ -1,154 +1,261 @@
-
 <div class="container py-4" dir="rtl">
-    <!-- חלונית סינון -->
-    <div class="filter-sidebar">
-      <br>
-      <br>
+  <!-- חלונית סינון -->
+  <div class="filter-sidebar">
+    <br />
+    <br />
 
-      <mat-form-field appearance="fill" class="w-100 mb-2">
-        <mat-label >חפש לפי שם</mat-label>
-        <input matInput [(ngModel)]="searchQuery" (input)="getAvrechim()" placeholder="חפש שם" />
-      </mat-form-field>
-      <br>
-      <br>
-      <br>
-      <br>
-      <mat-form-field appearance="fill" class="w-100 mb-2">
-        <mat-label>סינון לפי נוכחות</mat-label>
-        <mat-select [(ngModel)]="filterPresence" (ngModelChange)="getAvrechim()">
-          <mat-option value="">הכל</mat-option>
-          <mat-option value="כן">כן</mat-option>
-          <mat-option value="לא">לא</mat-option>
-          <mat-option value="בוקר">בוקר</mat-option>
-          <mat-option value="צהרים">צהרים</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>חפש לפי שם</mat-label>
+      <input
+        matInput
+        [(ngModel)]="searchQuery"
+        (input)="getAvrechim()"
+        placeholder="חפש שם"
+      />
+    </mat-form-field>
+    <br />
+    <br />
+    <br />
+    <br />
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>סינון לפי נוכחות</mat-label>
+      <mat-select [(ngModel)]="filterPresence" (ngModelChange)="getAvrechim()">
+        <mat-option value="">הכל</mat-option>
+        <mat-option value="כן">כן</mat-option>
+        <mat-option value="לא">לא</mat-option>
+        <mat-option value="בוקר">בוקר</mat-option>
+        <mat-option value="צהרים">צהרים</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <mat-form-field appearance="fill" class="w-100 mb-2">
-        <mat-label>סינון לפי דתות</mat-label>
-        <mat-select [(ngModel)]="filterDatot" (ngModelChange)="getAvrechim()">
-          <mat-option value="">הכל</mat-option>
-          <mat-option value="לא_רשום">לא רשום</mat-option>
-          <mat-option value="יום_שלם">יום שלם</mat-option>
-          <mat-option value="חצי_יום">חצי יום</mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill" class="w-100 mb-2">
-        <mat-label>סינון לפי סטטוס</mat-label>
-        <mat-select [(ngModel)]="filterStatus" (ngModelChange)="getAvrechim()">
-          <mat-option value="">הכל</mat-option>
-          <mat-option value="ראש_קבוצה_בבוקר">ראש קבוצה בבוקר</mat-option>
-          <mat-option value="ראש_קבוצה_אחה_צ">ראש קבוצה אחה&quot;צ</mat-option>
-          <mat-option value="ר&quot;כ אחה&quot;צ והח חצי דתות">ר&quot;כ אחה&quot;צ והח חצי דתות</mat-option>          
-          <mat-option value="ראש_כולל">ראש כולל</mat-option>
-          <mat-option value="אברך_רצופות_יום_שלם">יום שלם</mat-option>
-          <mat-option value="אברך_רצופות_חצי_יום">חצי יום</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>סינון לפי דתות</mat-label>
+      <mat-select [(ngModel)]="filterDatot" (ngModelChange)="getAvrechim()">
+        <mat-option value="">הכל</mat-option>
+        <mat-option value="לא_רשום">לא רשום</mat-option>
+        <mat-option value="יום_שלם">יום שלם</mat-option>
+        <mat-option value="חצי_יום">חצי יום</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <div class="new-avrech">
-      <button class="primary" style="margin: 3% 85% 2%; background-color: #673ab7; color: white; border: 1px solid white; width: 150px; height: 50px; border-radius: 8px; text-align: center; align-items: center; justify-items: center;" (click)="openAddAvrechDialog()">
-        <mat-icon >person_add</mat-icon>
-        הוספת אברך חדש
-      </button>
-    </div>
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>סינון לפי סטטוס</mat-label>
+      <mat-select [(ngModel)]="filterStatus" (ngModelChange)="getAvrechim()">
+        <mat-option value="">הכל</mat-option>
+        <mat-option value="ראש_קבוצה_בבוקר">ראש קבוצה בבוקר</mat-option>
+        <mat-option value="ראש_קבוצה_אחה_צ">ראש קבוצה אחה&quot;צ</mat-option>
+        <mat-option value='ר"כ אחה"צ והח חצי דתות'
+          >ר&quot;כ אחה&quot;צ והח חצי דתות</mat-option
+        >
+        <mat-option value="ראש_כולל">ראש כולל</mat-option>
+        <mat-option value="אברך_רצופות_יום_שלם">יום שלם</mat-option>
+        <mat-option value="אברך_רצופות_חצי_יום">חצי יום</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
-      <!-- פאגינציה -->
+  <div class="new-avrech">
+    <button
+      class="accent"
+      style="
+        margin: 3% 85% 2%;
+        background-color: #37619c;
+        color: white;
+        border: 1px solid white;
+        width: 150px;
+        height: 80px;
+        border-radius: 8px;
+        text-align: center;
+        align-items: center;
+        justify-items: center;
+      "
+      (click)="openAddAvrechDialog()"
+    >
+      <mat-icon>person_add</mat-icon>
+      הוספת אברך חדש
+    </button>
+  </div>
+
+  <!-- פאגינציה -->
   <div class="paginator-container">
-    <mat-paginator style="flex-direction: row-reverse;" dir="ltr" [length]="totalAvrechim" [pageSize]="pageSize" (page)="pageChanged($event)">
+    <mat-paginator
+      style="flex-direction: row-reverse"
+      dir="ltr"
+      [length]="totalAvrechim"
+      [pageSize]="pageSize"
+      (page)="pageChanged($event)"
+    >
     </mat-paginator>
   </div>
 
   <div class="row">
     <div *ngFor="let avrech of avrechim" class="col-sm-12 mb-4">
-      <mat-card class="card border" style="border-radius: 8px; border: 1px solid #333 !important; width: 65%; margin-right: 30%; margin-left: 5%;">
-        <mat-card-header class="d-flex align-items-center" style="display: flex; justify-content: space-between;">
-          <div class="button-group" style="margin-left: 0;">
-            <button mat-raised-button color="accent" class="me-2" style="width: 110px; margin-left: 10px;" (click)="openEditDialog(avrech)">עדכן פרטים</button>
-            <button mat-raised-button color="warn" style="width: 110px;" (click)="deleteAvrech(avrech.id)">מחק</button>
+      <mat-card
+        class="card border"
+        style="
+          border-radius: 8px;
+          border: 1px solid #333 !important;
+          width: 65%;
+          margin-right: 30%;
+          margin-left: 5%;
+        "
+      >
+        <mat-card-header
+          class="d-flex align-items-center"
+          style="display: flex; justify-content: space-between"
+        >
+          <div class="button-group" style="margin-left: 0">
+            <button
+              mat-raised-button
+              color="accent"
+              class="me-2"
+              style="width: 110px; margin-left: 10px"
+              (click)="openEditDialog(avrech)"
+            >
+              <mat-icon style="margin-left: 8px">edit</mat-icon>
+              עדכן פרטים
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              style="width: 110px"
+              (click)="deleteAvrech(avrech.id)"
+            >
+              <mat-icon style="margin-left: 8px">delete</mat-icon>
+              מחק
+            </button>
           </div>
-          <mat-card-title class="font-weight-bold" style="font-size: 2.5em; font-weight:bold; text-align: center; flex-grow: 1;">
-              {{ avrech.lastName + " " + avrech.firstName }}
+          <mat-card-title
+            class="font-weight-bold"
+            style="
+              font-size: 2.5em;
+              font-weight: bold;
+              text-align: center;
+              flex-grow: 1;
+            "
+          >
+            {{ avrech.lastName + " " + avrech.firstName }}
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <div>
-          <div class="data" style="margin-right: 40px;">
-            <br>
-            <br>
-            <div class="abrek-details">
-              <div class="detail-item">
-                <p><strong>תעודת זהות: </strong> {{ avrech.teudatZeut }}</p>
-                <p><strong>תאריך לידה: </strong>{{ formatDate(avrech.dateOfBirth) }}</p>
-                <p><strong>כתובת: </strong>{{ avrech.street + " " + avrech.houseNumber}}</p>
-                                </div>
-          <div class="detail-item">
-
-          <p><strong>סטטוס:</strong> {{ avrech.status }} </p>
-          <p><strong>דתות:</strong> {{ avrech.datot }}</p>
-          <p><strong>נוכחות: </strong>{{ avrech.isPresent }}</p>
-          </div>
-          <div class="detail-item">
-            <mat-expansion-panel class="custom-expansion" style="width: 190px;">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <p><strong>פלאפון: </strong>{{ avrech.cellPhone || "לא קיים "}}</p>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <div class="phone-details">
-                <p><strong>פלאפון 2: </strong>{{ avrech.cellPhone2 || "לא קיים"}}</p>
-                <p><strong>טלפון: </strong>{{ avrech.phone }}</p>
+            <div class="data" style="margin-right: 40px">
+              <br />
+              <br />
+              <div class="abrek-details">
+                <div class="detail-item">
+                  <p><strong>תעודת זהות: </strong> {{ avrech.teudatZeut }}</p>
+                  <p>
+                    <strong>תאריך לידה: </strong
+                    >{{ formatDate(avrech.dateOfBirth) }}
+                  </p>
+                  <p>
+                    <strong>כתובת: </strong
+                    >{{ avrech.street + " " + avrech.houseNumber }}
+                  </p>
+                </div>
+                <div class="detail-item">
+                  <p><strong>סטטוס:</strong> {{ avrech.status }}</p>
+                  <p><strong>דתות:</strong> {{ avrech.datot }}</p>
+                  <p><strong>נוכחות: </strong>{{ avrech.isPresent }}</p>
+                </div>
+                <div class="detail-item">
+                  <mat-expansion-panel
+                    class="custom-expansion" 
+                    style="width: 190px"
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <p>
+                          <strong>פלאפון: </strong
+                          >{{ avrech.cellPhone || "לא קיים " }}
+                        </p>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="phone-details">
+                      <p>
+                        <strong>פלאפון 2: </strong
+                        >{{ avrech.cellPhone2 || "לא קיים" }}
+                      </p>
+                      <p><strong>טלפון: </strong>{{ avrech.phone }}</p>
+                    </div>
+                  </mat-expansion-panel>
+                  <br />
+                  <mat-expansion-panel
+                    class="custom-expansion"
+                    style="width: 190px"
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <strong>פרטי בנק:</strong>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="bank-details">
+                      <p><strong>בנק: </strong>{{ avrech.bank }}</p>
+                      <p><strong>סניף: </strong>{{ avrech.branch }}</p>
+                      <p>
+                        <strong>מספר חשבון: </strong>{{ avrech.accountNumber }}
+                      </p>
+                    </div>
+                  </mat-expansion-panel>
+                </div>
               </div>
-            </mat-expansion-panel>
-            <br>
-            <mat-expansion-panel class="custom-expansion" style="width: 190px;">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <strong>פרטי בנק:</strong>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <div class="bank-details">
-                <p><strong>בנק: </strong>{{ avrech.bank }}</p>
-                <p><strong>סניף: </strong>{{ avrech.branch }}</p>
-                <p><strong>מספר חשבון: </strong>{{ avrech.accountNumber }}</p>
-              </div>
-            </mat-expansion-panel>
-
+            </div>
           </div>
-        </div>
-          </div>
-        
-    </div>
         </mat-card-content>
-        <mat-card-actions class="d-flex" style="flex-wrap: wrap;">
-          <mat-expansion-panel style="background-color: #673ab7; width: 30%;" class="mt-4 custom-expansion-panel"   (closed)="isMonthlyDataVisible[avrech.id] = false" >
-            <mat-expansion-panel-header style="color: white;">
-              <mat-panel-title style="color: white;">
-          <!-- <div class="form-container d-flex flex-column" style="margin-right: 40px; max-width: 300px;"> -->
-          <!-- <button mat-raised-button color="primary" class="mb-2" -->
-            <!-- (click)="loadMonthlyData(avrech.id, yearInput.value, monthInput.value)" style="margin-right: 40px;"> -->
-            הצג נתוני חודש
-          <!-- </button> -->
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-          <mat-form-field appearance="fill" class="w-50 mb-2" >
-            <mat-label>הזן שנה</mat-label>
-            <input matInput type="text" #yearInput (keydown.enter)="loadMonthlyData(avrech.id, yearInput.value, monthInput.value)" placeholder="תשפ&quot;ה"/>
-          </mat-form-field>
-          <br>
-          <mat-form-field appearance="fill" class="w-50 mb-2">
-            <mat-label>הזן חודש</mat-label>
-            <input matInput type="text" #monthInput (keydown.enter)="loadMonthlyData(avrech.id, yearInput.value, monthInput.value)" placeholder="חשון"/>
-          </mat-form-field>
-          <!-- </div> -->
-        </mat-expansion-panel>
+        <mat-card-actions class="d-flex" style="flex-wrap: wrap">
+          <mat-expansion-panel
+            style="background-color: #0369a1; width: 30%"
+            class="mt-4 custom-expansion-panel"
+            (closed)="isMonthlyDataVisible[avrech.id] = false"
+          >
+            <mat-expansion-panel-header style="color: white">
+              <mat-panel-title style="color: white">
+                <!-- <div class="form-container d-flex flex-column" style="margin-right: 40px; max-width: 300px;"> -->
+                <!-- <button mat-raised-button color="primary" class="mb-2" -->
+                <!-- (click)="loadMonthlyData(avrech.id, yearInput.value, monthInput.value)" style="margin-right: 40px;"> -->
+                הצג נתוני חודש
+                <!-- </button> -->
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-form-field appearance="fill" class="w-50 mb-2">
+              <mat-label>הזן שנה</mat-label>
+              <input
+                matInput
+                type="text"
+                #yearInput
+                (keydown.enter)="
+                  loadMonthlyData(avrech.id, yearInput.value, monthInput.value)
+                "
+                placeholder='תשפ"ה'
+              />
+            </mat-form-field>
+            <br />
+            <mat-form-field appearance="fill" class="w-50 mb-2">
+              <mat-label>הזן חודש</mat-label>
+              <input
+                matInput
+                type="text"
+                #monthInput
+                (keydown.enter)="
+                  loadMonthlyData(avrech.id, yearInput.value, monthInput.value)
+                "
+                placeholder="חשון"
+              />
+            </mat-form-field>
+            <!-- </div> -->
+          </mat-expansion-panel>
 
           <!-- נתונים חודשיים -->
-          <div class="monthly-data mt-3" style="margin-right: 60px;" *ngIf="isMonthlyDataVisible[avrech.id] && monthlyData[avrech.id].length">
-            <h3 style="font-weight: bold; color:#673ab7;">נתונים חודשיים:</h3>
-            <table class="table table-striped" style="text-align: center;">
+          <div
+            class="monthly-data mt-3"
+            style="margin-right: 60px"
+            *ngIf="
+              isMonthlyDataVisible[avrech.id] && monthlyData[avrech.id].length
+            "
+          >
+            <h3 style="font-weight: bold; color: #0369a1">נתונים חודשיים:</h3>
+            <table class="table table-striped" style="text-align: center">
               <thead>
                 <tr>
                   <th>שנה</th>
@@ -168,8 +275,8 @@
                   <td>{{ record.year }}</td>
                   <td>{{ record.month }}</td>
                   <td>{{ record.baseAllowance }}</td>
-                  <td>{{ record.isChabura ? '✅' : '❌' }}</td>
-                  <td>{{ record.didLargeTest ? '✅' : '❌' }}</td>
+                  <td>{{ record.isChabura ? "✅" : "❌" }}</td>
+                  <td>{{ record.didLargeTest ? "✅" : "❌" }}</td>
                   <td>{{ record.datot }}</td>
                   <td>{{ record.totalAmount }}</td>
                   <td>{{ record.orElchanan }}</td>
@@ -188,6 +295,3 @@
     </div>
   </div>
 </div>
-
-
-  

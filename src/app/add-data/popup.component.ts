@@ -51,7 +51,7 @@ import { MatDividerModule } from '@angular/material/divider';
       h1 {
         margin-bottom: 10px;
         font-size: 24px;
-        color: #673ab7;
+        color: #0369a1;
       }
 
       mat-dialog-content {

@@ -1,0 +1,33 @@
+<div class="home-container">
+  <header class="hero">
+    <div class="hero-content">
+      <h1>ברוכים הבאים למערכת ניהול שירת משה</h1>
+      <p class="subtitle">ניהול נתונים מרכזי ונוח למוסד</p>
+    </div>
+    <div class="hero-image">
+      <mat-icon class="hero-icon">school</mat-icon>
+    </div>
+  </header>
+
+  <section class="features">
+    <h2>פעולות זמינות</h2>
+    <div class="features-grid">
+      <mat-card *ngFor="let feature of features" 
+                [routerLink]="feature.route"
+                class="feature-card"
+                [ngClass]="feature.color">
+        <mat-card-header>
+          <div mat-card-avatar class="feature-icon">
+            <mat-icon>{{feature.icon}}</mat-icon>
+          </div>
+          <mat-card-title>{{feature.title}}</mat-card-title>
+          <mat-card-subtitle>{{feature.description}}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© {{currentYear}} שירת משה - כל הזכויות שמורות</p>
+  </footer>
+</div>

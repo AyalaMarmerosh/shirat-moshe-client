@@ -1,39 +1,129 @@
-<nav class="navbar" dir="rtl">
-    <ul class="nav-list">
-      <li class="nav-item">
-        <a mat-button routerLink="/action" routerLinkActive="active-link">
-          <mat-icon>rocket_launch</mat-icon> דף הבית
-        </a>
-      </li>
-      <li class="nav-item">
-        <a mat-button routerLink="/monthly" routerLinkActive="active-link">
-          <mat-icon>table_chart</mat-icon> תצוגת נתונים 
-        </a>
-      </li>
-      <li class="nav-item">
-        <a mat-button routerLink="/avrechim-list" routerLinkActive="active-link">
-          <mat-icon>group</mat-icon> רשימת אברכים
-        </a>
-      </li>
-      <li class="nav-item">
-        <a mat-button routerLink="/add-data" routerLinkActive="active-link">
-          <mat-icon>add_circle</mat-icon> הוספת נתונים חודשיים
-        </a>
-      </li>
-      <li class="nav-item">
-        <a mat-button routerLink="/settings" routerLinkActive="active-link">
-          <mat-icon>settings</mat-icon> הגדרות
-        </a>
-      </li>
-      <!-- <li class="nav-item">
-        <mat-icon>account_circle</mat-icon>
-        <span *ngIf="username"> {{ username }}</span>
-      </li> -->
-    </ul>
-    <div class="user-info">
-      <mat-icon>account_circle</mat-icon>
-      <span *ngIf="username">{{ username }}</span>
+<mat-toolbar color="primary" class="mat-elevation-z4" dir="rtl">
+  <div class="toolbar-container">
+    <div class="logo" routerLink="/login">
+      <mat-icon class="logo-icon">account_balance</mat-icon>
+      <span class="logo-text">שירת משה</span>
     </div>
-    
+
+    <!-- Desktop Navigation Menu -->
+    <nav class="nav-menu desktop-menu">
+      <a
+        mat-button
+        routerLink="/action"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon>home</mat-icon>
+        <span>דף הבית</span>
+      </a>
+
+      <a mat-button routerLink="/monthly" routerLinkActive="active">
+        <mat-icon>table_chart</mat-icon>
+        <span>תצוגת נתונים</span>
+      </a>
+
+      <a mat-button routerLink="/avrechim-list" routerLinkActive="active">
+        <mat-icon>groups</mat-icon>
+        <span>אברכים</span>
+      </a>
+
+      <a mat-button routerLink="/add-data" routerLinkActive="active">
+        <mat-icon>post_add</mat-icon>
+        <span>הוספת נתונים</span>
+      </a>
+
+      <a mat-button routerLink="/settings" routerLinkActive="active">
+        <mat-icon>settings</mat-icon>
+        <span>הגדרות</span>
+      </a>
+    </nav>
+
+    <!-- Mobile Hamburger Menu Button -->
+    <button mat-icon-button class="hamburger-btn" (click)="toggleMenu()">
+      <mat-icon>{{ isMenuOpen ? "close" : "menu" }}</mat-icon>
+    </button>
+
+    <div class="user-section">
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon class="user-avatar">account_circle</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <div class="user-menu-header">
+          <mat-icon>account_circle</mat-icon>
+          <div class="user-details">
+            <span class="username">{{ username || "משתמש" }}</span>
+            <span class="user-email">{{ userEmail || "אורח" }}</span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>
+          <mat-icon>person</mat-icon>
+          <span>פרופיל</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>הגדרות</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>התנתקות</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Menu -->
+  <nav class="mobile-menu" [class.open]="isMenuOpen" dir="rtl">
+    <a
+      mat-button
+      routerLink="/action"
+      routerLinkActive="active"
+      (click)="closeMenu()"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <mat-icon>home</mat-icon>
+      <span>דף הבית</span>
+    </a>
+
+    <a
+      mat-button
+      routerLink="/monthly"
+      routerLinkActive="active"
+      (click)="closeMenu()"
+    >
+      <mat-icon>table_chart</mat-icon>
+      <span>תצוגת נתונים</span>
+    </a>
+
+    <a
+      mat-button
+      routerLink="/avrechim-list"
+      routerLinkActive="active"
+      (click)="closeMenu()"
+    >
+      <mat-icon>groups</mat-icon>
+      <span>אברכים</span>
+    </a>
+
+    <a
+      mat-button
+      routerLink="/add-data"
+      routerLinkActive="active"
+      (click)="closeMenu()"
+    >
+      <mat-icon>post_add</mat-icon>
+      <span>הוספת נתונים</span>
+    </a>
+
+    <a
+      mat-button
+      routerLink="/settings"
+      routerLinkActive="active"
+      (click)="closeMenu()"
+    >
+      <mat-icon>settings</mat-icon>
+      <span>הגדרות</span>
+    </a>
   </nav>
-  
+</mat-toolbar>

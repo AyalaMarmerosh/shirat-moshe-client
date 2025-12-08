@@ -1,4 +1,491 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles */
+:root {
+  /* Modern Professional Color Palette */
+  --primary-color: #1a5276; /* Deep Teal - Main brand color */
+  --primary-light: #2874a6;
+  --primary-dark: #154360;
+  --secondary-color: #1e8449; /* Green - Secondary brand color */
+  --secondary-light: #27ae60;
+  --secondary-dark: #196f3d;
+  --accent-color: #a93226; /* Dark Red - For important actions */
+  --accent-light: #cb4335;
+  --accent-dark: #922b21;
+  --background-color: #f8f9fa; /* Off-white background */
+  --surface-color: #ffffff; /* Pure white surface */
+  --text-primary: #2c3e50; /* Dark blue-gray for main text */
+  --text-secondary: #5d6d7e; /* Dark gray for secondary text */
+  --success-color: #28b463; /* Green for success states */
+  --warning-color: #d68910; /* Dark orange for warnings */
+  --error-color: #c0392b; /* Dark red for errors */
+  --info-color: #2980b9; /* Blue for information */
+  --divider-color: #e5e7e9; /* Light gray for dividers */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  direction: rtl;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  color: #334155;
+  line-height: 1.5;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.75rem;
+}
+h4 {
+  font-size: 1.5rem;
+}
+h5 {
+  font-size: 1.25rem;
+}
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-light);
+  text-decoration: underline;
+}
+
+/* Layout */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+.mt-1 {
+  margin-top: var(--spacing-xs);
+}
+.mt-2 {
+  margin-top: var(--spacing-sm);
+}
+.mt-3 {
+  margin-top: var(--spacing-md);
+}
+.mt-4 {
+  margin-top: var(--spacing-lg);
+}
+.mt-5 {
+  margin-top: var(--spacing-xl);
+}
+.mb-1 {
+  margin-bottom: var(--spacing-xs);
+}
+.mb-2 {
+  margin-bottom: var(--spacing-sm);
+}
+.mb-3 {
+  margin-bottom: var(--spacing-md);
+}
+.mb-4 {
+  margin-bottom: var(--spacing-lg);
+}
+.mb-5 {
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Material Overrides */
+.mat-toolbar {
+  background: var(--primary-color) !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mat-button,
+.mat-raised-button,
+.mat-icon-button,
+.mat-stroked-button,
+.mat-flat-button {
+  border-radius: 4px !important;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.mat-raised-button,
+.mat-flat-button {
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.mat-raised-button:hover,
+.mat-flat-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md) !important;
+}
+
+.mat-button.mat-primary,
+.mat-raised-button.mat-primary,
+.mat-flat-button.mat-primary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.mat-button.mat-accent,
+.mat-raised-button.mat-accent,
+.mat-flat-button.mat-accent {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  color: #ffffff !important;
+}
+
+.mat-button.mat-accent:hover,
+.mat-raised-button.mat-accent:hover,
+.mat-flat-button.mat-accent:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%) !important;
+}
+
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: var(--divider-color);
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: var(--secondary-color);
+}
+
+.mat-form-field-label {
+  color: var(--text-secondary);
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: var(--secondary-color);
+}
+
+.mat-input-element {
+  color: var(--text-primary);
+}
+
+/* Card styles */
+.mat-card {
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--divider-color);
+}
+
+.mat-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.mat-card-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.mat-card-title {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.mat-card-content {
+  padding: 1.5rem;
+}
+
+/* Table styles */
+.mat-table {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.mat-header-cell {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 500;
+}
+
+.mat-row:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.mat-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Tab styles */
+.mat-tab-group {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.mat-tab-header {
+  background-color: var(--primary-color);
+}
+
+.mat-tab-label {
+  color: rgba(255, 255, 255, 0.8);
+  opacity: 1;
+}
+
+.mat-tab-label-active {
+  color: white;
+  font-weight: 500;
+}
+
+.mat-ink-bar {
+  background-color: var(--secondary-color) !important;
+  height: 3px !important;
+}
+
+/* Dialog styles */
+.mat-dialog-container {
+  padding: 0 !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+.mat-dialog-title {
+  background-color: var(--primary-color);
+  color: white;
+  margin: 0;
+  padding: 1rem 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.mat-dialog-content {
+  padding: 1.5rem !important;
+  margin: 0;
+}
+
+.mat-dialog-actions {
+  padding: 1rem 1.5rem;
+  justify-content: flex-end;
+  background-color: var(--background-color);
+  margin: 0;
+}
+
+/* Snackbar styles */
+.mat-snack-bar-container {
+  border-radius: 4px !important;
+  margin: 1rem !important;
+}
+
+.mat-snack-bar-handset {
+  width: auto !important;
+}
+
+/* Custom scrollbar */
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* Material Icons - removed local font, using Google Fonts CDN */
+/* Font will be loaded from index.html */
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.mat-icon {
+  font-family: "Material Icons" !important;
+}
+
+/* Remove ALL purple/accent colors globally */
+::ng-deep .mat-raised-button.mat-accent,
+::ng-deep .mat-icon-button.mat-accent,
+::ng-deep button[color="accent"] {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-raised-button.mat-accent:hover,
+::ng-deep .mat-icon-button.mat-accent:hover,
+::ng-deep button[color="accent"]:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%) !important;
+}
+
+/* Material Button Overrides */
+::ng-deep .mat-mdc-raised-button.mat-accent {
+  background-color: #0284c7 !important;
+  color: white !important;
+}
+
+::ng-deep .mat-mdc-raised-button.mat-primary {
+  background-color: #0284c7 !important;
+}
+
+::ng-deep .mdc-button--raised.mat-accent {
+  background-color: #0284c7 !important;
+  color: white !important;
+}
+
+/* Fix Material theme colors */
+::ng-deep .mat-primary {
+  color: #0284c7 !important;
+}
+
+::ng-deep .mat-accent {
+  color: #0284c7 !important;
+}
+
+::ng-deep .mat-toolbar.mat-primary {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%) !important;
+  color: white !important;
+}
+
+/* Global Styles - Remove ALL Purple/Accent Colors */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  color: #334155;
+}
+
+/* Override Material Theme - Remove Purple, Use Blue */
+::ng-deep .mat-mdc-raised-button.mat-accent,
+::ng-deep .mat-mdc-button.mat-accent,
+::ng-deep .mat-raised-button.mat-accent,
+::ng-deep .mat-button.mat-accent,
+::ng-deep .mat-icon-button.mat-accent,
+::ng-deep button[color="accent"],
+::ng-deep .mdc-button--raised.mat-accent,
+::ng-deep [matColor="accent"] {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-mdc-raised-button.mat-accent:hover,
+::ng-deep .mat-mdc-button.mat-accent:hover,
+::ng-deep .mat-raised-button.mat-accent:hover,
+::ng-deep .mat-button.mat-accent:hover,
+::ng-deep button[color="accent"]:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%) !important;
+}
+
+/* Remove accent theme color globally */
+::ng-deep .mat-accent {
+  color: #0284c7 !important;
+}
+
+/* Fix Material Toolbar */
+::ng-deep .mat-toolbar.mat-primary {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%) !important;
+  color: white !important;
+}
+
+/* Override Material MDC components */
+::ng-deep .mat-mdc-button-base.mat-accent {
+  --mdc-theme-secondary: #0284c7 !important;
+  --mdc-button-ripple-color: rgba(2, 132, 199, 0.1) !important;
+}
+
+/* Force all accent buttons to be blue */
+::ng-deep .mdc-button--raised.mat-accent::before {
+  background-color: #0284c7 !important;
+}
+
+::ng-deep .mdc-button--raised.mat-accent {
+  background-color: #0284c7 !important;
+  color: white !important;
+}
+
+::ng-deep .mdc-button.mat-accent {
+  color: #0284c7 !important;
+}

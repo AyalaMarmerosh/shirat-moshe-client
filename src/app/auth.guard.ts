@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { AuthService } from '../app/_services/auth.service'; // ודא שזה הנתיב הנכון
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { AuthService } from '../app/_services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +8,13 @@ import { AuthService } from '../app/_services/auth.service'; // ודא שזה ה
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(): boolean {
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/']); // הפניה לדף התחברות אם לא מחובר
-      return false;
-    }
-    return true;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    // אם המשתמש מחובר, אפשר את הגישה
+    if (this.authService.isAuthenticated()) {
+      return true;
+    } 
+    // אחרת הפנה ל-login
+    this.router.navigate(['/login']);
+    return false;
   }
 }

@@ -156,7 +156,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
       h2 {
         margin-bottom: 20px;
-        color: #673ab7;
+        color: #0369a1;
       }
 
       .form-container {

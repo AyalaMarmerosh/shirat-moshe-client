@@ -1,123 +1,227 @@
+.form-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  max-width: 90%;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
 .scrollable-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    margin: 20px auto;
-    max-width: 95%; /* מתאים למסכים קטנים וגדולים */
-    overflow-x: auto; /* גלילה אופקית במקרה של תוכן רחב מדי */
-    overflow-y: auto;        
-    max-height: 500px;       
-    direction: rtl;          
-    position: relative;
+  margin: 20px auto;
+  max-width: 95%;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 600px;
+  direction: rtl;
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.scrollable-container::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #bfdbfe 0%, #93c5fd 100%);
+  border-radius: 6px;
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+  background-color: #f1f5f9;
+}
+
+.scrollable-table {
+  width: 100%;
+  padding: 15px;
+}
+
+.mat-table {
+  width: 100%;
+}
+
+.mat-header-cell {
+  background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%) !important;
+  color: #0369a1 !important;
+  font-weight: 600 !important;
+  padding: 12px 8px !important;
+  border: none;
+  white-space: nowrap;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+.mat-cell {
+  color: #334155 !important;
+  padding: 10px 8px !important;
+  border: none;
+  font-size: 0.85em;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+.mat-row {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.mat-row:hover {
+  background-color: #f0f9ff !important;
+}
+
+mat-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Input Styles */
+input {
+  width: 100%;
+  background-color: #f8fafc;
+  color: #334155;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.85em;
+}
+
+input:focus {
+  background-color: #f0f9ff;
+  border-color: #0284c7;
+  box-shadow: 0 0 12px rgba(2, 132, 199, 0.15);
+  outline: none;
+}
+
+/* Button Styles */
+button {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff !important;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%);
+  transform: translateY(-2px);
+}
+
+mat-checkbox {
+  display: flex;
+  justify-content: center;
+}
+
+/* Icons */
+.clickable-icon {
+  cursor: pointer;
+  color: #0284c7;
+  transition: all 0.2s ease;
+  margin: 0 4px;
+}
+
+.clickable-icon:hover {
+  color: #0369a1;
+  transform: scale(1.15);
+}
+
+.delete-icon {
+  color: #ca0000;
+  transition: all 0.2s ease;
+}
+
+.delete-icon:hover {
+  color: #ff0000;
+  transform: scale(1.15);
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #0284c7;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 40px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .scrollable-container::-webkit-scrollbar {
-    width: 9px;             /* רוחב הפס */
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .scrollable-container::-webkit-scrollbar-thumb {
-    background-color: #673ab7;
-    border-radius: 4px;
-  }
-  
-  .scrollable-container::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  }
-  
-  .scrollable-table {
-    width: 100%;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* צל מסודר */
-    background-color: #f9f9f9; /* רקע עדין */
-  }
-  
-  .mat-table {
-    width: 100%;
-    text-align: center;
-    table-layout: fixed;
-  }
-  
+}
+
+.text-center {
+  text-align: center;
+  color: #475569;
+  font-size: 0.95em;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1100px) and (min-width: 769px) {
   .mat-header-cell {
-    font-weight: bold;
-    color: #3f51b5; /* צבע כחול כהה לכותרות */
-    font-size: 1.2em;
-    text-align: center;
-    background-color: #e3f2fd; /* רקע עדין לכותרת */
+    font-size: 0.75em;
+    padding: 10px 5px !important;
   }
-  
+
   .mat-cell {
-    font-size: 1em;
-    color: #555; /* צבע כהה אך לא שחור */
-    /* padding: 10px; */
-    word-wrap: break-word; /* מונע חיתוך של מילים */
-    white-space: normal;  /* מבטיח שהתוכן לא יהיה במצב שורה אחת */
+    font-size: 0.7em;
+    padding: 8px 5px !important;
   }
-  
-  .mat-row {
-    transition: background-color 0.3s ease; /* אנימציה נעימה */
-    padding: 10px; /* הוספת padding לכל שורה */
+}
 
-  }
-  
-  .mat-row:hover {
-    background-color: #f1f1f1; /* רקע משתנה בריחוף */
-  }
-  
-  .mat-elevation-z3 {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* צל עדין */
-  }
-  mat-header-row {
-    position: sticky;
-    top: 0;
-    background-color: white;
-    z-index: 1;
-    direction: rtl !important; 
-    font-weight: bold;
-  }  
-
-  .mat-header-cell, .mat-cell {
-    word-wrap: break-word; /* מונע חיתוך של מילים */
-    white-space: normal;  /* מבטיח שהתוכן לא יהיה במצב שורה אחת */
-    padding: 10px; /* יש לוודא מרווחים נוחים */
+@media (max-width: 768px) {
+  .form-section {
+    width: 95%;
+    padding: 12px;
   }
 
-  .mat-header-cell, .mat-cell {
-    display: flex;
-    align-items: center; /* מיקום אנכי */
-    justify-content: center; /* מיקום אופקי */
-    text-align: center; /* גיבוי למקרה של טקסט */
-  }
-  
-  .spinner {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #673ab7;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
-  }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .i{
-    width: 60px;
+  .mat-header-cell {
+    font-size: 0.7em;
+    padding: 8px 4px !important;
   }
 
-  .clickable-icon {
-    margin: auto 2px;
-    cursor: pointer; /* משנה את סמל העכבר ליד כשמרחפים על האייקון */
+  .mat-cell {
+    font-size: 0.65em;
+    padding: 6px 4px !important;
   }
 
-  
-  mat-header-cell:first-of-type:not(:only-of-type), [dir=rtl] mat-footer-cell:first-of-type:not(:only-of-type){
-    padding: auto !important;
+  .scrollable-container {
+    max-height: 450px;
   }
+}
+
+@media (max-width: 480px) {
+  .form-section {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .mat-header-cell {
+    font-size: 0.6em;
+    padding: 6px 2px !important;
+  }
+
+  .mat-cell {
+    font-size: 0.55em;
+    padding: 4px 2px !important;
+  }
+
+  .scrollable-container {
+    max-height: 400px;
+  }
+}
+

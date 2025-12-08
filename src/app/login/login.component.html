@@ -1,83 +1,72 @@
-<!-- <div dir="rtl" class="container d-flex justify-content-center align-items-center vh-100">
-  <div class="card shadow-lg p-3" style="max-width: 400px; width: 100%;">
-    <h2 class="text-center mb-4">התחברות שירת משה</h2>
-    <form (ngSubmit)="onLogin()" *ngIf="!isLoading">
-      <div class="mb-3">
-        <label for="username" class="form-label">שם משתמש:</label>
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo">
+        <mat-icon class="logo-icon">account_balance</mat-icon>
+        <h1>שירת משה</h1>
+      </div>
+      <p class="subtitle">מערכת ניהול מתקדמת</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <form (ngSubmit)="onLogin()" class="login-form" *ngIf="!isLoading">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>שם משתמש</mat-label>
         <input
+          matInput
           id="username"
           [(ngModel)]="username"
           name="username"
           required
-          class="form-control"
-          placeholder="הכנס שם משתמש"
+          autocomplete="username"
         />
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">ססמה:</label>
+        <mat-icon matPrefix>person_outline</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>סיסמה</mat-label>
         <input
+          matInput
           id="password"
           [type]="hidePassword ? 'password' : 'text'"
-          type="password"
           [(ngModel)]="password"
           name="password"
           required
-          class="form-control"
-          placeholder="הכנס ססמה"
+          autocomplete="current-password"
         />
-        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+        <mat-icon matPrefix>lock_outline</mat-icon>
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="togglePasswordVisibility()"
+          tabindex="-1"
+        >
           <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
-      </div>
-      <div class="d-grid">
-        <button style="background-color: #673ab7; border: #673ab7;" type="submit" class="btn btn-success">התחבר</button>
-      </div>
-    </form>
-    <div *ngIf="isLoading" class="text-center">
-      <div class="spinner"></div>
-      <p>מתחבר, אנא המתן...</p>
-    </div>
-  </div>
-</div> -->
+      </mat-form-field>
 
-<div dir="rtl" class="container d-flex justify-content-center align-items-center vh-100">
-  <div class="card shadow-lg p-3" style="height: 300px; max-width: 500px; width: 100%; align-items: center; justify-items: center;">
-    <h2 class="text-center mb-4" style="font-weight: bold;">התחברות שירת משה</h2>
-    <form (ngSubmit)="onLogin()" *ngIf="!isLoading">
-      <div>
-        <mat-form-field appearance="outline" class="full-width" style="width: 100%;">
-          <mat-label>שם משתמש</mat-label>
-          <input
-            matInput
-            id="username"
-            [(ngModel)]="username"
-            name="username"
-            required
-          />
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>סיסמה</mat-label>
-          <input
-            matInput
-            [type]="hidePassword ? 'password' : 'text'"
-            [(ngModel)]="password"
-            name="password"
-            required
-          />
-          <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
-            <mat-icon style="color: #673ab7;">{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-      <div class="d-flex justify-content-center">
-        <button style="background-color: #673ab7; border: #673ab7; height: 50px; width: 100px;" type="submit" class="btn btn-success">התחבר</button>
-      </div>
+      <button
+        mat-raised-button
+        type="submit"
+        class="login-button"
+        [disabled]="isLoading"
+      >
+        <span *ngIf="!isLoading">התחברות</span>
+        <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
+      </button>
     </form>
-    <div *ngIf="isLoading" class="text-center">
-      <div class="spinner"></div>
-      <p>מתחבר, אנא המתן...</p>
+
+    <div class="spinner-container" *ngIf="isLoading">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <div class="login-footer">
+      <p>© 2025 שירת משה - כל הזכויות שמורות</p>
     </div>
   </div>
 </div>

@@ -7,7 +7,7 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatFormField, MatFormFieldControl, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-// import { environment } from '../../environments/environment';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -26,35 +27,45 @@ import { MatButtonModule } from '@angular/material/button';
 export class LoginComponent {
   username = '';
   password = '';
-  isLoading = false; // משתנה למעקב אחרי מצב הטעינה
-  hidePassword: boolean = true;  // ברירת מחדל: הסיסמה מוסתרת
+  isLoading = false;
+  errorMessage = ''; // הוסף את השדה החסר
+  hidePassword: boolean = true;
 
   constructor(private authService: AuthService, private router: Router) { }
 
   togglePasswordVisibility(): void {
-    this.hidePassword = !this.hidePassword;  // מתחלף בין הסתרה להצגה
+    this.hidePassword = !this.hidePassword;
   }
-  // פונקציה לטיפול בלחיצה על התחברות
+
   onLogin(): void {
-    this.isLoading = true; // התחלת טעינה
+    if (!this.username || !this.password) {
+      this.errorMessage = "אנא הזן שם משתמש וסיסמה";
+      return;
+    }
+
+    this.isLoading = true;
+    this.errorMessage = ''; // נקה את ההודעה הקודמת
     console.log(this.username,"שם משתמשn");
     this.authService.login(this.username, this.password).subscribe(
       (response) => {
-        this.isLoading = false; // סיום טעינה
+        this.isLoading = false;
         if(response && response.token ){
           console.log("open?");
           this.authService.saveToken(response.token);
           console.log("ההתחברות הצליחה")
-          this.router.navigate(['/action']); 
+          // נווט ל-action בעיכוב קטן
+          setTimeout(() => {
+            this.router.navigate(['/action']);
+          }, 100);
         }else{
+          this.errorMessage = "שגיאה: לא ניתן להתחבר. נסה שוב מאוחר יותר.";
           console.error("שגיאה: התגובה מהשרת אינה מכילה את השדה 'token'");
-          alert("שגיאה: לא ניתן להתחבר. נסה שוב מאוחר יותר.");
         }
       },
       (error) => {
-        this.isLoading = false; // סיום טעינה במקרה של שגיאה
+        this.isLoading = false;
+        this.errorMessage = "שגיאה במהלך ההתחברות. בדוק את הפרטים שלך.";
         console.error("שגיאה במהלך ההתחברות:", error);
-        alert('שגיאה במהלך ההתחברות');
       }
     );
   }

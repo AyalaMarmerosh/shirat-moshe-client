@@ -1,35 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
-import { AuthService } from './auth.service';  // ייבוא של ה-AuthService
-import { Router } from '@angular/router';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.authService.getToken();  // קבלת הטוקן מתוך ה-AuthService
-
-    let clonedRequest = req;
+    const token = this.authService.getToken();
+    
     if (token) {
-      // יצירת בקשה חדשה עם הוספת כותרת Authorization
-      clonedRequest = req.clone({
+      const clonedReq = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`  // מוסיף את הטוקן לכותרת
+          Authorization: `Bearer ${token}`
         }
       });
+      return next.handle(clonedReq);
     }
-
-    return next.handle(clonedRequest).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          alert('החיבור שלך פג, נא להתחבר מחדש.');
-          this.authService.logout(); // התנתקות
-        }
-        return throwError(() => error);
-      })
-    );
+    
+    return next.handle(req);
   }
 }

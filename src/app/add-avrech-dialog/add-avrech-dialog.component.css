@@ -3,6 +3,7 @@ button{
     border-radius: 5px;
     border: none;
     height: 50px;
+    width: 100px;
 }
 .body{
     text-align: center;
@@ -12,3 +13,30 @@ mat-form-field {
     display: block;
     margin-bottom: 10px; /* ריווח בין האינפוטים */
   }
+
+.mat-dialog-container {
+  direction: rtl !important;
+}
+
+.mat-dialog-content {
+  overflow-y: auto;
+  max-height: 70vh;
+  padding-right: 16px; /* כדי שהטקסט לא יידבק לצד */
+}
+
+/* הדיאלוג עצמו נשאר RTL */
+.mat-mdc-dialog-container {
+  direction: rtl !important;
+}
+
+/* שכבת התוכן הגוללת — חייבת להיות LTR כדי שהגלילה תהיה בימין */
+.mat-mdc-dialog-content.mdc-dialog__content {
+  direction: ltr !important;
+  /* text-align: right !important; לאזן את הטקסט */
+}
+
+/* מבטיח שהטקסט הפנימי יישאר RTL */
+.mat-mdc-dialog-content.mdc-dialog__content * {
+  direction: rtl !important;
+}
+
