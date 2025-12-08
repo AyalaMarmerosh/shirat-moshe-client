@@ -124,6 +124,8 @@
               <mat-icon style="margin-left: 8px">delete</mat-icon>
               מחק
             </button>
+
+
           </div>
           <mat-card-title
             class="font-weight-bold"
@@ -134,8 +136,12 @@
               flex-grow: 1;
             "
           >
+                      <button mat-raised-button  (click)="toggleSuspended(avrech)">
+  {{ avrech.isSuspended ? 'החזר לפעיל' : 'השהה' }}
+</button>
             {{ avrech.lastName + " " + avrech.firstName }}
           </mat-card-title>
+          
         </mat-card-header>
         <mat-card-content>
           <div>

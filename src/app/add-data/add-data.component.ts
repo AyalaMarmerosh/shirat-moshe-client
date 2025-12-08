@@ -111,11 +111,18 @@ getRecords() {
   }).subscribe(({ avrechimData, recordsData }) => {
     this.avrechim = avrechimData.avrechim;
 
-    this.records = recordsData.sort((a, b) => {
-      const nameA = this.getAvrechName(a.personId);
-      const nameB = this.getAvrechName(b.personId);
-      return nameA.localeCompare(nameB, 'he');
-    });
+    this.records = recordsData
+  .filter(r => {
+    console.log("r.personId", r.personId);
+    const avrech = this.avrechim.find(a => a.id === r.personId);
+    return avrech && !avrech.isSuspended;
+  })
+  .sort((a, b) => {
+    const nameA = this.getAvrechName(a.personId);
+    const nameB = this.getAvrechName(b.personId);
+    return nameA.localeCompare(nameB, 'he');
+  });
+
   });
 }
 

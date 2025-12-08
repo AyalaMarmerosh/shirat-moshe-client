@@ -70,51 +70,171 @@ export class MonthlyDataComponent implements OnInit{
     this.getRecords();
   }
 
-  getRecords(){
-    this.isLoading = true;
-    this.myService.getAvrechim(1, 100).subscribe(avrechimData => {  
-      this.avrechim = avrechimData.avrechim; // שמירת האברכים בזיכרון
+//   getRecords(){
+//     this.isLoading = true;
+//     this.myService.getAvrechim(1, 100).subscribe(avrechimData => {  
+//       this.avrechim = avrechimData.avrechim; // שמירת האברכים בזיכרון
 
-    this.myService.getRecords(this.selectedYear, this.selectedMonth).subscribe((data) => {
-      this.isLoading = false; // סיום טעינה
-      console.log("nvnvnv", data);
-      const hebrewMonthsOrder = [
-        'תשרי', 'חשון','חשוון', 'כסליו', 'טבת', 'שבט', 'אדר', 'אדר א', 'אדר ב',
-        'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול'
-      ];
+//     this.myService.getRecords(this.selectedYear, this.selectedMonth).subscribe((data) => {
+//       this.isLoading = false; // סיום טעינה
+//       console.log("nvnvnv", data);
+//   //     const hebrewMonthsOrder = [
+//   //       'תשרי', 'חשון','חשוון', 'כסליו', 'טבת', 'שבט', 'אדר', 'אדר א', 'אדר ב',
+//   //       'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול'
+//   //     ];
 
-      this.records = data
-      .filter(rec => this.searchName ? this.getAvrechName(rec.personId).includes(this.searchName) : true)
-      .filter(rec => rec.year !== 'Default')
-      .map(rec => ({
-        ...rec,
-        avrechName: this.getAvrechName(rec.personId) // הוספת שם האברך לכל רשומה
-      }))
-  .sort((a, b) => {
-        // מיון לפי שנה (בסדר יורד)
-        if (a.year !== b.year) {
-          return b.year.localeCompare(a.year);
+//   //     this.records = data
+//   //     .filter(rec => this.searchName ? this.getAvrechName(rec.personId).includes(this.searchName) : true)
+//   //     .filter(rec => rec.year !== 'Default')
+//   //     .map(rec => ({
+//   //       ...rec,
+//   //       avrechName: this.getAvrechName(rec.personId) // הוספת שם האברך לכל רשומה
+//   //     }))
+//   // .sort((a, b) => {
+//   //       const yearCompare = b.year.localeCompare(a.year);
+//   //         if (yearCompare !== 0) return yearCompare;
+
+//   //         const aMonthIndex = hebrewMonthsOrder.indexOf(a.month);
+//   //         const bMonthIndex = hebrewMonthsOrder.indexOf(b.month);
+//   //         if (aMonthIndex !== bMonthIndex) return bMonthIndex - aMonthIndex;
+
+//   //         return a.avrechName.localeCompare(b.avrechName, 'he');
+//   //       });
+
+//   const hebrewMonthsOrder = [
+//   'תשרי', 'חשון', 'כסליו', 'טבת', 'שבט', 'אדר', 'אדר א', 'אדר ב',
+//   'ניסן', 'אייר', 'סיון', 'תמוז', 'אב', 'אלול'
+// ];
+
+// this.records = data
+//   .filter(rec => this.searchName ? this.getAvrechName(rec.personId).includes(this.searchName) : true)
+//   .filter(rec => rec.year !== 'Default')
+//   .map(rec => ({
+//     ...rec,
+//     avrechName: this.getAvrechName(rec.personId)
+//   }))
+//   .sort((a, b) => {
+//     // מיון שנה – מהגדול לקטן
+//     const yearCompare = b.year.localeCompare(a.year);
+//     if (yearCompare !== 0) return yearCompare;
+
+//     // מיון חודש לפי אינדקס תקין
+//     const aMonthIndex = hebrewMonthsOrder.indexOf(a.month);
+//     const bMonthIndex = hebrewMonthsOrder.indexOf(b.month);
+
+//     return bMonthIndex - aMonthIndex;
+//   });
+
+//     }, error => {
+//       this.isLoading = false;
+//       alert("יש שגיאה בטעינת הנתונים");
+//     });
+//   });
+// }
+
+
+getRecords(){
+  this.isLoading = true;
+  this.myService.getAvrechim(1, 100).subscribe(avrechimData => {
+    this.avrechim = avrechimData.avrechim;
+
+    this.myService.getRecords(this.selectedYear, this.selectedMonth).subscribe(data => {
+      this.isLoading = false;
+
+      // מיפוי חודש עברי תקני (ערכים נומרליים לכל וריאציה נפוצה)
+      const monthOrderMap = new Map<string, number>([
+        ['תשרי', 0],
+        ['תֵשְׁרֵי', 0],
+        ['חשון', 1],
+        ['חשוון', 1],
+        ['חשׁון', 1],
+        ['כסלו', 2],
+        ['כסלוּ', 2],
+        ['טבת', 3],
+        ['שבט', 4],
+        ['אדר', 5],      // במקרה של שנה פשוטה
+        ['אדר א', 5],    // אדר א
+        ['אדר ב', 6],    // אדר ב (שנה מעוברת)
+        ['ניסן', 7],
+        ['אייר', 8],
+        ['סיון', 9],
+        ['תמוז', 10],
+        ['אב', 11],
+        ['אלול', 12]
+      ]);
+
+      // נורמליזציה: הסרת רווחים מיותרים, המרת אותיות זהות, ועיבוד וריאציות נפוצות
+      const normalizeMonth = (m: string | null | undefined): string => {
+        if (!m) return '';
+        let s = m.trim();
+
+        // החלפות נפוצות
+        s = s.replace(/\u05BC/g, ''); // הסרת ניקוד שיכול להפריע (אם קיים)
+        s = s.replace(/ח\s*ש\s*ו\s*ן/gi, 'חשוון'); // דוגמא - פחות סביר, רק למקרה
+        s = s.replace(/\s+/g, ' '); // רווחים מרובים -> אחד
+
+        // סטנדרט: המרת חשוון ל'חשון' (או לשם שאת רוצה בתצוגה)
+        if (s === 'חשוון' || s === 'חשוֹן') s = 'חשון';
+
+        // המרת אדר בלי פירוט לאדר א (שיטת מיפוי שלנו)
+        if (s === 'אדר') {
+          // נשאיר 'אדר' ככזה — מיפוי למיקום קיים (5)
+          // אם את רוצה לכריע לפי האם השנה מעוברת, צריך לבדוק זאת בנפרד
         }
 
-          // מיון לפי חודש (על פי הסדר במערך)
-          const monthAIndex = hebrewMonthsOrder.indexOf(a.month);
-          const monthBIndex = hebrewMonthsOrder.indexOf(b.month);
-          if(monthAIndex !== monthBIndex) {
-            return monthBIndex - monthAIndex;
-          }
+        // הפוך לכל אותיות רגילות (אם יש תווים מיוחדים)
+        s = s.replace(/[^\u0590-\u05FF\s0-9א-ת]/g, '');
 
-          // const nameA = this.getAvrechName(a.personId);
-          // const nameB = this.getAvrechName(b.personId);
-          return a.avrechName.localeCompare(b.avrechName, 'he');
+        return s;
+      };
+
+      // ממפה ומנרמלת את הנתונים לפני המיון
+      const prepared = data
+        .filter(rec => this.searchName ? this.getAvrechName(rec.personId).includes(this.searchName) : true)
+        .filter(rec => rec.year !== 'Default')
+        .map(rec => {
+          const normalizedMonth = normalizeMonth(rec.month);
+          return {
+            ...rec,
+            monthNormalized: normalizedMonth,
+            avrechName: this.getAvrechName(rec.personId)
+          };
         });
-    },
-    error => {
-      this.isLoading = false; // סיום טעינה
-      alert("יש שגיאה בטעינת הנתונים")
-      console.error('Error loading data', error);
+
+      // פונקציית עזר שמחזירה אינדקס מ־monthOrderMap; אם לא נמצא -> -100 (קטן מאוד)
+      const monthIndex = (monthStr: string) => {
+        if (!monthStr) return -100;
+        const key = monthStr;
+        if (monthOrderMap.has(key)) return monthOrderMap.get(key)!;
+        // נסי לבדוק גם וריאציות קטנות (למשל ללא מרווחים)
+        const collapsed = key.replace(/\s+/g, ' ').trim();
+        if (monthOrderMap.has(collapsed)) return monthOrderMap.get(collapsed)!;
+        // אפשר להוסיף עוד בדיקות אם יש וריאציות מיוחדות
+        return -100; // לא מזוהה -> ייקבע כ'נמוך' כדי שלא יפריע למיון הרגיל
+      };
+
+      // המיון: שנה יורדת (החדש קודם), בתוך שנה חודש בסדר יורד (מהסוף להתחלה), ואז שם
+      this.records = prepared.sort((a, b) => {
+        // ננסה להשוות שנה בצורה יציבה — אם השנים מיוצגות כטקסט עברי כמו 'תשפ"ה', נשתמש ב־localeCompare הפשוט
+        const yearCompare = b.year.localeCompare(a.year, 'he');
+        if (yearCompare !== 0) return yearCompare;
+
+        const idxA = monthIndex(a.monthNormalized);
+        const idxB = monthIndex(b.monthNormalized);
+        if (idxA !== idxB) return idxB - idxA; // סדר יורד לפי אינדקס (גבוה -> נמוך)
+
+        // ברירת מחדל: שמות עבריים בסדר לפי עברית
+        return a.avrechName.localeCompare(b.avrechName, 'he');
+      });
+
+    }, error => {
+      this.isLoading = false;
+      alert("יש שגיאה בטעינת הנתונים");
+      console.error(error);
     });
   });
 }
+
 getAvrechim(): void {
   this.myService.getAvrechim(1, 100).subscribe((data) => {
     this.avrechim = data.avrechim;

@@ -100,6 +100,31 @@ export class AvrechComponent implements OnInit{
     });
   }
 
+  toggleSuspended(avrech: Avrech) {
+  avrech.isSuspended = !avrech.isSuspended;
+  // בדיקה אם המשתמש לא מורשה להוסיף נתונים
+        if (this.authService.getUsernameFromToken()=='Viewer') {
+          this.snackBar.open('אין לך הרשאות לשמור נתונים', 'סגור', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            panelClass: ['error-snackbar'] // עיצוב ייחודי להודעת שגיאה
+          });
+          return; // עוצר את שמירת הנתונים
+        }
+    if (avrech) {
+      avrech.datot = this.replaceSpacesWithUnderscore(avrech.datot);
+      avrech.status = this.replaceSpacesWithUnderscore(avrech.status);
+
+      
+  console.log("`אברך ${avrech}`", avrech);
+  // אם רוצים לשמור במאגר הנתונים:
+  this.myService.updateAvrech(avrech).subscribe(() => {
+    this.snackBar.open(`סטטוס אברך עודכן`, 'סגור', { duration: 3000 });
+  });
+}}
+
+
   openEditDialog(avrech: Avrech): void {
         // בדיקה אם המשתמש לא מורשה להוסיף נתונים
         if (this.authService.getUsernameFromToken()=='Viewer') {
@@ -135,6 +160,9 @@ export class AvrechComponent implements OnInit{
   }
   
   
+replaceSpacesWithUnderscore(input: string): string {
+    return input.replace(/\s+/g, '_');
+  } 
 
   pageChanged(event: PageEvent): void {
     this.pageSize = event.pageSize;

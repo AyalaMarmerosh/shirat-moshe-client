@@ -16,5 +16,6 @@ export interface Avrech{
     houseNumber: string,
     bank: string,
     branch: string,
-    accountNumber: string 
+    accountNumber: string,
+    isSuspended: boolean; 
 }
