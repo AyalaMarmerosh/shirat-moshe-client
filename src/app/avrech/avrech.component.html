@@ -136,9 +136,14 @@
               flex-grow: 1;
             "
           >
-                      <button mat-raised-button  (click)="toggleSuspended(avrech)">
+                      <!-- <button mat-raised-button  (click)="toggleSuspended(avrech)">
+  {{ avrech.isSuspended ? 'החזר לפעיל' : 'השהה' }}
+</button> -->
+<button mat-raised-button (click)="toggleSuspended(avrech)" class="suspend-btn">
+  <mat-icon>{{ avrech.isSuspended ? 'person' : 'pause_circle' }}</mat-icon>
   {{ avrech.isSuspended ? 'החזר לפעיל' : 'השהה' }}
 </button>
+
             {{ avrech.lastName + " " + avrech.firstName }}
           </mat-card-title>
           

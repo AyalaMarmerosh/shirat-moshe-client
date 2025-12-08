@@ -37,6 +37,21 @@
   box-shadow: -4px 0 16px rgba(0, 0, 0, 0.12);
 }
 
+.suspend-btn {
+  background-color: white;       /* רקע לבן */
+  color: #0369a1 !important;                /* צבע טקסט תכלת כהה */
+  border: 1px solid #00bfff;     /* מסגרת דקה תכלת */
+  border-radius: 6px;            /* פינות מעוגלות */
+  display: flex;
+  align-items: center;
+  gap: 6px;                      /* מרווח בין האייקון לטקסט */
+}
+
+.suspend-btn:hover {
+  background-color: #e6f2ff;     /* שינוי רקע בהובר */
+}
+
+
 .filter-sidebar h3 {
   color: var(--primary-dark);
   font-weight: 600;
