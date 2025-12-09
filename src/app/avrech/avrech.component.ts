@@ -18,10 +18,11 @@ import { AddAvrechDialogComponent } from '../add-avrech-dialog/add-avrech-dialog
 import { PopupComponent } from './updatePopup.component'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../_services/auth.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-avrech',
   standalone: true,
-  imports: [    MatIconModule,
+  imports: [    MatIconModule, MatTooltipModule,
   CommonModule, FormsModule, MatPaginatorModule, RouterModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatExpansionModule, MatSelectModule],
   templateUrl: './avrech.component.html',
   styleUrl: './avrech.component.css'

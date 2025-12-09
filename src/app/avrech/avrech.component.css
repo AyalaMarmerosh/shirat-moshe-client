@@ -17,6 +17,27 @@
   --spacing-md: 16px;
 }
 
+.container {
+  width: 100%;
+  overflow-x: hidden; /* ביטול גלילה לרוחב */
+}
+
+.layout {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.filter-sidebar {
+  width: 260px;
+  flex-shrink: 0; /* שלא יתכווץ */
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0; /* פותר גלילה לרוחב */
+}
+
 /* Sidebar Filter */
 .filter-sidebar {
   position: fixed;

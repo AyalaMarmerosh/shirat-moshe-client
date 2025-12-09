@@ -336,9 +336,9 @@
             />
           </ng-container>
         </mat-cell>
-        <mat-footer-cell *matFooterCellDef style="flex: 1"
-          >סה"כ: {{ getTotalOrElchanan() }}</mat-footer-cell
-        >
+        <mat-footer-cell *matFooterCellDef style="flex: 1; color: red;">
+           {{ getTotalOrElchanan() }}
+        </mat-footer-cell>
       </ng-container>
 
       <!-- Additional Amount Column -->
@@ -354,8 +354,8 @@
             <input matInput type="number" [(ngModel)]="record.addAmount" />
           </ng-container>
         </mat-cell>
-        <mat-footer-cell *matFooterCellDef style="flex: 0.9"
-          >סה"כ: {{ getTotalAddAmount() }}</mat-footer-cell
+        <mat-footer-cell *matFooterCellDef style="flex: 0.9; color: red;"
+          > {{ getTotalAddAmount() }}</mat-footer-cell
         >
       </ng-container>
 
@@ -372,6 +372,9 @@
             <input matInput type="number" [(ngModel)]="record.ginusar" />
           </ng-container>
         </mat-cell>
+          <mat-footer-cell *matFooterCellDef style="flex: 1; color: red;">
+           {{ getTotalOrGinusar() }}
+        </mat-footer-cell>
         <mat-footer-cell *matFooterCellDef style="flex: 1"></mat-footer-cell>
       </ng-container>
 

@@ -252,6 +252,9 @@ getTotalOrElchanan(): number {
   return this.records.reduce((sum, record) => sum + (record.orElchanan || 0), 0);
 }
 
+getTotalOrGinusar(): number {
+  return this.records.reduce((sum, record) => sum + (record.ginusar || 0), 0);
+}
 getTotalAddAmount(): number {
   return this.records.reduce((sum, record) => sum + (record.addAmount || 0), 0);
 }

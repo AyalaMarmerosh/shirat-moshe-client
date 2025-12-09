@@ -13,9 +13,6 @@
         <input matInput type="text" [(ngModel)]="selectedYear" (ngModelChange)="getRecords()" placeholder="לדוגמה: תשפ" />
       </mat-form-field>
   
-      <!-- <button mat-raised-button color="primary" (click)="getRecords()" style="align-self: center; height: 40px;">
-        טען נתונים
-      </button> -->
     </div>
     <div class="scrollable-container" dir="rtl">
     <mat-card class="scrollable-table">
@@ -45,66 +42,6 @@
           <mat-cell *matCellDef="let record"> {{ selectedYear || '-' }} </mat-cell>
           <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
-  
-        <!-- <ng-container matColumnDef="baseAllowance">
-          <mat-header-cell *matHeaderCellDef> מלגה בסיסית </mat-header-cell>
-          <mat-cell *matCellDef="let record">
-            <input matInput type="number" [(ngModel)]="record.baseAllowance"(ngModelChange)="calculateTotalAmount(record)"(ngModelChange)="calculateOrElchanan(record)"  />
-          </mat-cell>
-          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
-        </ng-container>
-  
-        <ng-container matColumnDef="isChabura">
-          <mat-header-cell *matHeaderCellDef> חבורה  </mat-header-cell>
-          <mat-cell *matCellDef="let record">
-            <mat-checkbox [(ngModel)]="record.isChabura" (ngModelChange)="calculateTotalAmount(record)" (ngModelChange)="calculateOrElchanan(record)"  ></mat-checkbox>
-          </mat-cell>
-          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
-        </ng-container>
-  
-        <ng-container matColumnDef="didLargeTest">
-          <mat-header-cell *matHeaderCellDef> מבחן  </mat-header-cell>
-          <mat-cell *matCellDef="let record">
-            <mat-checkbox [(ngModel)]="record.didLargeTest" (ngModelChange)="calculateTotalAmount(record)" (ngModelChange)="calculateOrElchanan(record)" 
-            ></mat-checkbox>
-          </mat-cell>
-          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
-        </ng-container>
-  
-        
-  
-        <ng-container matColumnDef="totalAmount">
-          <mat-header-cell *matHeaderCellDef> סכום סופי </mat-header-cell>
-          <mat-cell *matCellDef="let record">
-            <input matInput type="number" [(ngModel)]="record.totalAmount" (ngModelChange)="calculateOrElchanan(record)"  [value]="record.totalAmount" readonly />
-          </mat-cell>
-          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="datot">
-          <mat-header-cell *matHeaderCellDef> דתות </mat-header-cell>
-          <mat-cell *matCellDef="let record">
-            <input matInput type="number" [(ngModel)]="record.datot"  (ngModelChange)="calculateTotalAmount(record)" (ngModelChange)="calculateOrElchanan(record)" />
-          </mat-cell>
-          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="orElchanan">
-          <mat-header-cell *matHeaderCellDef> אור אלחנן</mat-header-cell>
-          <mat-cell *matCellDef="let record">
-            <input matInput type="number"  [(ngModel)]="record.orElchanan" (ngModelChange)="calculateAdd(record)" [value]="record.orElchanan"/>
-          </mat-cell>
-          <mat-footer-cell *matFooterCellDef>סה"כ {{ totalOrElchanan }} </mat-footer-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="addAmount">
-          <mat-header-cell *matHeaderCellDef> יתרה</mat-header-cell>
-          <mat-cell *matCellDef="let record">
-            <input matInput type="number"  [(ngModel)]="record.addAmount" [value]="record.addAmount"/>
-          </mat-cell>
-          <mat-footer-cell *matFooterCellDef>סה"כ {{ totalAddAmount }} </mat-footer-cell>
-        </ng-container>
-   -->
 
    <!-- מלגה בסיסית -->
 <ng-container matColumnDef="baseAllowance">
@@ -117,7 +54,11 @@
       (ngModelChange)="calculateTotalAmount(record)"
     />
   </mat-cell>
-  <mat-footer-cell *matFooterCellDef> סה"כ {{ totalBase }} </mat-footer-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+    <span *ngIf="totalBase > 0">
+    {{ totalBase }} 
+    </span>
+  </mat-footer-cell>
 </ng-container>
 
 <!-- חבורה -->
@@ -155,7 +96,11 @@
       readonly
     />
   </mat-cell>
-  <mat-footer-cell *matFooterCellDef> סה"כ {{ totalAmount }} </mat-footer-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+    <span *ngIf="totalAmount > 0">
+    {{ totalAmount }}
+    </span>
+   </mat-footer-cell>
 </ng-container>
 
 <!-- דתות -->
@@ -169,7 +114,11 @@
       (ngModelChange)="calculateOrElchanan(record)"
     />
   </mat-cell>
-  <mat-footer-cell *matFooterCellDef> סה"כ {{ totalDatot }} </mat-footer-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+    <span *ngIf="totalDatot > 0">
+    {{ totalDatot }} 
+    </span>
+  </mat-footer-cell>
 </ng-container>
 
 <!-- אור אלחנן -->
@@ -183,7 +132,11 @@
       readonly
     />
   </mat-cell>
-  <mat-footer-cell *matFooterCellDef> סה"כ {{ totalOrElchanan }} </mat-footer-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+    <span *ngIf="totalOrElchanan > 0">
+     {{ totalOrElchanan }} 
+    </span>
+  </mat-footer-cell>
 </ng-container>
 
 <!-- יתרה -->
@@ -197,7 +150,11 @@
       (ngModelChange)="calculateTotals()"
     />
   </mat-cell>
-  <mat-footer-cell *matFooterCellDef> סה"כ {{ totalAddAmount }} </mat-footer-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+    <span *ngIf="totalAddAmount > 0">
+           {{ totalAddAmount }} 
+      </span>
+  </mat-footer-cell>
 </ng-container>
 
 
@@ -208,10 +165,15 @@
     <input
       matInput
       type="number"
-      [(ngModel)]="record.ginusar"      
+      [(ngModel)]="record.ginusar"     
+      (ngModelChange)="calculateTotalGinusar()" 
     />
   </mat-cell>
-  <mat-footer-cell *matFooterCellDef>  סה"כ {{ totalGinusar }}  </mat-footer-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+  <span *ngIf="totalGinusar > 0">
+    {{ totalGinusar }}
+  </span>
+  </mat-footer-cell>
 </ng-container>
 
 

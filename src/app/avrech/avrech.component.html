@@ -58,21 +58,21 @@
     <button
       class="accent"
       style="
-        margin: 3% 85% 2%;
+        margin: 6% 90% -5% 2%;
         background-color: #37619c;
         color: white;
         border: 1px solid white;
-        width: 150px;
-        height: 80px;
+        width: 50px;
+        height: 50px;
         border-radius: 8px;
         text-align: center;
         align-items: center;
         justify-items: center;
       "
       (click)="openAddAvrechDialog()"
+      matTooltip="הוספת אברך חדש"
     >
       <mat-icon>person_add</mat-icon>
-      הוספת אברך חדש
     </button>
   </div>
 
@@ -139,15 +139,20 @@
                       <!-- <button mat-raised-button  (click)="toggleSuspended(avrech)">
   {{ avrech.isSuspended ? 'החזר לפעיל' : 'השהה' }}
 </button> -->
-<button mat-raised-button (click)="toggleSuspended(avrech)" class="suspend-btn">
-  <mat-icon>{{ avrech.isSuspended ? 'person' : 'pause_circle' }}</mat-icon>
-  {{ avrech.isSuspended ? 'החזר לפעיל' : 'השהה' }}
-</button>
+
 
             {{ avrech.lastName + " " + avrech.firstName }}
+            
           </mat-card-title>
           
         </mat-card-header>
+        <div class="puss" style="padding: 10px;">
+        <button mat-raised-button (click)="toggleSuspended(avrech)" class="suspend-btn">
+  <mat-icon>{{ avrech.isSuspended ? 'play_circle' : 'pause_circle' }}</mat-icon>
+  {{ avrech.isSuspended ? 'החזר לפעיל' : 'השהה' }}
+</button>
+        </div>
+
         <mat-card-content>
           <div>
             <div class="data" style="margin-right: 40px">

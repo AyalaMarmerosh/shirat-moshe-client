@@ -113,6 +113,21 @@
   display: none;
 }
 
+mat-toolbar {
+  position: fixed;   /* דבק למסך */
+  top: 0;            /* למעלה */
+  left: 0;
+  width: 100%;       /* רוחב מלא */
+  z-index: 1000;     /* מעל כל תוכן אחר */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* כדי שהקונטיינר של הדף לא "יחמוק" מתחת ל-navbar */
+.container1 {
+  padding-top: 80px;  /* התאימי לפי גובה ה-toolbar שלך */
+}
+
+
 .nav-menu mat-icon {
   margin-left: 0.5rem;
   font-size: 1.25rem;

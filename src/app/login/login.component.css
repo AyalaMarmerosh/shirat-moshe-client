@@ -284,3 +284,8 @@ h1 {
     -moz-osx-font-smoothing: grayscale;
   }
 }
+
+.spinner-container{
+  color: var(--primary-light) !important;
+  border-color: #1a5276 !important;
+}

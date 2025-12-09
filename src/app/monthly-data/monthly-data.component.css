@@ -2,7 +2,7 @@
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   padding: 20px;
   border-radius: 12px;
-  margin: 20px auto;
+  margin: 10px auto;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   max-width: 90%;
   display: flex;
@@ -10,6 +10,27 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  height: 110px;
+}
+
+mat-header-row {
+  background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+  font-weight: bold;
+  color: #075985;
+  text-align: center;
+  border-bottom: 2px solid #93c5fd;
+}
+
+mat-header-cell {
+  font-size: 1rem;
+  padding: 12px 8px;
+  text-align: center;
+}
+
+mat-header-cell {
+  text-align: center !important;
+  justify-content: center !important;
+  display: flex !important;
 }
 
 .scrollable-container {
@@ -183,10 +204,10 @@ mat-checkbox {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 700px) {
   .form-section {
     width: 95%;
-    padding: 12px;
+    padding: 9px;
   }
 
   .mat-header-cell {
@@ -200,7 +221,7 @@ mat-checkbox {
   }
 
   .scrollable-container {
-    max-height: 450px;
+    max-height: 250px;
   }
 }
 
@@ -221,7 +242,7 @@ mat-checkbox {
   }
 
   .scrollable-container {
-    max-height: 400px;
+    max-height: 200px;
   }
 }
 

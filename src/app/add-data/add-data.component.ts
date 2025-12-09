@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MonthlyDataService } from '../_services/monthly-data.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -62,13 +62,12 @@ export class AddDataComponent implements OnInit{
   avrechName: string = '';
   selectedAbrek: any = null;
   showPopup: boolean = false;
-  totalOrElchanan: number = 63280;
-  totalAddAmount: number = 8400;
-  totalBase: number = 96500;
-  totalAmount: number = 100700;
-  totalDatot: number = 29020;
+  totalOrElchanan: number = 0;
+  totalAddAmount: number = 0;
+  totalBase: number = 0;
+  totalAmount: number = 0;
+  totalDatot: number = 0;
   totalGinusar: number = 0;
-
 
   constructor(
     private myService: MonthlyDataService,
@@ -80,28 +79,7 @@ export class AddDataComponent implements OnInit{
 
   ngOnInit(): void {
     this.getRecords();
-  }
-
-//   getRecords(){
-//     this.myService.getAvrechim(1, 300).subscribe(avrechData => {
-//       this.getAvrechim();
-//     })
-
-//     this.myService.getRecords(this.year, this.month).subscribe((data) => {
-//       console.log("nvnvnv", data)
-
-//             // מיון הרשומות לפי שם האברך
-//             this.records = data.sort((a, b) => {
-//               const nameA = this.getAvrechName(a.personId);
-//               const nameB = this.getAvrechName(b.personId);
-//               return nameA.localeCompare(nameB, 'he');
-//             });
-//       },
-//     error => {
-//       console.error('Error loading data', error);
-//     }
-//   );
-// }
+ }
 
 
 getRecords() {
@@ -122,10 +100,18 @@ getRecords() {
     const nameB = this.getAvrechName(b.personId);
     return nameA.localeCompare(nameB, 'he');
   });
-
+  this.c();
   });
 }
 
+c(){
+    this.totalBase = this.records.reduce((sum, record) => sum + (record.baseAllowance || 0), 0);
+    this.totalOrElchanan = this.records.reduce((sum, record) => sum + (record.orElchanan || 0), 0);
+    this.totalDatot = this.records.reduce((sum, record) => sum + (record.datot || 0), 0);
+    this.totalAmount = this.records.reduce((sum, record) => sum + (record.totalAmount || 0), 0);
+    this.totalAddAmount = this.records.reduce((sum, record) => sum + (record.addAmount || 0), 0);
+    this.totalGinusar = this.records.reduce((sum, record) => sum + (record.ginusar || 0), 0);
+}
 
 // get sumIsChabura(): number {
 //   return this.configService.sumIsChabura;
@@ -369,6 +355,12 @@ calculateAdd(record: MonthlyRecord): void {
     (record.totalAmount - (record.datot || 0)) - record.orElchanan,
     0
   );
+}
+
+calculateTotalGinusar() {
+  this.totalGinusar = this.records.reduce((sum, record) => {
+    return sum + (Number(record.ginusar) || 0);
+  }, 0);
 }
 
 calculateTotalAndOrElchanan(record: MonthlyRecord): void {
