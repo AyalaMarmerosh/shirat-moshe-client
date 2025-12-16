@@ -36,8 +36,30 @@
   box-shadow: 0 2px 8px rgba(2, 132, 199, 0.1);
 }
 
+/* INDEX – מספר רץ */
+.mat-column-index {
+  flex: 0 0 48px;
+  max-width: 48px;
+  text-align: center;
+}
+
+/* חבורה */
+.mat-column-isChabura {
+  flex: 0 0 56px;
+  max-width: 56px;
+  text-align: center;
+}
+
+/* מבחן */
+.mat-column-didLargeTest {
+  flex: 0 0 56px;
+  max-width: 56px;
+  text-align: center;
+}
+
+
 .mat-cell {
-  padding: 14px 12px !important;
+  padding: 6px 4px !important;
   color: #334155;
   text-align: center;
   border: none;
