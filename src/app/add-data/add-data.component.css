@@ -57,6 +57,11 @@
   text-align: center;
 }
 
+.mat-column-id {
+  flex: 0 0 86px;
+  max-width: 86px;
+  text-align: center;
+}
 
 .mat-cell {
   padding: 6px 4px !important;
@@ -72,12 +77,12 @@
 }
 
 input {
-  width: 90%;
+  width: 80%;
   background-color: #f8fafc;
   color: #334155;
   border: 1.5px solid #cbd5e1;
   border-radius: 6px;
-  padding: 10px 14px;
+  padding: 6px 4px;
   font-size: 0.95em;
   transition: all 0.2s ease;
 }
@@ -228,7 +233,7 @@ button:hover {
   }
 
   input {
-    width: 95%;
+    width: 85%;
   }
 
   .scrollable-container {
@@ -257,8 +262,8 @@ button:hover {
   }
 
   input {
-    width: 100%;
-    padding: 8px 10px;
+    width: 80%;
+    padding: 6px 4px;
     font-size: 0.9em;
   }
 
@@ -294,8 +299,8 @@ button:hover {
   }
 
   input {
-    width: 100%;
-    padding: 8px 10px;
+    width: 80%;
+    padding: 6px 4px;
   }
 
   .scrollable-container {
@@ -325,8 +330,8 @@ button:hover {
   }
 
   input {
-    width: 100%;
-    padding: 8px 10px;
+    width: 80%;
+    padding: 6px 4px;
     font-size: 0.85em;
   }
 
