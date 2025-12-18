@@ -10,7 +10,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  height: 110px;
+  /* height: 110px; */
 }
 
 mat-header-row {
@@ -32,6 +32,15 @@ mat-header-cell {
   justify-content: center !important;
   display: flex !important;
 }
+
+.export-container {
+  position: relative;
+  z-index: 50;
+  margin: 120px 0 auto 20px;
+  text-align: center;
+
+}
+
 
 .scrollable-container {
   margin: 20px auto;
