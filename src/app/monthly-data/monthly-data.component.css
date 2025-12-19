@@ -35,7 +35,7 @@ mat-header-cell {
 
 .export-container {
   position: relative;
-  z-index: 50;
+  z-index: 5;
   margin: 120px 0 auto 20px;
   text-align: center;
 
