@@ -146,4 +146,20 @@ export class MonthlyDataService {
     }
     return throwError(errorMessage);
   }
+
+//   saveDefaultRecords(records: MonthlyRecord[]) {
+//       const headers = this.createAuthorizationHeaders();
+//   return this.http.post(
+//     `${this.apiUrl}/save-default`, records, { headers });
+// }
+
+saveDefaultRecords(records: MonthlyRecord[]) {
+  const headers = this.createAuthorizationHeaders();
+  return this.http.post(
+    `${this.apiUrl}/save-default`,
+    records,
+    { headers, responseType: 'text' }  // <-- כאן
+  );
+}
+
 }

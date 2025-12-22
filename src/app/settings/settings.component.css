@@ -29,3 +29,15 @@ mat-form-field {
     display: block;
     margin-bottom: 10px; /* ריווח בין האינפוטים */
   }
+
+
+  .mat-column-baseAllowance,
+.mat-column-datot,
+.mat-column-ginusar {
+  width: 4ch;
+  text-align: center;
+}
+
+.cell-input-4 {
+  width: 7ch;
+}

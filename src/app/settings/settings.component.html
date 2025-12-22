@@ -1,4 +1,4 @@
-<div class="update-login" style="margin: 3% auto; display: flex; justify-content: center; ">
+<div class="update-login" style="margin: 10% auto auto; display: flex; justify-content: center; ">
   <mat-expansion-panel dir="rtl" style="width: 30%;">
     <mat-expansion-panel-header style="display: flex; justify-content: center; align-items: center;">
       <mat-panel-title>עדכון שם משתמש וסיסמה</mat-panel-title>
@@ -49,6 +49,209 @@
 </div>
 
   
+<div class="update-login" style="margin: 3% auto; display: flex; justify-content: center; ">
+  <mat-expansion-panel dir="rtl" style="width: 90%;">
+    <mat-expansion-panel-header style="display: flex; justify-content: center; align-items: center;">
+      <mat-panel-title>עדכון נתונים בסיסיים</mat-panel-title>
+    </mat-expansion-panel-header>
+
+     <div class="scrollable-container" dir="rtl">
+    <mat-card class="scrollable-table">
+        <mat-card-content>
+          <div style="text-align: center; margin-bottom: 12px;">
+  <button
+    mat-raised-button
+    style="width: 15%; background-color: #ff6e6e; color: white; font-weight: bold;"
+    (click)="saveAsDefault()">
+    שמור כברירת מחדל
+  </button>
+</div>
+
+      <mat-table [dataSource]="records" class="mat-elevation-z3">
+        <ng-container matColumnDef="index">
+          <mat-header-cell *matHeaderCellDef> מס' </mat-header-cell>
+          <mat-cell *matCellDef="let record; let i = index"> {{ i + 1 }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> שם </mat-header-cell>
+          <mat-cell  *matCellDef="let record"  (click)="onAbrekClick(record.personId)"   style="cursor: pointer; color: rgb(16, 39, 152);">     
+            {{ getAvrechName(record.personId) }}
+        </mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+  
+        <!-- <ng-container matColumnDef="month">
+          <mat-header-cell *matHeaderCellDef> חודש </mat-header-cell>
+          <mat-cell *matCellDef="let record"> {{ selectedMonth  || '-' }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="year">
+          <mat-header-cell *matHeaderCellDef> שנה </mat-header-cell>
+          <mat-cell *matCellDef="let record"> {{ selectedYear || '-' }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container> -->
+
+   <!-- מלגה בסיסית -->
+<ng-container matColumnDef="baseAllowance">
+  <mat-header-cell *matHeaderCellDef> מלגה בסיסית </mat-header-cell>
+  <mat-cell *matCellDef="let record">
+    <input
+      class="cell-input-4"
+      matInput
+      type="number"
+      [(ngModel)]="record.baseAllowance"
+      (ngModelChange)="calculateTotalAmount(record)"
+    />
+  </mat-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+    <span *ngIf="totalBase > 0">
+    {{ totalBase }} 
+    </span>
+  </mat-footer-cell>
+</ng-container>
+
+<!-- חבורה -->
+<ng-container matColumnDef="isChabura" >
+  <mat-header-cell *matHeaderCellDef> חבורה </mat-header-cell>
+  <mat-cell *matCellDef="let record">
+    <mat-checkbox
+      [(ngModel)]="record.isChabura"
+      (ngModelChange)="calculateTotalAndOrElchanan(record)"
+    ></mat-checkbox>
+  </mat-cell>
+  <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+</ng-container>
+
+<!-- מבחן -->
+<ng-container matColumnDef="didLargeTest">
+  <mat-header-cell *matHeaderCellDef> מבחן </mat-header-cell>
+  <mat-cell *matCellDef="let record">
+    <mat-checkbox
+      [(ngModel)]="record.didLargeTest"
+      (ngModelChange)="calculateTotalAndOrElchanan(record)"
+    ></mat-checkbox>
+  </mat-cell>
+  <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+</ng-container>
+
+<!-- סכום סופי -->
+<ng-container matColumnDef="totalAmount">
+  <mat-header-cell *matHeaderCellDef> סכום סופי </mat-header-cell>
+  <mat-cell *matCellDef="let record">
+    <input
+      class="cell-input-4"
+      matInput
+      type="number"
+      [value]="record.totalAmount"
+      readonly
+    />
+  </mat-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+    <span *ngIf="totalAmount > 0">
+    {{ totalAmount }}
+    </span>
+   </mat-footer-cell>
+</ng-container>
+
+<!-- דתות -->
+<ng-container matColumnDef="datot">
+  <mat-header-cell *matHeaderCellDef> דתות </mat-header-cell>
+  <mat-cell *matCellDef="let record">
+    <input
+          class="cell-input-4"
+
+      matInput
+      type="number"
+      [(ngModel)]="record.datot"
+      (ngModelChange)="calculateOrElchanan(record)"
+    />
+  </mat-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+    <span *ngIf="totalDatot > 0">
+    {{ totalDatot }} 
+    </span>
+  </mat-footer-cell>
+</ng-container>
+
+<!-- אור אלחנן -->
+<ng-container matColumnDef="orElchanan">
+  <mat-header-cell *matHeaderCellDef> אור אלחנן </mat-header-cell>
+  <mat-cell *matCellDef="let record">
+    <input
+          class="cell-input-4"
+
+      matInput
+      type="number"
+      [value]="record.orElchanan"
+      readonly
+    />
+  </mat-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+    <span *ngIf="totalOrElchanan > 0">
+     {{ totalOrElchanan }} 
+    </span>
+  </mat-footer-cell>
+</ng-container>
+
+<!-- יתרה -->
+<ng-container matColumnDef="addAmount">
+  <mat-header-cell *matHeaderCellDef> יתרה </mat-header-cell>
+  <mat-cell *matCellDef="let record">
+    <input
+          class="cell-input-4"
+      matInput
+      type="number"
+      [(ngModel)]="record.addAmount"
+      (ngModelChange)="calculateTotals()"
+    />
+  </mat-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+    <span *ngIf="totalAddAmount > 0">
+           {{ totalAddAmount }} 
+      </span>
+  </mat-footer-cell>
+</ng-container>
+
+
+<!-- פירות גינוסר -->
+<ng-container matColumnDef="ginusar">
+  <mat-header-cell *matHeaderCellDef> פירות גינוסר </mat-header-cell>
+  <mat-cell *matCellDef="let record">
+    <input
+          class="cell-input-4"
+      matInput
+      type="number"
+      [(ngModel)]="record.ginusar"     
+      (ngModelChange)="calculateTotalGinusar()" 
+    />
+  </mat-cell>
+  <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
+  <span *ngIf="totalGinusar > 0">
+    {{ totalGinusar }}
+  </span>
+  </mat-footer-cell>
+</ng-container>
+
+
+        <ng-container matColumnDef="notes">
+          <mat-header-cell  *matHeaderCellDef > הערות</mat-header-cell>
+          <mat-cell *matCellDef="let record">
+            <input style="width: 100px;" matInput type="text"  [(ngModel)]="record.notes"/>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+      </mat-table>
+    </mat-card-content>
+  </mat-card>
+</div>
+
 <!-- <div>
     <label>סכום חבורה:</label>
     <input type="number" [(ngModel)]="sumIsChabura">

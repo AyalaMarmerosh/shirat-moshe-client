@@ -90,26 +90,54 @@ updateCredentials(oldUsername: string, newUsername: string, newPassword: string,
   }
 
   // 🕒 פונקציה שבודקת כל 5 שניות אם הטוקן פג
+  // private startTokenExpirationCheck(): void {
+  //   setInterval(() => {
+  //     if (!this.isAuthenticated()) {
+  //       alert('החיבור שלך פג, נא להתחבר מחדש.');
+  //       this.logout();
+  //     }
+  //   }, 50000); // כל 5 שניות
+  // }
+
+
   private startTokenExpirationCheck(): void {
-    setInterval(() => {
-      if (!this.isAuthenticated()) {
-        alert('החיבור שלך פג, נא להתחבר מחדש.');
-        this.logout();
-      }
-    }, 50000); // כל 5 שניות
-  }
+  setInterval(() => {
+    const token = this.getToken();
+    if (!token) {
+      return; // אין התחברות → לא בודקים כלום
+    }
+
+    if (!this.isAuthenticated()) {
+      this.logout();
+    }
+  }, 50000);
+}
 
   // 🔄 בדיקה כשחוזרים לכרטיסייה אם הטוקן עדיין תקף
+  // private setupVisibilityChangeListener(): void {
+  //   document.addEventListener('visibilitychange', () => {
+  //     if (!document.hidden) {
+  //       if (!this.isAuthenticated()) {
+  //         alert('החיבור שלך פג, נא להתחבר מחדש.');
+  //         this.logout();
+  //       }
+  //     }
+  //   });
+  // }
+
   private setupVisibilityChangeListener(): void {
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) {
-        if (!this.isAuthenticated()) {
-          alert('החיבור שלך פג, נא להתחבר מחדש.');
-          this.logout();
-        }
-      }
-    });
-  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) return;
+
+    const token = this.getToken();
+    if (!token) return;
+
+    if (!this.isAuthenticated()) {
+      this.logout();
+    }
+  });
+}
+
 
   getUsernameFromToken(): string | null {
     console.log("נכנס לפונקציה");
