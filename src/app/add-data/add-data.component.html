@@ -5,12 +5,12 @@
     <div class="form-section" style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
       <mat-form-field appearance="outline" style="flex: 1; min-width: 200px;">
         <mat-label>חודש</mat-label>
-        <input matInput type="text" [(ngModel)]="selectedMonth" (ngModelChange)="getRecords()" placeholder="לדוגמה: חשוון" />
+        <input matInput type="text" [(ngModel)]="selectedMonth" (ngModelChange)="getRecords(); saveDraftState()" placeholder="לדוגמה: חשוון" />
       </mat-form-field>
   
       <mat-form-field appearance="outline" style="flex: 1; min-width: 200px;">
         <mat-label>שנה</mat-label>
-        <input matInput type="text" [(ngModel)]="selectedYear" (ngModelChange)="getRecords()" placeholder="לדוגמה: תשפ" />
+        <input matInput type="text" [(ngModel)]="selectedYear" (ngModelChange)="getRecords(); saveDraftState()" placeholder="לדוגמה: תשפ" />
       </mat-form-field>
   
     </div>
@@ -192,7 +192,8 @@
     </mat-card>
     </div>
     <div style="text-align: center; margin-top: 20px;">
-      <button mat-raised-button color="accent" (click)="saveData()">שמור נתונים</button>
+      <button mat-raised-button style="margin: 0.1%;" color="accent" (click)="saveData()">שמור נתונים</button>
+      <button mat-raised-button style="margin: 0.1%;" color="accent" (click)="cancelChanges()">בטל שינויים</button>
     </div>
   </div>
   <div *ngIf="showPopup" class="popup-overlay">

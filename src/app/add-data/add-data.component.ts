@@ -17,6 +17,7 @@ import { PopupComponent } from './popup.component';
 import { CalculationConfigService } from '../_services/calculation-config.service';
 import { AuthService } from '../_services/auth.service';
 import { forkJoin } from 'rxjs';
+import { MonthlyDraftService } from '../_services/MonthlyDraft.service';
 
 
 
@@ -74,12 +75,27 @@ export class AddDataComponent implements OnInit{
     private authService: AuthService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
+    private draftService: MonthlyDraftService
     // private configService: CalculationConfigService
    ){}
 
-  ngOnInit(): void {
+//   ngOnInit(): void {
+//     this.getRecords();
+//  }
+
+ngOnInit(): void {
+  const draft = this.draftService.getDraft();
+
+  if (draft) {
+    this.records = draft.records;
+    this.selectedMonth = draft.selectedMonth;
+    this.selectedYear = draft.selectedYear;
+
+    this.calculateTotals(); // חשוב
+  } else {
     this.getRecords();
- }
+  }
+}
 
 
 getRecords() {
@@ -166,6 +182,10 @@ saveData(): void {
   this.myService.addMonthlyRecords(newRecords).subscribe({
     next: (response) => {
       console.log('נתונים נשמרו בהצלחה', response);
+
+          // ⭐ כאן מנקים את הטיוטה
+    this.draftService.clearDraft();
+
       alert("נתונים נשמרו בהצלחה");
     },
     error: (error) => {
@@ -197,6 +217,20 @@ saveData(): void {
   });
 }
 
+saveDraftState() {
+  this.draftService.saveDraft({
+    records: this.records,
+    selectedMonth: this.selectedMonth,
+    selectedYear: this.selectedYear
+  });
+}
+
+cancelChanges() {
+  this.draftService.clearDraft();
+  this.getRecords();
+}
+
+
 isValidHebrewYear(year: string): boolean {
   const regex = /^תש[א-ת]"[א-ת]$/;
   return regex.test(year);
@@ -209,6 +243,8 @@ calculateTotals(): void {
   this.totalAmount = this.records.reduce((sum, record) => sum + (record.totalAmount || 0), 0);
   this.totalDatot = this.records.reduce((sum, record) => sum + (record.datot || 0), 0);
   this.totalGinusar = this.records.reduce((sum, record) => sum + (record.ginusar || 0), 0);
+    this.saveDraftState();
+
 }
 
 // calculateTotalAmount(record: any): void {
@@ -233,6 +269,8 @@ calculateTotalAmount(record: MonthlyRecord): void {
 
   // אחרי שמחשבים את הסכום הסופי — נחשב את אור אלחנן והיתרה
   this.calculateOrElchanan(record);
+    this.saveDraftState();
+
 }
 
 // calculateOrElchanan(record: MonthlyRecord): void{
@@ -324,6 +362,7 @@ calculateOrElchanan(record: MonthlyRecord): void {
     // ברירת מחדל — אם אין התאמה בסטטוס
     maxOrElchanan = availableForOrElchanan;
     record.orElchanan = record.totalAmount;
+    
   }
 
   // חישוב אור אלחנן לפי המקסימום
@@ -333,6 +372,7 @@ calculateOrElchanan(record: MonthlyRecord): void {
   // record.addAmount = Math.max(availableForOrElchanan - record.orElchanan, 0);
 
   this.calculateTotals();
+
 }
 
 getAvrechByPersonId(personId: number): Avrech | undefined {
@@ -355,12 +395,16 @@ calculateAdd(record: MonthlyRecord): void {
     (record.totalAmount - (record.datot || 0)) - record.orElchanan,
     0
   );
+    this.saveDraftState();
+
 }
 
 calculateTotalGinusar() {
   this.totalGinusar = this.records.reduce((sum, record) => {
     return sum + (Number(record.ginusar) || 0);
   }, 0);
+    this.saveDraftState();
+
 }
 
 calculateTotalAndOrElchanan(record: MonthlyRecord): void {
