@@ -86,6 +86,9 @@ export class AddDataComponent implements OnInit{
 ngOnInit(): void {
   const draft = this.draftService.getDraft();
 
+    this.myService.getAvrechim(1, 300).subscribe(res => {
+    this.avrechim = res.avrechim;
+
   if (draft) {
     this.records = draft.records;
     this.selectedMonth = draft.selectedMonth;
@@ -95,6 +98,8 @@ ngOnInit(): void {
   } else {
     this.getRecords();
   }
+    });
+
 }
 
 
@@ -233,6 +238,7 @@ cancelChanges() {
 
 isValidHebrewYear(year: string): boolean {
   const regex = /^תש[א-ת]"[א-ת]$/;
+  console.log("בדיקת שנה עברית:", regex.test(year));
   return regex.test(year);
 }
 
