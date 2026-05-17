@@ -18,6 +18,7 @@ import { CalculationConfigService } from '../_services/calculation-config.servic
 import { AuthService } from '../_services/auth.service';
 import { forkJoin } from 'rxjs';
 import { MonthlyDraftService } from '../_services/MonthlyDraft.service';
+import { MatOption } from "@angular/material/core";
 
 
 
@@ -32,8 +33,7 @@ import { MonthlyDraftService } from '../_services/MonthlyDraft.service';
     MatCardModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    MatDialogModule
-  ],
+    MatDialogModule, MatOption],
   templateUrl: './add-data.component.html',
   styleUrl: './add-data.component.css'
 })
@@ -69,6 +69,26 @@ export class AddDataComponent implements OnInit{
   totalAmount: number = 0;
   totalDatot: number = 0;
   totalGinusar: number = 0;
+isValidHebrewMonth(month: string): boolean {
+  const monthOrderMap = new Map<string, number>([
+    ['תשרי', 0],
+    ['חשון', 1],
+    ['כסלו', 2],
+    ['טבת', 3],
+    ['שבט', 4],
+    ['אדר', 5],
+    ['אדר א', 5],
+    ['אדר ב', 6],
+    ['ניסן', 7],
+    ['אייר', 8],
+    ['סיון', 9],
+    ['תמוז', 10],
+    ['אב', 11],
+    ['אלול', 12]
+  ]);
+
+  return monthOrderMap.has(month?.trim());
+}
 
   constructor(
     private myService: MonthlyDataService,
@@ -165,6 +185,22 @@ saveData(): void {
         return; // עצירה מיידית של הפעולה
       }
 
+      if (!this.selectedMonth) {
+  this.snackBar.open('יש לבחור חודש', 'סגור', {
+    duration: 4000
+  });
+  return;
+}
+
+if (!this.isValidHebrewMonth(this.selectedMonth)) {
+  this.snackBar.open('חודש לא תקין. אנא בחר חודש עברי', 'סגור', {
+    duration: 5000,
+    horizontalPosition: 'center',
+    verticalPosition: 'bottom'
+  });
+  return;
+}
+
       if (!this.isValidHebrewYear(this.selectedYear)) {
         console.log( "knv??");
         this.snackBar.open('שנה עברית לא תקינה. אנא הזן שנה בתצורת "תשפ"ה"', 'סגור', {
@@ -174,7 +210,6 @@ saveData(): void {
         });
         return;
       }
-
       
       const newRecords = this.records.map(record => ({
         ...record, // העתקת כל הנתונים הקיימים
@@ -183,39 +218,91 @@ saveData(): void {
         month: this.selectedMonth
       }));
 
-  console.log('שומר נתונים:', newRecords);
+//   console.log('שומר נתונים:', newRecords);
+//   this.myService.addMonthlyRecords(newRecords).subscribe({
+//     next: (response) => {
+//       console.log('נתונים נשמרו בהצלחה', response);
+
+//           // ⭐ כאן מנקים את הטיוטה
+//     this.draftService.clearDraft();
+
+//       alert("נתונים נשמרו בהצלחה");
+//     },
+//     error: (error) => {
+//       console.error('שגיאה בשמירת נתונים', error);
+//       console.log('סטטוס שגיאה:', error.status);  // הדפסת סטטוס השגיאה
+
+//       if(error.status === 403){
+//         this.snackBar.open('אין לך הרשאות להוסיף נתונים','סגור',  {
+//           duration: 5000,
+//           horizontalPosition: 'center',
+//           verticalPosition: 'bottom',
+//           panelClass: ['conflict-snackbar']
+//         });
+//       } else if (error.status === 409 ) {
+//         this.snackBar.open('נתונים עבור החודש והשנה הללו כבר קיימים', 'סגור', {
+//           duration: 5000,
+//           horizontalPosition: 'center',
+//           verticalPosition: 'bottom',
+//           panelClass: ['conflict-snackbar'] // מחלקה ייחודית לעיצוב
+//         });
+//       } else {
+//         this.snackBar.open('אירעה שגיאה בשמירת הנתונים.', 'סגור', {
+//           duration: 3000,
+//           horizontalPosition: 'center',
+//           verticalPosition: 'bottom'
+//         });
+//       }
+//     }
+//   });
+// }
+
+ // ✔️ בדיקה אם כבר קיים
+  this.myService.checkExists(this.selectedYear, this.selectedMonth)
+    .subscribe({
+      next: (res) => {
+      console.log("EXISTS RESPONSE:", res); // 👈 חשוב מאוד
+
+        if (res.exists) {
+          const confirmReplace = confirm(
+            'כבר קיימים נתונים לחודש הזה. האם להחליף אותם?'
+          );
+
+          if (!confirmReplace) return;
+
+          this.saveToServer(newRecords);
+        } else {
+          this.saveToServer(newRecords);
+        }
+      },
+      error: () => {
+        this.snackBar.open('שגיאה בבדיקת נתונים קיימים', 'סגור', {
+          duration: 3000
+        });
+      }
+    });
+}
+
+saveToServer(newRecords: MonthlyRecord[]) {
   this.myService.addMonthlyRecords(newRecords).subscribe({
-    next: (response) => {
-      console.log('נתונים נשמרו בהצלחה', response);
+    next: () => {
+      console.log('נשמר בהצלחה');
 
-          // ⭐ כאן מנקים את הטיוטה
-    this.draftService.clearDraft();
+      this.draftService.clearDraft();
 
-      alert("נתונים נשמרו בהצלחה");
+      this.snackBar.open('נתונים נשמרו בהצלחה', 'סגור', {
+        duration: 3000
+      });
     },
     error: (error) => {
-      console.error('שגיאה בשמירת נתונים', error);
-      console.log('סטטוס שגיאה:', error.status);  // הדפסת סטטוס השגיאה
 
-      if(error.status === 403){
-        this.snackBar.open('אין לך הרשאות להוסיף נתונים','סגור',  {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          panelClass: ['conflict-snackbar']
-        });
-      } else if (error.status === 409 ) {
-        this.snackBar.open('נתונים עבור החודש והשנה הללו כבר קיימים', 'סגור', {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          panelClass: ['conflict-snackbar'] // מחלקה ייחודית לעיצוב
+      if (error.status === 409) {
+        this.snackBar.open('כבר קיימים נתונים', 'סגור', {
+          duration: 4000
         });
       } else {
-        this.snackBar.open('אירעה שגיאה בשמירת הנתונים.', 'סגור', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom'
+        this.snackBar.open('שגיאה בשמירה', 'סגור', {
+          duration: 3000
         });
       }
     }

@@ -114,6 +114,13 @@ export class MonthlyDataService {
       // catchError(this.handleErrorData)
     );
   }
+
+  checkExists(year: string, month: string) {
+  const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
+  return this.http.get<{ exists: boolean }>(
+    `${this.apiUrl}/exists?year=${year}&month=${month}`
+  );
+}
   addAvrech(avrech: any): Observable<any> {
     const headers = this.createAuthorizationHeaders();  // יצירת headers עם הטוקן
     return this.http.post(`${this.apiUrl}/add`, avrech, {headers}).pipe(

@@ -19,6 +19,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../_services/auth.service';
+import { AddDataComponent } from '../add-data/add-data.component';
+import { MonthlyDraftService } from '../_services/MonthlyDraft.service';
 
 @Component({
   selector: 'app-monthly-data',
@@ -59,12 +61,19 @@ export class MonthlyDataComponent implements OnInit{
   selectedMonth: string = '';
   selectedYear: string = '';
   searchName: string = '';
+  totalOrElchanan: number = 0;
+  totalAddAmount: number = 0;
+  totalBase: number = 0;
+  totalAmount: number = 0;
+  totalDatot: number = 0;
+  totalGinusar: number = 0;
   isLoading = false; // משתנה למעקב אחרי מצב הטעינה
   editingIndex: number | null = null; // משתנה למעקב אחרי השורה המהווה מצב עריכה
 
 
   
-  constructor(private myService: MonthlyDataService, private snackBar: MatSnackBar, private dialog: MatDialog, private authService: AuthService   ){}
+  constructor(private myService: MonthlyDataService, private snackBar: MatSnackBar, private dialog: MatDialog, private authService: AuthService,     private draftService: MonthlyDraftService
+  ){}
 
   ngOnInit(): void {
     this.getRecords();
@@ -144,12 +153,9 @@ getRecords(){
       // מיפוי חודש עברי תקני (ערכים נומרליים לכל וריאציה נפוצה)
       const monthOrderMap = new Map<string, number>([
         ['תשרי', 0],
-        ['תֵשְׁרֵי', 0],
         ['חשון', 1],
         ['חשוון', 1],
-        ['חשׁון', 1],
         ['כסלו', 2],
-        ['כסלוּ', 2],
         ['טבת', 3],
         ['שבט', 4],
         ['אדר', 5],      // במקרה של שנה פשוטה
@@ -384,79 +390,119 @@ deleteData(id: number): void {
 }
 
 calculateTotals(): void {
-  this.getTotalOrElchanan();
-  this.getTotalAddAmount();
+  this.totalOrElchanan = this.records.reduce((sum, record) => sum + (record.orElchanan || 0), 0);
+  this.totalAddAmount = this.records.reduce((sum, record) => sum + (record.addAmount || 0), 0);
+  this.totalBase = this.records.reduce((sum, record) => sum + (record.baseAllowance || 0), 0);
+  this.totalAmount = this.records.reduce((sum, record) => sum + (record.totalAmount || 0), 0);
+  this.totalDatot = this.records.reduce((sum, record) => sum + (record.datot || 0), 0);
+  this.totalGinusar = this.records.reduce((sum, record) => sum + (record.ginusar || 0), 0);
+    this.saveDraftState();
+
 }
 
-calculateTotalAmount(record: any): void {
-  console.log(record, "calculateTotalAmount");
-
-  const baseAllowance = record.baseAllowance || 0;
-  const isChabura = record.isChabura;
-  const test = record.didLargeTest || 0;
-
-  // חישוב הסכום הסופי
-  record.totalAmount = baseAllowance + (isChabura ? 300 : 0) + (test ? 500 : 0) ;
-  this.calculateTotals();
+saveDraftState() {
+  this.draftService.saveDraft({
+    records: this.records,
+    selectedMonth: this.selectedMonth,
+    selectedYear: this.selectedYear
+  });
 }
-calculateOrElchanan(record: MonthlyRecord): void{
-  console.log(record.isChabura, "vvvvv");
-  console.log(record, "calculateOrElchanan");
-  let avrech = this.getAvrechByPersonId(record.personId);
-  if( avrech && ( avrech.status == "יום שלם" || avrech?.status == "ראש כולל" )){
-    console.log("אברך יום שלם");
-    if(record.isChabura){
-      if( record.totalAmount <= 2300 ){
-        record.orElchanan = record.totalAmount
-      } else{
-        record.orElchanan = 2300;
-        record.addAmount = record.totalAmount - record.orElchanan;
-      }
-    }else{
-      if( record.totalAmount <= 2000 ){
-        record.orElchanan = record.totalAmount
-      } else{
-        console.log(record);
-        record.orElchanan = 2000;
-        record.addAmount = record.totalAmount - record.orElchanan;
-      }
+
+  calculateTotalAmount(record: MonthlyRecord): void {
+  const base = record.baseAllowance || 0;
+  const chabura = record.isChabura ? 300 : 0; // דוגמה — תלוי כמה את נותנת על חבורה
+  const test = record.didLargeTest ? 500 : 0; // גם זה רק דוגמה
+
+  // סכום סופי ללא דתות
+  record.totalAmount = base + chabura + test;
+
+  // אחרי שמחשבים את הסכום הסופי — נחשב את אור אלחנן והיתרה
+  this.calculateOrElchanan(record);
+    this.saveDraftState();
+
+}
+
+calculateOrElchanan(record: MonthlyRecord): void {
+  const avrech = this.getAvrechByPersonId(record.personId);
+  const datot = record.datot || 0;
+
+  // הסכום הזמין לחלוקה בין אור אלחנן ליתרה
+  const availableForOrElchanan = record.totalAmount - datot;
+  let maxOrElchanan = 0;
+
+  if (avrech && (avrech.status === "יום שלם" || avrech.status === "ראש כולל")) {
+    console.log("יום שלם או ראש כולל");
+    maxOrElchanan = 2300;
+    if (availableForOrElchanan >= maxOrElchanan){
+      record.orElchanan = maxOrElchanan;
+      record.addAmount = availableForOrElchanan - maxOrElchanan;
     }
-  }else if(avrech && ( avrech.status == "חצי יום" || avrech.status == "ראש קבוצה בבוקר" || avrech.status == "ראש קבוצה אחה צ" )){
-    if(record.isChabura){
-      if( record.totalAmount <= 1300 ){
-        record.orElchanan = record.totalAmount
-      } else{
-        record.orElchanan = 1300;
-        record.addAmount = record.totalAmount - record.orElchanan;
-      }
-    }else{
-      if( record.totalAmount <= 1000 ){
-        record.orElchanan = record.totalAmount
-      } else{
-        console.log(record);
-        record.orElchanan = 1000;
-        record.addAmount = record.totalAmount - record.orElchanan;
-      }
+    else{
+      record.orElchanan = availableForOrElchanan;
+      record.addAmount = 0;
     }
-  }else{
+
+  } else if (
+    avrech &&
+    (avrech.status === "חצי יום" ||
+    avrech.status === " חצי יום" ||
+     avrech.status === "ראש קבוצה בבוקר" ||
+     avrech.status === "ראש קבוצה אחה צ")
+  ) {
+    console.log("ראש קבוצה או חצי יום");
+    maxOrElchanan = 1300;
+    if (availableForOrElchanan >= maxOrElchanan){
+      record.orElchanan = maxOrElchanan;
+      record.addAmount = availableForOrElchanan - maxOrElchanan;
+    }
+    else{
+      record.orElchanan = availableForOrElchanan;
+      record.addAmount = 0;
+    }
+      } else {
+            console.log("אין סטטוס");
+      console.log(avrech);
+    // ברירת מחדל — אם אין התאמה בסטטוס
+    maxOrElchanan = availableForOrElchanan;
     record.orElchanan = record.totalAmount;
-  }
     
+  }
+
+  // חישוב אור אלחנן לפי המקסימום
+  // record.orElchanan = Math.min(maxOrElchanan, availableForOrElchanan);
+
+  // // חישוב יתרה – רק אם נשאר מעבר למקסימום
+  // record.addAmount = Math.max(availableForOrElchanan - record.orElchanan, 0);
+
   this.calculateTotals();
+
 }
+
 
 getAvrechByPersonId(personId: number): Avrech | undefined {
   return this.avrechim.find(avrech => avrech.id === personId);
 }
 
 calculateAdd(record: MonthlyRecord): void {
-  console.log(record, "calculateAdd");
-  if(record.totalAmount - record.orElchanan >=0){
-    record.addAmount = record.totalAmount - record.orElchanan;
-  }
-  else{
-    record.addAmount = 0;
-  }  this.calculateTotals();
+  record.addAmount = Math.max(
+    (record.totalAmount - (record.datot || 0)) - record.orElchanan,
+    0
+  );
+    this.saveDraftState();
+
+}
+
+calculateTotalGinusar() {
+  this.totalGinusar = this.records.reduce((sum, record) => {
+    return sum + (Number(record.ginusar) || 0);
+  }, 0);
+    this.saveDraftState();
+
+}
+
+calculateTotalAndOrElchanan(record: MonthlyRecord): void {
+  this.calculateTotalAmount(record);   // קודם חישוב סכום סופי
+  this.calculateOrElchanan(record);    // אחר כך אור אלחנן והיתרה
 }
 
 openPopup(): void {

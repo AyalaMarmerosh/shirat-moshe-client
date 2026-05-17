@@ -218,11 +218,8 @@
               matInput
               type="number"
               [(ngModel)]="record.baseAllowance"
-              (ngModelChange)="
-                calculateTotalAmount(record);
-                calculateOrElchanan(record);
-                calculateAdd(record)
-              "
+      (ngModelChange)="calculateTotalAmount(record)"
+
             />
           </ng-container>
         </mat-cell>
@@ -241,11 +238,7 @@
           <ng-container *ngIf="isEditing(i)">
             <mat-checkbox
               [(ngModel)]="record.isChabura"
-              (ngModelChange)="
-                calculateTotalAmount(record);
-                calculateOrElchanan(record);
-                calculateAdd(record)
-              "
+              (ngModelChange)="calculateTotalAndOrElchanan(record)"
             ></mat-checkbox>
           </ng-container>
         </mat-cell>
@@ -264,11 +257,7 @@
           <ng-container *ngIf="isEditing(i)">
             <mat-checkbox
               [(ngModel)]="record.didLargeTest"
-              (ngModelChange)="
-                calculateTotalAmount(record);
-                calculateOrElchanan(record);
-                calculateAdd(record)
-              "
+      (ngModelChange)="calculateTotalAndOrElchanan(record)"
             ></mat-checkbox>
           </ng-container>
         </mat-cell>
@@ -289,9 +278,6 @@
               matInput
               type="number"
               [(ngModel)]="record.totalAmount"
-              (ngModelChange)="
-                calculateOrElchanan(record); calculateAdd(record)
-              "
             />
           </ng-container>
         </mat-cell>
@@ -310,9 +296,8 @@
               matInput
               type="number"
               [(ngModel)]="record.datot"
-              (ngModelChange)="
-                calculateOrElchanan(record); calculateAdd(record)
-              "
+      (ngModelChange)="calculateOrElchanan(record)"
+
             />
           </ng-container>
         </mat-cell>
@@ -333,7 +318,6 @@
               matInput
               type="number"
               [(ngModel)]="record.orElchanan"
-              (ngModelChange)="calculateAdd(record)"
             />
           </ng-container>
         </mat-cell>
@@ -352,7 +336,8 @@
             record.addAmount
           }}</ng-container>
           <ng-container *ngIf="isEditing(i)">
-            <input matInput type="number" [(ngModel)]="record.addAmount" />
+            <input matInput type="number" [(ngModel)]="record.addAmount"       (ngModelChange)="calculateTotals()"
+ />
           </ng-container>
         </mat-cell>
         <mat-footer-cell *matFooterCellDef style="flex: 0.9; color: red;"
@@ -370,7 +355,9 @@
             record.ginusar
           }}</ng-container>
           <ng-container *ngIf="isEditing(i)">
-            <input matInput type="number" [(ngModel)]="record.ginusar" />
+            <input matInput type="number" [(ngModel)]="record.ginusar"
+                  (ngModelChange)="calculateTotalGinusar()" 
+ />
           </ng-container>
         </mat-cell>
           <mat-footer-cell *matFooterCellDef style="flex: 1; color: red;">
