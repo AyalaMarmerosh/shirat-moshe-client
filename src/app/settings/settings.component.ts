@@ -150,7 +150,7 @@ getRecords() {
   .filter(r => {
     console.log("r.personId", r.personId);
     const avrech = this.avrechim.find(a => a.id === r.personId);
-    return avrech && !avrech.isSuspended;
+    return avrech;
   })
   .sort((a, b) => {
     const nameA = this.getAvrechName(a.personId);
