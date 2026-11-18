@@ -102,7 +102,10 @@ export class AvrechComponent implements OnInit{
   }
 
   toggleSuspended(avrech: Avrech) {
+      console.log("`אברך ${avrech}`", avrech);
+
   avrech.isSuspended = !avrech.isSuspended;
+  
   // בדיקה אם המשתמש לא מורשה להוסיף נתונים
         if (this.authService.getUsernameFromToken()=='Viewer') {
           this.snackBar.open('אין לך הרשאות לשמור נתונים', 'סגור', {
@@ -119,6 +122,7 @@ export class AvrechComponent implements OnInit{
 
       
   console.log("`אברך ${avrech}`", avrech);
+  
   // אם רוצים לשמור במאגר הנתונים:
   this.myService.updateAvrech(avrech).subscribe(() => {
     this.snackBar.open(`סטטוס אברך עודכן`, 'סגור', { duration: 3000 });

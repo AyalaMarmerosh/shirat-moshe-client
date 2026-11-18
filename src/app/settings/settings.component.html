@@ -181,12 +181,10 @@
   <mat-header-cell *matHeaderCellDef> אור אלחנן </mat-header-cell>
   <mat-cell *matCellDef="let record">
     <input
-          class="cell-input-4"
-
+      class="cell-input-4"
       matInput
       type="number"
-      [value]="record.orElchanan"
-      
+      [(ngModel)]="record.orElchanan"
     />
   </mat-cell>
   <mat-footer-cell *matFooterCellDef style="color: red; text-align: center !important; justify-content: center !important;">
